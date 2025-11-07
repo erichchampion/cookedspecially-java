@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Isotope Tutorial</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js">
+	</script>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript">
+	</script>
+	<script src="js/jquery.isotope.min.js" type="text/javascript">
+	</script>	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var $container = $('#content');
+		$container.isotope({
+			// options...
+			resizable: false, // disable normal resizing
+			// set columnWidth to a percentage of container width
+			masonry: { columnWidth: $container.width() / 3 },
+			filter: '*',
+			animationOptions: {
+				duration: 750,
+				easing: 'linear',
+				queue: false,
+			}
+		});
+
+		$('#nav a').click(function(){
+			var selector = $(this).attr('data-filter');
+			$container.isotope({ 
+				filter: selector,
+				animationOptions: {
+					duration: 750,
+					easing: 'linear',
+					queue: false,
+				}
+			});
+		return false;
+		});
+		
+		// update columnWidth on window resize
+		$(window).smartresize(function(){
+	  		$container.isotope({
+	    		// update columnWidth to a percentage of container width
+	    		masonry: { columnWidth: $container.width() / 3 }
+			});
+		});
+		
+	});
+	</script>
+	
+    <script type="text/javascript" charset="utf-8">
+	// http://docs.phonegap.com/en/2.0.0/cordova_file_file.md.html#File
+	
+    // Wait for Cordova to load
+    //
+    function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+    }
+
+/* File reading */
+/*
+    function gotFS(fileSystem) {
+        fileSystem.root.getFile("readme.txt", null, gotFileEntry, fail);
+    }
+
+    function gotFileEntry(fileEntry) {
+        fileEntry.file(gotFile, fail);
+    }
+
+    function gotFile(file){
+        readDataUrl(file);
+        readAsText(file);
+    }
+
+    function readDataUrl(file) {
+        var reader = new FileReader();
+        reader.onloadend = function(evt) {
+            console.log("Read as data URL");
+            console.log(evt.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function readAsText(file) {
+        var reader = new FileReader();
+        reader.onloadend = function(evt) {
+            console.log("Read as text");
+            console.log(evt.target.result);
+        };
+        reader.readAsText(file);
+    }
+*/
+/* File writing */
+/*
+    function gotFS(fileSystem) {
+        fileSystem.root.getFile("readme.txt", {create: true, exclusive: false}, gotFileEntry, fail);
+    }
+
+    function gotFileEntry(fileEntry) {
+        fileEntry.createWriter(gotFileWriter, fail);
+    }
+
+    function gotFileWriter(writer) {
+        writer.onwriteend = function(evt) {
+            console.log("contents of file now 'some sample text'");
+            writer.truncate(11);  
+            writer.onwriteend = function(evt) {
+                console.log("contents of file now 'some sample'");
+                writer.seek(4);
+                writer.write(" different text");
+                writer.onwriteend = function(evt){
+                    console.log("contents of file now 'some different text'");
+                }
+            };
+        };
+        writer.write("some sample text");
+    }
+*/
+
+    function fail(error) {
+        console.log(error.code);
+    }
+
+    </script>
+	
+</head>
+<body>
+<div id="nav">
+	<ul>
+		<li><a href="" data-filter="*">All</a></li>
+		<li><a href="" data-filter=".cat1">Category 1</a></li>
+		<li><a href="" data-filter=".cat2">Category 2</a></li>
+		<li><a href="" data-filter=".cat3">Category 3</a></li>
+	</ul>
+</div>
+<div id="content">
+	<div class="box cat1 cat3">
+		<h2 class="box-title">
+			Lorem Ipsum
+		</h2>
+		<div class="box-text">
+			Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. Nunc montes tristique purus auctor. Nascetur? Vut amet, phasellus pulvinar et odio. Ut aliquet integer sed enim ac amet nunc? Tincidunt sit, cum ridiculus, placerat cum, vut magna ridiculus ut phasellus ridiculus? Eu hac, mattis adipiscing, montes adipiscing urna montes rhoncus! 
+		</div>
+	</div>
+	<div class="box cat1">
+		<h2 class="box-title">
+			Lorem Ipsum
+		</h2>
+		<div class="box-text">
+			Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. Nunc montes tristique purus auctor. Nascetur? Vut amet, phasellus pulvinar et odio. Ut aliquet integer sed enim ac amet nunc? Tincidunt sit, cum ridiculus, placerat cum, vut magna ridiculus ut phasellus ridiculus? Eu hac, mattis adipiscing, montes adipiscing urna montes rhoncus! Odio placerat pellentesque risus urna elit, odio phasellus, rhoncus, est ridiculus purus etiam, penatibus integer! 
+		</div>
+	</div>
+	<div class="box cat2 cat3">
+		<h2 class="box-title">
+			Lorem Ipsum
+		</h2>
+		<div class="box-text">
+			Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. Nunc montes tristique purus auctor. Nascetur? 
+		</div>
+	</div>
+	<div class="box cat1">
+		<h2 class="box-title">
+			Lorem Ipsum
+		</h2>
+		<div class="box-text">
+			Amet dolor? Diam cras ac quis a ut, augue massa cursus natoque cursus in sociis rhoncus, scelerisque mus ac. Pellentesque odio rhoncus, aliquet tempor? Nisi cursus lorem tincidunt penatibus eu scelerisque! Scelerisque mid rhoncus turpis eros? Nunc rhoncus in turpis, mus, nec augue, odio, mid tempor aliquam, ultricies. 
+		</div>
+	</div>
+	<div class="box cat2">
+		<h2 class="box-title">
+			Lorem Ipsum
+		</h2>
+		<div class="box-text">
+			Diam cras ac quis a ut, augue massa cursus natoque cursus in sociis rhoncus, scelerisque mus ac. Pellentesque odio rhoncus, aliquet tempor? Nisi cursus lorem tincidunt penatibus eu scelerisque! Scelerisque mid rhoncus turpis eros? Nunc rhoncus in turpis, mus, nec augue, odio, mid tempor aliquam, ultricies. 
+		</div>
+	</div>
+	<div class="box cat2">
+		<h2 class="box-title">
+			Lorem Ipsum
+		</h2>
+		<div class="box-text">
+			Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. Nunc montes tristique purus auctor. Nascetur? Vut amet, phasellus pulvinar et odio. Pellentesque odio rhoncus, aliquet tempor? Nisi cursus lorem tincidunt penatibus eu scelerisque! Scelerisque mid rhoncus turpis eros? Nunc rhoncus in turpis, mus, nec augue, odio, mid tempor aliquam, ultricies. 
+		</div>
+	</div>
+	<div class="box cat2 cat3">
+		<h2 class="box-title">
+			Lorem Ipsum
+		</h2>
+		<div class="box-text">
+			Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. 
+		</div>
+	</div>
+	<div class="box cat1">
+		<h2 class="box-title">
+			Lorem Ipsum
+		</h2>
+		<div class="box-text">
+			Amet dolor? Diam cras ac quis a ut, augue massa cursus natoque cursus in sociis rhoncus, scelerisque mus ac. Pellentesque odio rhoncus, aliquet tempor? Nisi cursus lorem tincidunt penatibus eu scelerisque! Scelerisque mid rhoncus turpis eros? Nunc rhoncus in turpis, mus, nec augue, odio, mid tempor aliquam, ultricies. 
+		</div>
+	</div>
+	<div class="box cat2 cat3">
+		<h2 class="box-title">
+			Lorem Ipsum
+		</h2>
+		<div class="box-text">
+			Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. Nunc montes tristique purus auctor. Amet dolor? Diam cras ac quis a ut, augue massa cursus natoque cursus in sociis rhoncus, scelerisque mus ac. Pellentesque odio rhoncus, aliquet tempor? Nisi cursus lorem tincidunt penatibus eu scelerisque! Scelerisque mid rhoncus turpis eros? Nunc rhoncus in turpis, mus, nec augue, odio, mid tempor aliquam, ultricies. 
+		</div>
+	</div>
+</div>
+</body>
+</html>

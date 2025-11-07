@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Marketing Email</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+<body>
+<p>Hello <span th:text="${email}"></span>,</p>
+<p><span th:utext="${emailBody}"></span></p>
+</body>
+</html>

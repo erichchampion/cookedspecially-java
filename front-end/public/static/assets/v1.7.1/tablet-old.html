@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<script type="text/javascript" charset="utf-8" src="js/jquery-1.9.1.js"></script>
+
+		<title> Axis </title>
+		
+	</head>
+    <style>
+        body{
+            background: #666;
+        }   
+        #container{
+            width:1024px;
+            height:600px;
+            margin: 10px auto;
+            color:#333;
+            text-align:center;
+            color:#ccc;
+            font-family: helvetica, arial;
+            font-size: 10px;
+        }
+        #container a{
+            text-decoration: none;
+            color: #eee;
+        }   
+        #container a:hover{
+            color: #fff;
+        }          
+        #appFrame {
+            border: 16px solid #000000;
+            border-radius: 12px 12px 12px 12px;
+            height: 600px;
+            width: 1024px;
+        }
+        @media all and (max-width: 999px) {
+            #container{
+                height:1024px;
+                width:600px;
+                margin: 10px auto;
+            }
+            #appFrame{
+                height:1024px;
+                width:600px;
+            }
+        }
+    </style>
+	<body>
+        <div id="container">
+        <p style="margin:0 0 4px"> 
+            ViewPort: <span style="color:#eee">1024x600</span> 
+            Orientation:
+            <a href="#" onclick="$('#appFrame').css('height', 600).css('width', 1024)">Landscape</a> | 
+            <a href="#" onclick="$('#appFrame').css('height', 1024).css('width', 600)">Portrait</a> </p>
+		<iframe id="appFrame" src="index.html"></iframe>
+        </div>
+	</body>
+</html>

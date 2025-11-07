@@ -1,0 +1,25 @@
+{
+   "menu": {
+      "menuId": 1,
+      "restaurantId": 1,
+      "name": "Main Menu",
+      "description": "morning menu",
+      "categories": [
+         {
+            "categoryId": 1,
+            "name": "Beverages",
+            "description": "",
+            "dishes": [
+               {
+                  "dishId": 1,
+                  "name": "Fruit punch",
+                  "description": "mixed fruit juice",
+                  "shortDescription": "",
+                  "imageUrl": "",
+                  "price": 200
+               }
+            ]
+         }
+      ]
+   }
+}

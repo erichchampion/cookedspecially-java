@@ -1,0 +1,479 @@
+{
+    "menus": [
+        {
+            "menuId": 1,
+            "restaurantId": null,
+            "userId": 1,
+            "name": "First Menu",
+            "description": "Some Menu",
+            "imageUrl": "",
+            "modifiedTime": 1363873605000,
+            "status": "ACTIVE",
+            "sections": [
+                {
+                    "sectionId": 19,
+                    "userId": null,
+                    "name": "Snacks",
+                    "description": "Spicy",
+                    "header": "Header for Snacks",
+                    "footer": "Footer for Snacks",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                },
+                {
+                    "sectionId": 20,
+                    "userId": null,
+                    "name": "Beverages",
+                    "description": "Drink",
+                    "header": "Header for Drinks",
+                    "footer": "Footer for Drinks",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 1,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Aloo Chaat",
+                            "description": "Fired Potato",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/appetizer-button.jpg",
+                            "price": 20,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        },
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "menuId": 2,
+            "restaurantId": null,
+            "userId": 1,
+            "name": "2nd Menu",
+            "description": "Some Menu",
+            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+            "modifiedTime": 1363873605000,
+            "status": "ACTIVE",
+            "sections": [
+                {
+                    "sectionId": 19,
+                    "userId": null,
+                    "name": "Snacks",
+                    "description": "Spicy",
+                    "header": "",
+                    "footer": "",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                },
+                {
+                    "sectionId": 20,
+                    "userId": null,
+                    "name": "Beverages",
+                    "description": "Drink",
+                    "header": "",
+                    "footer": "",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 1,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Aloo Chaat",
+                            "description": "Fired Potato",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/appetizer-button.jpg",
+                            "price": 20,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        },
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "menuId": 3,
+            "restaurantId": null,
+            "userId": 1,
+            "name": "3rd Menu",
+            "description": "Some Menu",
+            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+            "modifiedTime": 1363873605000,
+            "status": "ACTIVE",
+            "sections": [
+                {
+                    "sectionId": 19,
+                    "userId": null,
+                    "name": "Snacks",
+                    "description": "Spicy",
+                    "header": "",
+                    "footer": "",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                },
+                {
+                    "sectionId": 20,
+                    "userId": null,
+                    "name": "Beverages",
+                    "description": "Drink",
+                    "header": "",
+                    "footer": "",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 1,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Aloo Chaat",
+                            "description": "Fired Potato",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/appetizer-button.jpg",
+                            "price": 20,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        },
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "menuId": 4,
+            "restaurantId": null,
+            "userId": 1,
+            "name": "4th Menu",
+            "description": "Some Menu",
+            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+            "modifiedTime": 1363873605000,
+            "status": "ACTIVE",
+            "sections": [
+                {
+                    "sectionId": 19,
+                    "userId": null,
+                    "name": "Snacks",
+                    "description": "Spicy",
+                    "header": "",
+                    "footer": "",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                },
+                {
+                    "sectionId": 20,
+                    "userId": null,
+                    "name": "Beverages",
+                    "description": "Drink",
+                    "header": "",
+                    "footer": "",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 1,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Aloo Chaat",
+                            "description": "Fired Potato",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/appetizer-button.jpg",
+                            "price": 20,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        },
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "menuId": 5,
+            "restaurantId": null,
+            "userId": 1,
+            "name": "5th Menu",
+            "description": "Some Menu",
+            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+            "modifiedTime": 1363873605000,
+            "status": "ACTIVE",
+            "sections": [
+                {
+                    "sectionId": 19,
+                    "userId": null,
+                    "name": "Snacks",
+                    "description": "Spicy",
+                    "header": "",
+                    "footer": "",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                },
+                {
+                    "sectionId": 20,
+                    "userId": null,
+                    "name": "Beverages",
+                    "description": "Drink",
+                    "header": "",
+                    "footer": "",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 1,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Aloo Chaat",
+                            "description": "Fired Potato",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/appetizer-button.jpg",
+                            "price": 20,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        },
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "menuId": 6,
+            "restaurantId": null,
+            "userId": 1,
+            "name": "6th Menu",
+            "description": "Some Menu",
+            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+            "modifiedTime": 1363873605000,
+            "status": "ACTIVE",
+            "sections": [
+                {
+                    "sectionId": 19,
+                    "userId": null,
+                    "name": "Snacks",
+                    "description": "Spicy",
+                    "header": "",
+                    "footer": "",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                },
+                {
+                    "sectionId": 20,
+                    "userId": null,
+                    "name": "Beverages",
+                    "description": "Drink",
+                    "header": "",
+                    "footer": "",
+                    "price": 10,
+                    "valid": true,
+                    "itemIds": "",
+                    "position": 0,
+                    "items": [
+                        {
+                            "itemId": 1,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Aloo Chaat",
+                            "description": "Fired Potato",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/appetizer-button.jpg",
+                            "price": 20,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        },
+                        {
+                            "itemId": 2,
+                            "restaurantId": null,
+                            "userId": 1,
+                            "name": "Bhel puri",
+                            "description": "Spicy puffed rice",
+                            "shortDescription": "The short description.",
+                            "imageUrl": "/clients/cookedspecially/images/beverage-button.jpg",
+                            "price": 30,
+                            "itemType": "Snacks",
+                            "vegetarian": true,
+                            "alcoholic": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "status": "ACTIVE"
+}

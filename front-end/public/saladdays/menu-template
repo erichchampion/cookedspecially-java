@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:fb="https://ogp.me/ns/fb#">
+<head prefix="og: https://ogp.me/ns# fb: http://ogp.me/ns/fb# business: http://ogp.me/ns/business#">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content=""/>
+  <meta name="author" content="Amit Chowdhary"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+  <meta charset="utf-8"/>
+	<meta id="og_title" property="og:title" content="Salad Days"/>
+	<meta id="og_description" property="og:description" content="Bringing real salads to India"/>
+	<meta name="Description" content="jQuery Timepicker Addon.  Add a timepicker to your jQuery UI Datepicker.  With options to show only time, format time, and much more."/>
+	<meta name="Keywords" content="jQuery, UI, datepicker, timepicker, datetime, time, format"/>
+	<meta id="og_image" property="og:image" content="https://static.squarespace.com/static/52dae045e4b050691872aeee/52dc34fce4b0845775fa4f80/53093ad3e4b0dd985a43dfc4/1393113819369/Veggie.jpg?format=1000w"/>
+	<meta property="fb:app_id"                            content="226697114202871"/>
+	<meta property="og:type"                              content="restaurant.restaurant"/>
+	<meta property="business:contact_data:street_address" content="U 60/37 Dlf city phase 3"/>
+	<meta property="business:contact_data:locality"       content="Gurgaon, Haryana"/>
+	<meta property="business:contact_data:postal_code"    content="122002"/>
+	<meta property="business:contact_data:country_name"   content="India"/>
+	<meta property="place:location:latitude"              content="28.4700"/>
+	<meta property="place:location:longitude"             content="77.0300"/>
+  <title>Menu | Saladdays</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="css/prettyPhoto.css" rel="stylesheet"/>
+  <link href="css/price-range.css" rel="stylesheet"/>
+  <link href="css/animate.css" rel="stylesheet"/>
+	<link href="css/wow.css" rel="stylesheet"/>
+	<link href="css/main.css" rel="stylesheet"/>
+	<link href="css/responsive.css" rel="stylesheet"/>
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+  <link rel="shortcut icon" href="images/ico/favicon.ico"/>
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png"/>
+  <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png"/>
+  <script type="text/javascript">
+    var restaurantInfo;
+    //INSERT RESTAURANT INFO HERE!
+    var sections = restaurantInfo.menus[0].sections;
+  </script>
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		<div class="header_top"><!--header_top-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6 ">
+						<div class="contactinfo">
+							<ul class="nav nav-pills">
+								<li><a href=""><i class="fa fa-phone"></i> +91 9643 800 901/02/03</a></li>
+								<li><a href=""><i class="fa fa-envelope"></i> hello@saladdays.co</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="social-icons pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href=""><i class="fa fa-facebook"></i></a></li>
+								<li><a href=""><i class="fa fa-twitter"></i></a></li>
+								<li><a href=""><i class="fa fa-google-plus"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header_top-->
+
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="logo">
+						<a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="mainmenu pull-left">
+							<ul id="main-menu-list" class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="index.html">Home</a></li>
+								<li class="dropdown"><a href="#" class="active">Our Menu<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="" class="active">Cold Pressed Juices</a></li>
+										<li><a href="">Non Vegetarian</a></li>
+										<li><a href="">Veggies</a></li>
+										<li><a href="">Fruit</a></li>
+										<li><a href="">Legumes</a></li>
+										<li><a href="">Sparkling Beverages</a></li>
+										<li><a href="">Subscription Plans</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="wow.html">Our Wow</a></li>
+                                <li><a href="services.html">Our Services</a></li>
+                                <li><a href="story.html">Our Story</a></li>
+                                <li><a href="contact-us.html">Blog</a></li>
+								<li><a href="contact-us.html">Contact Us</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class = "line"><p></p></div>
+	</header>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar" id="left-sidebar">
+					</div>
+				</div>
+
+				<div class="col-sm-9 padding-right">
+					<div class="features_items">
+						<!-- This is where menu items are inserted -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer id="footer"><!--Footer-->
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2014 Salad Days. All rights reserved.</p>
+				</div>
+			</div>
+		</div>
+
+	</footer><!--/Footer-->
+    <script src="js/jquery.js"></script>
+	<script src="js/price-range.js"></script>
+    <script src="js/jquery.scrollUp.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.prettyPhoto.js"></script>
+    <script src="js/main.js"></script>
+    <script type="text/javascript">
+    var saladDaysRestaurantID = 21;
+    var pannelHTML;
+    function addLeftSideBar() {
+    	var sideBarHTML = '<h2>Categories</h2><div class="panel-group category-products" id="accordian"></div>'
+    	$(".left-sidebar").append(sideBarHTML);
+    }
+	addLeftSideBar();
+	var imageURLPrefix = 'http://www.cookedspecially.com';
+	sections.forEach(function(section) {
+    	var panelListElementsHTML = '';
+    	var sectionName = section.name;
+    	var trimmedSectionName = sectionName.replace(/\s/g,'');
+    	var sectionTitleHTML = '<div class="col-sm-12"><h2 class="title text-center">' + sectionName + '</h2></div>';
+		$(".features_items").append(sectionTitleHTML);
+		var colValue = 3;
+    	section.items.forEach(function(item) {
+    		var itemName = item.name;
+    		var itemID = item.itemId;
+    		var itemPrice = item.price;
+    		var itemImageURL = imageURLPrefix + item.imageUrl;
+    		var innerHTML =
+    		'<div id="div_' + itemID + '" class="item-container col-sm-' + colValue + '">' +
+    			'<a name="' + itemName + '"/>' +
+		    		'<div class="product-image-wrapper">' +
+						'<div class="single-products">' +
+							'<div class="productinfo text-center">' +
+								'<img src="' + itemImageURL + '" alt="" />' +
+								'<h2>₹' + itemPrice + '</h2>' +
+								'<p>' + itemName + '</p>' +
+								'<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"/>Add to cart</a>' +
+							'</div>' +
+						'</div>' +
+					'</div>' +
+			'</div>';
+    		$(".features_items").append(innerHTML);
+    		//CREATE PANEL ELEMENTS LIST
+    		panelListElementsHTML += '<li><a id="link_' + itemID + '" href="#' + itemName + '">'+ itemName +'</a></li>';
+    	});
+    	//CREATE LEFT PANEL
+    	pannelHTML =
+    	'<div class="panel panel-default">' +
+			'<div class="panel-heading">' +
+				'<h4 class="panel-title">' +
+					'<a data-toggle="collapse" data-parent="#accordian" href="#' + trimmedSectionName + '">' +//To Do : Allow Section HREFS
+						'<span class="badge pull-right"><i class="fa fa-plus"></i></span>' +
+						sectionName +
+					'</a>' +
+				'</h4>' +
+			'</div>' +
+			'<div id="' + trimmedSectionName + '" class="panel-collapse collapse">' +
+				'<div class="panel-body">' +
+					'<ul>' + panelListElementsHTML + '</ul>' +
+				'</div>' +
+			'</div>';
+		console.log(pannelHTML);
+		$("#accordian").append(pannelHTML);
+    });
+    </script>
+</body>
+</html>

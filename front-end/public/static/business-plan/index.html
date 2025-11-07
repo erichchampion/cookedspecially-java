@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+
+    <title>CookedSpecially - Business Plan</title>
+
+    <meta name="author" content="cookedspecially.com">
+    <meta name="description" content="CookedSpecially API Script Library">
+
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <script type="text/javascript" charset="utf-8" src="http://www.bakedspecially.com:8080/static/assets/v1.8.5/js/jquery-1.9.1.js">
+    
+      
+    </script>
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+<body>
+<style>
+
+</style>
+
+<div id="pageContainer">
+
+<header onclick="location.href='../_index.html'">
+    <div id="logo"> </div>
+    <h1>Cooked<span style="color:#090">Specially</span></h1>
+</header>
+
+<section>
+
+
+<h1>Business Plan</h1>
+
+<pre>----------------------------------    
+1.  DESCRIPTION
+
+    A client/server framework that provides a tablet based menu browsing and ordering system for restaurants.
+    The framework includes a tablet (client) application for iOS and Android and the back end infrastructure.
+    
+    *** MORE INFO NEDDED HERE ***
+
+    
+----------------------------------    
+2.  CLIENT APPLICATION DESCRIPTION
+
+    This section describes the client funcionality, workflow, and user experience for both the customer 
+    and the restaurant's staff
+
+2.1 Application startup (STAFF)
+    
+    When the application launches it makes a call to the server to get the active restaurant's menus.
+    NOTE: For now, we have hard-coded Axis restaurant ID, but in the future we should ask for the 
+    restaurant's code and password in order to get the menus for any particular restaurant. 
+
+    The application should check the server periodically (TBD) to check for menu updates and changes.
+    
+    Once the application gets the menu information it displays the Welcome screen. At this point the 
+    manus can be browsed, but no orders can be created until a tableId/tabId has been selected by a     
+    member of restaurant's staff (hosts, waiter, manager)
+
+    Proposed API: getRestaurantMenus()
+    
+    Open to discussion:
+     - (?)
+    
+2.2 Table setup (STAFF)
+        
+    Each tablet device can handle orders for mutiple tables concurrently. The active tableId is set from
+    the application's "Control Panel". The "Control Panel" can be accessed only from the application's
+    Welcome screen by clicking of the gear icon on the top right corner. 
+    
+    After entering a valid access code, the "Control Panel" becomes visible and the active table can 
+    be set or changed by:
+     - Touching the active table name, or "Select..." when there are no active tables.
+     - A list of the restaurant's tables, table capacity and status will be displayed. 
+     - Select the desired table from the list
+    
+    When a table is set, the application makes a call to the server to get the table's current status.
+    The server should return a blank tabId/checkId if the table has no active tabs/check of the tabId 
+    with all the existing orders ad their status.
+    
+    The application uses the order information to display back to the customer the items that have 
+    already been placed, their current status, and the current total amount.
+    
+    Proposed API: getTableTab() or getTableCheck() or getTableStatus()
+    
+    Open to discussion: 
+     - status values: new, pending, in progress 
+     - terminology: tabId vs. checkId vs. nothing
+     - (?)
+
+2.3 Add Items to Order (CUSTOMER)    
+    
+    Terminology
+    Active Order:  Items that have been submitted to the server (cannot be changed by the customer)
+    Pending Order: Items added to the application's local order and have not been submiter to the server.
+                   
+    The customer can add or remove items to the "pending order" until it is submitted (placed). After the
+    "Pending Order: is submited, all the items will be moved to the "Active Order" 
+    
+    
+2.4 View Tab/Check (CUSTOMER) 
+
+    At any the customer can wiew the table's "Active Order" items and total amount. This is the equivalent 
+    to asking for the check.
+	
+    Open to discussion: 
+     - terminology: Tab vs. Check
+
+     
+----------------------------------    
+4.  HANDLING ORDERS TO BAR/KITCHEN
+
+    TBD (Erich / Akshay)
+
+    
+----------------------------------    
+5.  HANDING PAYMENTS
+    
+    TBD (Erich / Akshay)
+
+    
+----------------------------------    
+6.  REPORTING    
+
+    Background:	At any time during the day and at the end of each shift, the waiters and the restaurant 
+    managers must have access to the total amounts of tables and amounts to submit their money.
+
+    *** MORE INFO NEDDED HERE ***
+
+
+</pre>
+
+    
+</section>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<script>
+$(document).ready(function() {
+    $('.showExample').each(function(){
+        $(this).click(function() {
+              $(this).next().toggle("slow");
+              if ( $(this).text() == "Show Example"){
+                  $(this).text("Hide Example");              
+              }else{
+                  $(this).text("Show Example");              
+              }
+        });
+    });    
+});
+
+
+  
+  
+</script>
+
+
+</body>
+</html>

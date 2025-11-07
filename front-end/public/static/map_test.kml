@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <Style id="transBluePoly">
+      <LineStyle>
+        <width>1.5</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>7dff0000</color>
+      </PolyStyle>
+    </Style>
+    <Placemark>
+      <name>SALAD DAYS</name>
+      <description>
+        <![CDATA[
+          <h1>SALAD DAYS</h1>
+          <p>TREAT YOURSELF</p>
+          <p>1816 Sector 17A<br />
+          Gurgaon, Harayana, 122001</p>
+          <p> Phone: 1-SALAD-DAYS</p> 
+        ]]>
+      </description>      
+      <styleUrl>#transBluePoly</styleUrl>
+      <Polygon>
+        <extrude>1</extrude>
+        <altitudeMode>relativeToGround</altitudeMode>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+            	77.088942,28.498302
+				77.081249,28.490608
+				77.069769,28.477990 
+				77.071690,28.478009 
+				77.073618,28.464744 
+				77.083017,28.465348
+				77.094732,28.466215
+				77.095390,28.463315 
+				77.104571,28.464225
+				77.108025,28.467970 
+				77.109211,28.471214
+				77.110541,28.481626
+				77.107645,28.483003
+				77.105853,28.485832
+				77.108256,28.487171
+				77.107886,28.492470
+				77.103594,28.495223
+				77.092522,28.502050
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+  </Document>
+</kml>

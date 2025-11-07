@@ -1,0 +1,39 @@
+p, li {
+	font-size:14px;
+	font-weight:normal;
+	padding: 0px 15px 0px 15px;
+}
+.col-md-4 p, .col-md-4 li, .col-md-6 p, .col-md-6 li, .col-md-12 p, .col-md-12 li {
+	text-align:left;
+}
+
+section.home-section {
+	background: url(../images/bk-home-section.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+section.product-section {
+	background: url(../images/bk-product-section.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+/*
+section.clients-section {
+	background: url(../images/bk-clients-section.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+*/
+section.about-section {
+	background: url(../images/bk-about-section.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}

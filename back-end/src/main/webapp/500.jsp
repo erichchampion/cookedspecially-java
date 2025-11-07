@@ -1,0 +1,1 @@
+We're sorry, but you're having problems with your network and your order cannot sent. Please try again"

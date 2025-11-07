@@ -1,0 +1,27 @@
+{
+    "menuId": 2,
+    "restaurantId": null,
+    "userId": 1,
+    "name": "snack menu",
+    "description": "menu for snacks",
+    "categories": [
+        {
+            "categoryId": 3,
+            "userId": 1,
+            "name": "Snacks",
+            "description": "morning snack",
+            "dishes": [
+                {
+                    "dishId": 2,
+                    "restaurantId": null,
+                    "userId": 1,
+                    "name": "Aaloo Chaat",
+                    "description": "spicy potato",
+                    "shortDescription": null,
+                    "imageUrl": "/static/1/null_aloo-chaat.jpg",
+                    "price": 20
+                }
+            ]
+        }
+    ]
+}

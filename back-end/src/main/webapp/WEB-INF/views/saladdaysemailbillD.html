@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Template for HTML email with inline image</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+<body>
+
+<h1 align="center">SALAD DAYS</h1>
+<h5 align="center">Amicus Natural Products Pvt. Ltd.</h5>
+<div align="center"><a href="http://www.saladdays.co" align="center">www.saladdays.co</a></div>
+<div align="center"><a href="http://www.facebook.com/Saladdays.co" align="center">www.facebook.com/Saladdays.co</a></div>
+<div align="center">9643 800 901/02/03</div>
+<div align="center" th:text="${checkDate}"></div><br/>
+<div th:if="${#bools.isTrue(customer)}">
+<p>Name: <span th:text="${customer.firstName}"></span> <span th:text="${customer.lastName}"></span> </p>
+<div th:switch="${not #strings.isEmpty(checkRespone.deliverAddress)}"> 
+  <p th:case="${false}">Address: <span th:text="${customer.address}"></span></p>
+  <p th:case="${true}">Address: <span th:text="${checkRespone.deliverAddress}"></span></p> 
+</div>
+<div th:switch="${not #strings.isEmpty(checkRespone.deliveryArea)}"> 
+  <p th:case="${true}">Delivery Area: <span th:text="${checkRespone.deliveryArea}"></span></p> 
+</div>
+<p>Email Id: <span th:text="${customer.email}"></span></p>
+<p>Phone No.: <span th:text="${customer.phone}"></span></p>
+<p>Delivery Time: <span th:text="${checkRespone.deliveryDateTime}"></span></p> 
+<p>Payment Status: <span th:text="${checkRespone.status}"></span></p>
+<p>Payment Mode: <span th:text="${checkRespone.paymentMode}"></span></p>
+</div>
+<table align="center" width="100%">
+<tr>
+<th width="33%">Item</th>
+<th width="33%">Quantity</th>
+<th width="33%">Amount</th>
+</tr>
+<!-- <div th:if="${not #maps.isEmpty(itemsMap)}">
+<div th:each="item : ${itemsMap}">
+	<tr>
+		<td width="33%" align="center" th:text="${item.value.name}"></td>
+		<td width="33%" align="center"> <p><span>X </span><span th:text="${item.value.quantity}"></span></p></td>
+		<td width="33%" align="center" th:text="${item.value.price}"></td>
+	</tr>
+</div>
+</div> -->
+<div th:if="${not #maps.isEmpty(itemsMap)}">
+<div th:each="item : ${itemsMap}">
+	<tr>
+		<td width="33%" align="center" th:text="${item.value.name}"></td>
+		<td width="33%" align="center"> <p><span>X </span><span th:text="${item.value.quantity}"></span></p></td>
+		<td width="33%" align="center" th:text="${item.value.price}"></td>
+	</tr>
+	 <div th:each="itemAdd : ${item.value.addOns}" >
+	<div  th:if="${itemAdd.dishId} == ${item.value.id}" >
+	<tr>
+	<td width="34%" th:text="${itemAdd.name}"></td>
+		<td width="33%" align="center"> <p><span>X </span><span th:text="${item.value.quantity}"></span></p></td>
+		<td width="33%" align="center" th:text="${itemAdd.price * item.value.quantity}"></td>
+	</tr>
+	</div>
+	</div>
+</div>
+</div>
+</table>
+<hr/>
+<div style="float:left">Sub Total</div>  <div style="float:right" th:text="${checkRespone.amount}"></div><br/>
+<div th:if="${checkRespone.discountAmount} &gt; 0">
+<div style="float:left">Discount</div>  <div style="float:right" th:text="${checkRespone.discountAmount}"></div><br/>
+
+<div style="float:left">Total After Discount</div>  <div style="float:right" th:text="${checkRespone.amountAfterDiscount}"></div><br/>
+</div>
+<div th:each="item : ${checkRespone.taxDetails}">
+<div th:if="${item.key != null}">
+<div style="float:left" th:text="${item.key}"></div> 
+<div style="float:right"><span th:text="${#numbers.formatDecimal(item.value,1,2)}"></span></div>
+</div><br/>
+</div><br />
+<!-- <div th:if="${not #strings.isEmpty(checkRespone.additionalChargeName3)}"> -->
+<div th:if="${checkRespone.outCircleDeliveryCharges} &gt; 0"> 
+<div style="float:left">Delivery Charges</div><div style="float:right" th:text="${checkRespone.outCircleDeliveryCharges}"></div><br/>
+</div>
+<!-- </div> -->
+<br />
+<div style="float:left">Grand Total</div> 
+<div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.total, 0, 2)}">
+</div><br/>
+<div style="float:left">Rounded-off Total</div> <div style="float:right" th:text="${checkRespone.roundedOffTotal}"></div><br/>
+<hr/>
+
+<div align="center">TIN No.: 06551835911</div>
+<div align="center"><span>Invoice No.: </span><span th:text="${checkRespone.invoiceId}"></span></div>
+<br/>
+<br/>
+<div align="center">You're Awesome!</div>
+<div align="center">-------</div>
+
+</body>
+</html>

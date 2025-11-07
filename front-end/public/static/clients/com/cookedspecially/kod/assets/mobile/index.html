@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>CookedSpecially</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css' />
+	
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0-rc.1/jquery.mobile-1.4.0-rc.1.min.css">
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js">
+	</script>
+	<!-- script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script -->
+	<!-- script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script -->
+	<script src="http://code.jquery.com/mobile/1.4.0-rc.1/jquery.mobile-1.4.0-rc.1.min.js">
+	</script>
+
+	<!-- BEGIN: HTML5 AppCache Code -->
+	<script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/html5.js">
+	</script>
+	<!-- END: HTML5 AppCache Code -->
+
+	<style>
+	.achtung {
+		border-color:red !important;
+	}
+	.itemContent .title, .itemContent .description, .itemContent .price {
+		white-space:normal;
+		text-overflow:ellipsis;
+	}
+	.breadcrumb {
+		font-size:xx-small;
+		font-style:plain;
+		font-weight:lighter;
+		opacity: 0.7;
+	}
+	.smaller, .itemContent .description, .itemContent .price {
+		font-size:smaller;
+		font-style:plain;
+		font-weight:normal;
+	}
+	.itemContent.title, .itemContent .description {
+		padding-right:10px;
+	}
+	
+	.ui-collapsible-heading, .ui-collapsible-content {
+		opacity: 0.7;
+	}
+	.itemContent .title .icon-info, .itemContent .price {
+		float: right;
+		padding-right: 10px;
+	}	
+	.itemDetailContent {
+		width: 200px;
+	}
+	.itemDetailPrice {
+		font-size: 22px;
+		font-weight: 200;
+		text-align: right;
+		margin-top: 10px;
+	}	
+	
+	.ui-listview .ui-li-has-thumb>img:first-child, .ui-listview .ui-li-has-thumb>.ui-btn>img:first-child, .ui-listview .ui-li-has-thumb .ui-li-thumb {
+		max-height: inherit;
+		-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+	}
+	
+	#check-content {
+		font-family: courier;
+		font-size: smaller;
+	}
+	#email-check {
+		background: url("shared/css/images/at.png") no-repeat scroll center 0 rgba(0, 0, 0, 0);
+		height: auto;
+		padding: 25px;
+		text-align: center;
+		z-index: 100;
+	}
+
+	#email-check a {
+		text-decoration: none;
+	}
+
+	@media only screen 
+	and (max-device-width : 568px) 
+	and (orientation : portrait) { 
+		.ui-content {
+			padding-left: 0.25em;
+			padding-right: 0.25em;
+		}
+	}
+	</style>
+</head>
+<body>
+<!-- http://stackoverflow.com/questions/13986182/how-can-i-improve-the-page-transitions-for-my-jquery-mobile-app/13986390#13986390 -->
+<div id="allPages" style="visibility:hidden;">
+	<div data-role="page" id="restaurants">
+		<div data-role="header" data-id="globalHeader" data-position="fixed">
+			<!-- h1><a data-role="button" href="http://www.cookedspecially.com" target="CookedSpecially">CookedSpecially</a></h1 -->
+			<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<a href="#restaurants" data-role="button" data-inline="true" data-icon="home" class="ui-disabled">Restaurants</a>
+				<a id="menu-button" href="#" data-role="button" data-inline="true" data-icon="info" data-rel="popup" class="ui-disabled">Menus</a>
+				<a id="order-button" href="#order" data-role="button" data-inline="true" data-icon="info" class="ui-disabled">My Order</a>
+			</div>
+		</div>
+		<div id="restaurants-content" data-role="content">
+			<!--h3>
+				Our Family of Restaurants
+			</h3-->
+		</div>
+		<div data-role="footer" data-id="globalFooter" data-position="fixed">
+			<p>&nbsp;</p>
+		</div>
+	</div>
+	
+	<div data-role="page" id="order">
+		<div data-role="header" data-id="globalHeader" data-position="fixed">
+			<!-- h1><a data-role="button" href="http://www.cookedspecially.com" target="CookedSpecially">CookedSpecially</a></h1 -->
+			<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<a href="#restaurants" data-role="button" data-inline="true" data-icon="home">Restaurants</a>
+				<a href="#" data-role="button" data-inline="true" data-icon="info" data-rel="popup" class="ui-disabled">Menus</a>
+				<a href="#" data-role="button" data-inline="true" data-icon="info" class="ui-disabled">My Order</a>
+			</div>
+		</div>
+		<div id="order-content" data-role="content">
+		</div>
+		<div data-role="footer" data-id="globalFooter" data-position="fixed">
+			<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<a href="#popupContact" data-role="button" data-inline="true" data-icon="forward" data-rel="popup" data-position-to="window">Place Your Order</a>
+				<a href="#" onclick="goBack();" data-role="button" data-inline="true" data-icon="back" data-rel="back">Go Back</a>
+			</div>
+		</div>
+		<div data-role="popup" id="popupContact" data-theme="a" class="ui-corner-all" data-dismissible="false">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
+			<form onsubmit="return false;">
+				<div style="padding:10px 20px;">
+					<h3>Please let us know how to contact you.</h3>
+					<label for="customerId" class="ui-hidden-accessible">Email Address or Phone Number</label>
+					<input type="text" name="customerId" id="customerId" value="" placeholder="Email Address or Phone Number" data-theme="a"/>
+					<!--
+					label for="pw" class="ui-hidden-accessible">Password</label>
+					<input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a"/>
+					-->
+					<button type="submit" onclick="validateContactInfo();" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Continue</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div data-role="page" id="check">
+		<div data-role="header" data-id="globalHeader" data-position="fixed">
+			<!-- h1><a data-role="button" href="http://www.cookedspecially.com" target="CookedSpecially">CookedSpecially</a></h1 -->
+			<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<a href="#restaurants" data-role="button" data-inline="true" data-icon="home" class="ui-disabled">Restaurants</a>
+				<a href="#" data-role="button" data-inline="true" data-icon="info" data-rel="popup" class="ui-disabled">Menus</a>
+				<a href="#" data-role="button" data-inline="true" data-icon="info" class="ui-disabled">My Order</a>
+			</div>
+		</div>
+		<div id="check-content" data-role="content">
+		</div>
+		<div id="email-check" data-role="content">
+			<a href="#popupEmail" data-rel="popup" onclick="">Email Check</a>
+		</div>
+		<div data-role="footer" data-id="globalFooter" data-position="fixed">
+			<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<a href="#restaurants" data-role="button" data-inline="true" data-icon="home">Done</a>
+			</div>
+		</div>
+		<div data-role="popup" id="popupEmail" data-theme="a" class="ui-corner-all" data-dismissible="false">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
+			<form onsubmit="return false;">
+				<div style="padding:10px 20px;">
+					<h3>Please let us know your email address.</h3>
+					<label for="customerId" class="ui-hidden-accessible">Email Address</label>
+					<input type="text" name="customerId" id="customerId" value="" placeholder="Email Address" data-theme="a"/>
+					<!--
+					label for="pw" class="ui-hidden-accessible">Password</label>
+					<input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a"/>
+					-->
+					<button type="submit" onclick="validateEmailForCheck();" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Continue</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- End allPages -->
+<script type="text/javascript" charset="utf-8">
+
+
+
+/**********
+ * CONSTANTS
+ */
+var appVersion = '1.9.6';
+var appLatestVersion = '1.9.6';
+
+var restaurantId = "1"; //Axis
+/**********
+ * CONSTANTS
+ */
+var comCookedSpeciallyImagePattern = /\/static\/\d+\//;
+var comCookedSpeciallyImagePrefix = "";
+var comCookedSpeciallyApiPrefix = "/CookedSpecially";
+
+var mediaWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+var isPhone = (window.matchMedia('(max-device-width: 568px)').matches);
+
+// temporary hack
+var serverName = location.hostname + ":" + location.port;
+
+var db;
+var strConnectionAlert = "You appear to be online, but we have a connection problem. Please click Ok to try to download today's menu again.";
+var strOfflineAlert = "You appear to be offline. Please go online and click Ok to download today's menu.";
+
+var changeCount = 0;
+var menuCount = 0;
+
+/* *********
+ * GLOBALS
+ */
+var customerId = "";
+var restaurants = {0:20};
+var restaurantDataString = "";
+var restaurantData = [];
+var globalDataString = "";
+var globalData = [];
+var startTime;
+var endTime;
+var loadingTime;
+// Preloading images -- http://engineeredweb.com/blog/09/12/preloading-images-jquery-and-javascript/
+var preloadCache = [];
+var currency = '&#x20B9;'; // Indian rupee (&#x20B9;)
+var orderItemCount = 0;
+var orderItemCountArray = [];
+var myHistory = [];
+var checks = {1:null, 8:null};
+
+// APIs
+var _getTables  = '/CookedSpecially/seatingTable/getRestaurantTables.json?', 
+    _setTable   = '/CookedSpecially/seatingTable/setStatus?', 
+    _custInfo   = '/CookedSpecially/customer/getCustomerInfo.json?', 
+    _getCheck   = '/CookedSpecially/order/getCheckWithOrders.json?', 
+    _addToCheck = '/CookedSpecially/order/addToCheck.json?', 
+    _emailCheck = '/CookedSpecially/order/emailCheck?';	
+
+/* **********
+ * 1. BEGIN initHomePage
+ * Iterates through all menus in data file and add menus to the home page
+   Function Calls 
+    - addMenuToHomePage() for each menu
+    - updateAllMenus()
+ */
+function initHomePage(restaurantId, restaurantName) {
+        //console.log("DEBUG > BEGIN initHomePage");    
+        //console.log("DEBUG > About to iterate through globalData");
+        var menuIndex = 0;
+
+        if (globalData[restaurantId] != null && typeof(globalData[restaurantId].menus != "undefined") && globalData[restaurantId].menus != null) {
+                
+                var theRestaurant = $("div#restaurants div div#restaurant" + restaurantId);
+                var theRestaurantOrder = $("div#order div div#restaurant" + restaurantId);
+                var theMenuUl = $("div#restaurants div div#restaurant" + restaurantId + " ul");
+                var theMenuOrderUl = $("div#order div div#restaurant" + restaurantId + " ul");
+
+				if (theMenuUl.hasClass('ui-listview')) {
+					theMenuUl.listview('refresh');
+					console.log("Refreshing list.");
+				} else {
+					theMenuUl.listview();
+					console.log("Creating list.");
+				}
+
+				// iterate through data file and create menus in homepage
+                $.each(globalData[restaurantId].menus, function() {
+                        if (typeof(globalData[restaurantId].menus[menuIndex].menuId) != "undefined" && globalData[restaurantId].menus[menuIndex].menuId != null) {
+                                addMenuToHomePage(restaurantId, menuIndex);
+                                updateMenuPage(restaurantId, restaurantName, menuIndex);
+                                menuIndex++;
+                        }
+                });
+                
+				if (theMenuUl.hasClass('ui-listview')) {
+					console.log("Refreshing list.");
+					theMenuUl.listview('refresh');
+				} else {
+					console.log("Creating list.");
+					theMenuUl.listview();
+				}
+				
+				if (theRestaurant.hasClass('ui-collapsible')) {
+					console.log("Refreshing collapsible.");
+					//theMenuUl.parent().collapsible('refresh');
+				} else {
+					console.log("Creating collapsible.");
+					theRestaurant.collapsible();
+					// worked in jqm 1.3.2, not in 1.4
+					//theRestaurant.trigger('expand');
+				}
+				
+				// iterate through each menu
+				menuIndex = 0;
+                $.each(globalData[restaurantId].menus, function() {
+                        // create each menu page
+                        addMenuLinksToControlGroup(restaurantId, menuIndex);
+                        menuIndex++;
+                });
+
+                console.log("menuCount: " + menuIndex);
+                
+                $(theRestaurant).show();
+
+                $("#restaurants").page();
+                
+                $(window).on('hashchange', function() {myHistory.push(document.location.hash)});
+
+                $.mobile.loading( "hide" );
+                
+        }
+        else {
+                //console.log("DEBUG > globalData invalid");
+        }
+        //console.log("DEBUG > END initHomePage");      
+}
+/* 
+ * END initHomePage
+ **********/
+
+ 
+ 
+
+/* 
+ *******************************************************
+                     UI FUNCTIONS
+ ******************************************************* 
+ */
+ 
+/* **********
+ * 2. BEGIN addMenuToHomePage
+ * Creates the home page with all the menus
+    Parameters: 
+    m - menu index 
+ */
+function addMenuToHomePage(restaurantId, m) {
+        //console.info("DEBUG > BEGIN addMenuToHomePage: " + globalData[restaurantId].menus[m].name); 
+
+    var menuId = globalData[restaurantId].menus[m].menuId;
+    var name = globalData[restaurantId].menus[m].name;
+    var imageUrl = globalData[restaurantId].menus[m].imageUrl;
+        
+        var theMenuLi =	'<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-first-child ui-btn-up-c">' +
+						'	<div class="ui-btn-inner ui-li">' + 
+						'		<div class="ui-btn-text">' + 
+						'			<a href="#menu' + menuId + '" class="ui-link-inherit">' + name + '</a>' + 
+						'		</div>' + 
+						'		<span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span>' + 
+						'	</div>' + 
+						'</li>'; 
+		var theMenuLiHtml = '<li id="menu' + menuId + '"><a href="#menu' + menuId + '">' + name + '</a></li>';
+		$(theMenuLiHtml).appendTo("div#restaurants div div#restaurant" + restaurantId + " ul");
+		var theMenuLi = $("div#restaurants div div#restaurant" + restaurantId + " ul li#menu" + menuId);
+
+		/*
+		if (imageUrl.length != 0) {
+				var menuSelector = "a#menu" + menuId;
+				var imageUrl = "url(" + comCookedSpeciallyImagePrefix + imageUrl + ")";
+				$(menuSelector).css({"background-image": imageUrl, "background-size": "cover"});
+		}
+        */
+        
+        //console.log("DEBUG > END addMenuToHomePage"); 
+}
+/* 
+ * END addMenuToHomePage
+ **********/
+ 
+ 
+/* **********
+ * 3. BEGIN updateMenuPage
+ * Create each menu page
+    Parameters: 
+    m - menu index 
+ */
+ function updateMenuPage(restaurantId, restaurantName, m) {
+        //console.info("DEBUG > BEGIN updateMenuPage: " + m);   
+
+        if (typeof(globalData[restaurantId].menus[m].menuId) != "undefined" && globalData[restaurantId].menus[m].menuId != null) {
+                var menuId = "menu" + globalData[restaurantId].menus[m].menuId;
+                var smallImageUrl = "";
+                if (typeof(globalData[restaurantId].menus[m].smallImageUrl) != "undefined" && globalData[restaurantId].menus[m].smallImageUrl != null) {
+                        smallImageUrl = globalData[restaurantId].menus[m].smallImageUrl;
+                }               
+                var modifiedTime = new Date(globalData[restaurantId].menus[m].modifiedTime);
+                var sectionId = "";
+                
+                // Create menu page container
+                addMenuPage(restaurantId, restaurantName, m);
+
+                // iterate through each section
+                var s = 0;
+                $.each(globalData[restaurantId].menus[m].sections, function() {
+                        if (typeof(sectionId) != "undefined" && sectionId != null && sectionId.length == 0) {
+                                sectionId = "section" + this.sectionId;
+                        }
+                        // Create section container
+                        addSectionToMenuPage(restaurantId, restaurantName, m, s);
+                        s++;
+                });
+                
+                $("#menu" + menuId + "-sections").collapsible();
+                $("#menu" + menuId + "-sections").trigger('expand');
+        
+        }else {
+                console.log("updateMenuPage: menuId undefined");
+        }
+        //console.log("DEBUG > END updateMenuPage");    
+}
+
+/* **********
+ * 4 BEGIN addMenuLinksToControlGroup
+ * Create each menu page
+    Parameters: 
+    m - menu index 
+ */
+ function addMenuLinksToControlGroup(restaurantId, m) {
+        //console.info("DEBUG > BEGIN addMenuLinksToControlGroup: " + m);   
+
+        if (typeof(globalData[restaurantId].menus[m].menuId) != "undefined" && globalData[restaurantId].menus[m].menuId != null) {
+                var menuId = "menu" + globalData[restaurantId].menus[m].menuId;
+				var menuName = globalData[restaurantId].menus[m].name;
+
+				var theMenuItems = $("div#restaurants div#restaurant" + restaurantId + " ul").html();
+				$(theMenuItems).appendTo('div#' + menuId + ' ul#' + menuId + '-menu-nav-list');
+                $('div#' + menuId + ' ul#' + menuId + '-menu-nav-list li#' + menuId + ' a').addClass("ui-disabled");
+
+        }else {
+                console.log("updateMenuPage: menuId undefined");
+        }
+        //console.log("DEBUG > END updateMenuPage");    
+}
+
+/* 
+ * END addMenuLinksToControlGroup
+ **********/
+ 
+ 
+
+
+/* **********
+ * BEGIN addMenuPage
+ * Creates page container for each menu
+   Parameters: 
+    i - menu index 
+ */
+//function addMenuPage(menuId, name, description) {
+function addMenuPage(restaurantId, restaurantName, m) {
+        //console.info("DEBUG > BEGIN addMenuPage: " + m );
+        var menuId = globalData[restaurantId].menus[m].menuId;
+		var menuName = globalData[restaurantId].menus[m].name;
+		var menuDescription = globalData[restaurantId].menus[m].description;
+        var thePage = '' + 
+'	<div data-role="page" id="menu' + menuId + '">' + 
+'		<div data-role="header" data-id="globalHeader" data-position="fixed">' + 
+'			<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">' + 
+'				<a href="#restaurants" data-role="button" data-inline="true" data-icon="home">Restaurants</a>' + 
+'				<a id="menu-button" href="#menu' + menuId + '-menu-nav" data-role="button" data-inline="true" data-icon="info" data-rel="popup">Menus</a>' + 
+'				<a id="order-button" href="#order" data-role="button" data-inline="true" data-icon="info" class="ui-disabled">My Order</a>' + 
+'			</div>' + 
+'		</div>' + 
+'		<div id="menu-content" data-role="content">' + 
+'			<div id="menu' + menuId + '-sections">' + 
+'			</div>' + 
+'		</div>' + 
+'		<div data-role="footer" data-id="globalFooter" data-position="fixed">' + 
+'			<p>&nbsp;</p>' + 
+'		</div>' + 
+'		<div data-role="popup" id="menu' + menuId + '-menu-nav" data-overlay-theme="a">' + 
+'			<div data-role="content">' + 
+'				<ul id="menu' + menuId + '-menu-nav-list" data-role="listview">' + 
+'				</ul>' + 
+'			</div>' + 
+'		</div>' + 
+'	</div>';
+
+        if ($("div#menu" + menuId).length == 0) {
+                $(thePage).appendTo($.mobile.pageContainer);
+        }else {
+                //console.log("DEBUG > Skipping menu page " + globalData[restaurantId].menus[m].name + "because it has already been added");
+        }
+
+        //console.log("DEBUG > END addMenuPage");       
+}
+/* 
+ * END addMenuPage
+ **********/
+ 
+ 
+ 
+  
+ /* **********
+ * BEGIN addSectionToMenuPage
+ * Creates sections and filter links for each menu page
+   Parameters: 
+    m - menu index 
+    s - section index
+ */ 
+function addSectionToMenuPage(restaurantId, restaurantName, m, s) {
+        //console.info("DEBUG > addSectionToMenuPage() >  Menu: " + m + " Section: " + s);      
+        
+        if (typeof(globalData[restaurantId].menus[m].sections[s].sectionId) != "undefined" && globalData[restaurantId].menus[m].sections[s].sectionId != null) {
+                var name = globalData[restaurantId].menus[m].sections[s].name;
+                var menuId = globalData[restaurantId].menus[m].menuId;
+				var menuName = globalData[restaurantId].menus[m].name;
+                var sectionId = globalData[restaurantId].menus[m].sections[s].sectionId;
+                
+                var theHtml = '' + 
+'				<h3 id="section' + sectionId + '">' + 
+'					<span class="breadcrumb">' + restaurantName + ' / ' + menuName + ' / </span><br/>' + name + '' + 
+'				</h3>' + 
+'				<ul id="section' + sectionId + '" data-role="listview" data-inset="true" data-filter="false">' + 
+'				</ul>' + 
+'				<br>';
+				
+				$(theHtml).appendTo("#menu" +  menuId + "-sections");
+				
+				var theSectionUl = $("ul#section" + sectionId);
+
+                // iterate through each item
+                var itemIndex = 0;
+                $.each(globalData[restaurantId].menus[m].sections[s].items, function() {
+                        addItemToMenuPage(restaurantId, m,s,itemIndex);
+                        addItemDetailPage(restaurantId, m,s,itemIndex);
+                        itemIndex++;
+                });
+                
+        }       
+        //console.log("DEBUG > END addSectionToMenuPage");      
+}
+/* 
+ * END addSectionToMenuPage
+ **********/
+ 
+ 
+
+ 
+ 
+
+
+/* **********
+ * BEGIN addItemToMenuPage
+ * Populates menu page containers
+    Parameters: 
+    m - menu index 
+    s - section index
+    i - item index
+ */
+function addItemToMenuPage(restaurantId, m,s,i) {
+        //console.info ("DEBUG > BEGIN addItemToMenuPage" );    
+
+        var menuId = "menu" + globalData[restaurantId].menus[m].menuId;
+        var sectionId = "section" + globalData[restaurantId].menus[m].sections[s].sectionId;
+        var item = globalData[restaurantId].menus[m].sections[s].items[i];
+        
+        
+        if (typeof(item.itemId) != "undefined" && item.itemId != null) {
+                var itemId = "item" + item.itemId;
+                var name = item.name;
+                var description = item.description;
+                var shortDescription = item.shortDescription;
+                var price = item.price;
+                var itemType = item.itemType;
+                var vegetarian = item.vegetarian ? '<div class="vegetarian"></div>' : '';
+                var alcoholic = item.alcoholic;
+                var imageUrl = "";
+                var smallImageUrl = "";
+                
+                
+                // cache images
+                /*
+                 * This design doesn't use the full-size images
+                 *
+                if (typeof(item.imageUrl) != "undefined") {
+                    imageUrl = item.imageUrl;
+                }
+                else {
+                	imageUrl = "/static/assets/shared/images/defaultDetail50Percent.png"
+                }
+				var fullImageUrl = comCookedSpeciallyImagePrefix + imageUrl;
+				var cacheImage = document.createElement('img');
+				cacheImage.src = fullImageUrl;
+				preloadCache.push(cacheImage);
+				*/
+                if (typeof(item.smallImageUrl) != "undefined" && item.smallImageUrl != null) {
+					smallImageUrl = item.smallImageUrl;
+                }
+                else {
+                	smallImageUrl = "/static/assets/shared/images/defaultDetail50Percent200x200.png"
+                }
+				var fullsmallImageUrl = comCookedSpeciallyImagePrefix + smallImageUrl;
+				var cacheImage = document.createElement('img');
+				cacheImage.src = fullsmallImageUrl;
+				preloadCache.push(cacheImage);
+				var popup = 'data-rel="popup" data-position-to="window"';
+				if (isPhone) {
+					popup = '';
+				}
+                var theItem = '' + 
+'					<li id="' + itemId + '">' + 
+'					<a href="#' + itemId + 'detail" data-icon="info" ' + popup + '>' + 
+'					<img src="' + smallImageUrl + '">' + 
+'					<div class="itemContent">' +
+'					    <div class="title">' + vegetarian + name + ' <img class="icon-info" src="data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22iso-8859-1%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2214px%22%20height%3D%2214px%22%20viewBox%3D%220%200%2014%2014%22%20style%3D%22enable-background%3Anew%200%200%2014%2014%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpath%20d%3D%22M7%2C0C3.134%2C0%2C0%2C3.134%2C0%2C7s3.134%2C7%2C7%2C7s7-3.134%2C7-7S10.866%2C0%2C7%2C0z%20M7%2C2c0.552%2C0%2C1%2C0.447%2C1%2C1S7.552%2C4%2C7%2C4S6%2C3.553%2C6%2C3%20S6.448%2C2%2C7%2C2z%20M9%2C11H5v-1h1V6H5V5h3v5h1V11z%22%2F%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3Cg%3E%3C%2Fg%3E%3C%2Fsvg%3E"/></div>' +
+'					    <div class="description">' + shortDescription + '</div>' +
+'					    <div class="price">' + currency + price + '</div>' + 
+'					    <!-- span class="ui-li-count">' + currency + price + '</span -->' + 
+'					</div>' +
+'					</a>' + 
+'					<a href="#" onclick="addItemToOrder(' + restaurantId + ',' + m + ',' + s + ',' + i + ');" data-icon="plus">Add to my Order</a>' + 
+'					</li>';
+
+				var theSectionUl = $("ul#" + sectionId);
+                $(theItem).appendTo(theSectionUl);
+
+        }
+        //console.log("DEBUG > END addItemToMenuPage"); 
+}
+/* 
+ * END addItemToMenuPage
+ **********/
+
+
+ 
+/* **********
+ * BEGIN addItemDetailPage
+ * Creates menu item popup pages
+    Parameters: 
+    m - menu index 
+    s - section index
+    i - item index
+ */
+function addItemDetailPage(restaurantId, m,s,i) {
+        //console.info ("DEBUG > BEGIN addItemDetailPage" );    
+
+        var menuId = "menu" + globalData[restaurantId].menus[m].menuId;
+        var sectionId = "section" + globalData[restaurantId].menus[m].sections[s].sectionId;
+        var item = globalData[restaurantId].menus[m].sections[s].items[i];
+        
+        
+        if (typeof(item.itemId) != "undefined" && item.itemId != null) {
+                var itemId = "item" + item.itemId;
+                var name = item.name;
+                var description = item.description;
+                var shortDescription = item.shortDescription;
+                var price = item.price;
+                var itemType = item.itemType;
+                var vegetarian = item.vegetarian ? '<div class="vegetarian"></div>' : '';
+                var alcoholic = item.alcoholic;
+                var imageUrl = "";
+                var smallImageUrl = "";
+                
+				if (description.length == 0) {
+					description = shortDescription;
+				}
+		
+                // cache images
+                /*
+                 * This design doesn't use the full-size images
+                 *
+                if (typeof(item.imageUrl) != "undefined") {
+                    imageUrl = item.imageUrl;
+                }
+                else {
+                	imageUrl = "/static/assets/shared/images/defaultDetail50Percent.png"
+                }
+				var fullImageUrl = comCookedSpeciallyImagePrefix + imageUrl;
+				var cacheImage = document.createElement('img');
+				cacheImage.src = fullImageUrl;
+				preloadCache.push(cacheImage);
+				*/
+                if (typeof(item.smallImageUrl) != "undefined" && item.smallImageUrl != null) {
+					smallImageUrl = item.smallImageUrl;
+                }
+                else {
+                	smallImageUrl = "/static/assets/shared/images/defaultDetail50Percent200x200.png"
+                }
+				var fullsmallImageUrl = comCookedSpeciallyImagePrefix + smallImageUrl;
+				var cacheImage = document.createElement('img');
+				cacheImage.src = fullsmallImageUrl;
+				preloadCache.push(cacheImage);
+				var popup = 'data-role="popup"';
+				if (isPhone) {
+					popup = 'data-role="page"';
+				}
+
+				var header = '<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>';
+				if (isPhone) header = '' + 
+'					<div data-role="header" data-id="globalHeader" data-position="fixed">' + 
+'						<!-- h1><a data-role="button" href="http://www.cookedspecially.com" target="CookedSpecially">CookedSpecially</a></h1 -->' + 
+'						<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">' + 
+'							<a href="#restaurants" data-role="button" data-inline="true" data-icon="home">Restaurants</a>' + 
+'							<a id="menu-button" href="#" data-role="button" data-inline="true" data-icon="info" data-rel="popup" class="ui-disabled">Menus</a>' + 
+'							<a id="order-button" href="#order" data-role="button" data-inline="true" data-icon="info" class="ui-disabled">My Order</a>' + 
+'						</div>' + 
+'					</div>';
+
+				var footer = '' + 
+'						<div data-role="content">' + 
+'							<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">' + 
+'								<a href="#" onclick="addItemToOrder(' + restaurantId + ',' + m + ',' + s + ',' + i + ');" data-role="button" data-inline="true" data-icon="plus">Add To Order</a>' + 
+'								<a href="#" onclick="goBack();" data-role="button" data-inline="true" data-icon="back" data-rel="back">Go Back</a>' + 
+'							</div>' + 
+'						</div>';
+				if (isPhone) footer = '' + 
+'						<div data-role="footer" data-id="globalFooter" data-position="fixed">' + 
+'							<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">' + 
+'								<a href="#" onclick="addItemToOrder(' + restaurantId + ',' + m + ',' + s + ',' + i + ');" data-role="button" data-inline="true" data-icon="plus">Add To Order</a>' + 
+'								<a href="#" onclick="goBack();" data-role="button" data-inline="true" data-icon="back" data-rel="back">Go Back</a>' + 
+'							</div>' + 
+'						</div>';
+
+                var theItem = '' + 
+'					<div ' + popup + ' id="' + itemId + 'detail" class="itemDetail" data-overlay-theme="a">' + 
+header + 
+'						<div class="itemDetailContent" data-role="content">' + 
+'							<img width="200px" src="' + fullsmallImageUrl + '"/>' + 
+'							<h3 class="itemDetailName">' + 
+'								' + vegetarian + name + ' ' + 
+'							</h3>' + 
+'							<div class="itemDetailDesc">' + 
+'								' + shortDescription + ' ' + 
+'							</div>' + 
+'							<div class="itemDetailPrice">' + 
+'								' + currency + price + ' ' + 
+'							</div>' + 
+'						</div>' + 
+footer + 
+'					</div>';
+
+				if (isPhone) {
+					$(theItem).appendTo($.mobile.pageContainer);
+				}
+				else {
+                	$(theItem).appendTo("div#allPages div#" + menuId);
+                }
+        }
+        //console.log("DEBUG > END addItemDetailPage"); 
+}
+/* 
+ * END addItemDetailPage
+ **********/
+
+/* **********
+ * BEGIN addItemToOrder
+ * Adds an item to the Order page
+    Parameters: 
+    m - menu index 
+    s - section index
+    i - item index
+ */
+function addItemToOrder(restaurantId, m,s,i) {
+	//console.info ("DEBUG > BEGIN addItemToOrder" );    
+	$.mobile.loading( "show", {
+		text: "Adding to Order…",
+		textVisible: true,
+		theme: $.mobile.loader.prototype.options.theme,
+		textonly: false,
+		html: ""
+	});
+	$("a#order-button").addClass("achtung");
+	var menuId = "menu" + globalData[restaurantId].menus[m].menuId;
+	var sectionId = "section" + globalData[restaurantId].menus[m].sections[s].sectionId;
+	var item = globalData[restaurantId].menus[m].sections[s].items[i];
+	var itemId = "item" + item.itemId;
+	var name = item.name;
+	var description = item.description;
+	var shortDescription = item.shortDescription;
+	var price = item.price;
+	var itemType = item.itemType;
+	var vegetarian = item.vegetarian ? '<div class="vegetarian"></div>' : '';
+	var alcoholic = item.alcoholic;
+	var imageUrl = "";
+	var smallImageUrl = "";
+	
+	if (description.length == 0) {
+		description = shortDescription;
+	}
+	
+	// cache images
+	/*
+	 * This design doesn't use the full-size images
+	 *
+	if (typeof(item.imageUrl) != "undefined") {
+		imageUrl = item.imageUrl;
+	}
+	else {
+		imageUrl = "/static/assets/shared/images/defaultDetail50Percent.png"
+	}
+	var fullImageUrl = comCookedSpeciallyImagePrefix + imageUrl;
+	var cacheImage = document.createElement('img');
+	cacheImage.src = fullImageUrl;
+	preloadCache.push(cacheImage);
+	*/
+	if (typeof(item.smallImageUrl) != "undefined" && item.smallImageUrl != null) {
+		smallImageUrl = item.smallImageUrl;
+	}
+	else {
+		smallImageUrl = "/static/assets/shared/images/defaultDetail50Percent200x200.png"
+	}
+	var fullsmallImageUrl = comCookedSpeciallyImagePrefix + smallImageUrl;
+	var cacheImage = document.createElement('img');
+	cacheImage.src = fullsmallImageUrl;
+	preloadCache.push(cacheImage);
+
+    
+    var theItem = '' + 
+'		<li id="order-' + itemId + '">' + 
+'		<a class="item" href="#">' + 
+'			<img src="' + smallImageUrl + '">' + 
+'		<div class="itemContent ">' +
+'		    <div id="title" class="title">' + vegetarian + name + ' </div>' +
+'		    <div id="description" class="description">' + shortDescription + '</div>' +
+'			<div class="price">' + currency + '<span id="price">' + price + '</span></div>' + 
+'			<div id="restaurantId" style="display:none">' + restaurantId + '</div>' + 
+'			<div id="menuId" style="display:none">' + m + '</div>' + 
+'			<div id="sectionId" style="display:none">' + s + '</div>' + 
+'			<div id="itemId" style="display:none">' + i + '</div>' + 
+'			<!-- span class="ui-li-count">' + currency + price + '</span -->' + 
+'		</div>' +
+'		</a>' + 
+'		<a href="#" onclick="removeItemFromOrder($(this).parent(),' + restaurantId + ',' + m + ',' + s + ',' + i + ');" data-icon="delete">Remove</a>' + 
+'		<!-- a href="#" onclick="$(this).parent().remove();" data-icon="delete">Remove</a -->' + 
+'		</li>';
+    var theMenuOrderUl = $("div#order-content div#restaurant" + restaurantId + " ul");
+    var theCollapsible = $("div#order-content div#restaurant" + restaurantId);
+    $(theCollapsible).show();
+	$(theItem).prependTo(theMenuOrderUl);
+	
+	if (theMenuOrderUl.hasClass('ui-listview')) {
+		console.log("Refreshing list.");
+		theMenuOrderUl.listview('refresh');
+	} else {
+		console.log("Creating list.");
+		theMenuOrderUl.listview();
+	}
+
+	if (theCollapsible.hasClass('ui-collapsible')) {
+		console.log("Refreshing collapsible.");
+		theCollapsible.collapsible('refresh');
+	} else {
+		console.log("Creating collapsible.");
+		theCollapsible.collapsible();
+		theCollapsible.trigger('expand');
+	}
+	
+	$(theCollapsible).show();
+	$("div#allPages div#order").page();
+	$("a#order-button").removeClass("ui-disabled");
+	if (isPhone) {
+		//history.back();
+	}
+	else {
+		//$( "#" + itemId + "detail" ).popup( "close" );
+	}
+	orderItemCount++;
+	orderItemCountArray[restaurantId]++;
+
+	setTimeout(function(){$.mobile.loading( "hide" );$("a#order-button").removeClass("achtung");},1000);
+	//console.log("DEBUG > END addItemToOrder"); 
+}
+/* 
+ * END addItemToOrder
+ **********/
+
+/* **********
+ * BEGIN removeItemFromOrder
+ * Adds an item to the Order page
+    Parameters: 
+    m - menu index 
+    s - section index
+    i - item index
+ */
+function removeItemFromOrder(listItem, restaurantId, m,s,i) {
+	//console.info ("DEBUG > BEGIN removeItemFromOrder" );    
+
+	listItem.remove();
+
+	orderItemCount--;
+	orderItemCountArray[restaurantId]--;
+	
+	updateOrderTotals();
+
+	if (orderItemCountArray[restaurantId] < 1) {
+		var theCollapsible = $("div#order-content div#restaurant" + restaurantId);
+		theCollapsible.hide();
+    }
+	if (orderItemCount < 1) {
+		$("a#order-button").addClass("ui-disabled");
+		history.back();
+    }
+	//console.log("DEBUG > END removeItemFromOrder"); 
+}
+/* 
+ * END removeItemFromOrder
+ **********/
+
+/* **********
+ * BEGIN updateOrderTotals
+ * 
+ */
+function updateOrderTotals() {
+	//console.info ("DEBUG > BEGIN updateOrderTotals" );    
+
+	$.each(restaurants, function() {
+		var total = 0;
+		$.each($("#order #order-content #restaurant" + this + " span#price"), function() {
+			total = total + Number($(this).text());
+		});
+		$("#order #order-content #restaurant" + this + " h3 a span.ui-li-count").html(currency + total.toFixed(2) + " + Tax");
+	});
+
+	//console.log("DEBUG > END updateOrderTotals"); 
+}
+/* 
+ * END updateOrderTotals
+ **********/
+
+/* **********
+ * BEGIN goBack
+ * 
+ */
+function goBack() {
+	//console.info ("DEBUG > BEGIN goBack" );    
+	
+	document.location = myHistory[myHistory.length -1];
+	/*
+	history.go(-1);
+	navigator.app.backHistory();
+	$(window).on('hashchange', function() {});
+	*/
+	//console.log("DEBUG > END goBack"); 
+}
+/* 
+ * END goBack
+ **********/
+
+/* **********
+ * BEGIN validateContactInfo
+ * 
+ */
+function validateContactInfo() {
+	//console.info ("DEBUG > BEGIN validateContactInfo" );    
+	var emailMatch = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+	var phoneMatch = /^[0-9.-]+$/;
+	var phoneClean = /[.-]/g;
+	var custIdParam = "";
+	
+	customerId = $("input#customerId").val().trim().toLowerCase();
+	if (customerId == "") {
+		$("input#customerId").parent().addClass("achtung");
+		//$("input#customerId").attr("placeholder","Email Address or Phone Number Please?");		
+		return false;
+	}
+	
+	if (emailMatch.test(customerId)) {
+		custIdParam = "&email=" + customerId;
+		$("#popupEmail input#customerId").val(customerId);
+	}
+	if (phoneMatch.test(customerId)) {
+		custIdParam = "&email=" + customerId.replace(phoneClean,"");
+	}
+
+	if (custIdParam.length != "") {
+		$("input#customerId").parent().removeClass("achtung");
+
+		// Make sure we can't go back to the order page we're leaving now.
+		myHistory.pop();
+		history.replaceState({}, "CookedSpecially", "#restaurants");
+		
+		//$( "#popupContact" ).popup( "close" );
+		$.each(restaurants, function() {
+			var restaurantId = this;
+			//  /customer/getCustomerInfo.json?custId=<uniquedatabaseId>&email=<emailaddress>&phone=<phonenum>
+			var custInfoUrl = _custInfo + custIdParam;
+			$.ajax({
+			  url: custInfoUrl,
+			  dataType: 'json'
+			})
+			.done (function (data) {
+				if (data.customers[0].customerId > 0) {
+					var getCheckUrl = _getCheck + "restaurantId=" + restaurantId + "&custId=" + data.customers[0].customerId;
+					$('#tableCheckDetails').html('');
+					$.ajax({
+					  url: getCheckUrl,
+					  dataType: 'json'
+					})
+					.done (function (data) {
+						placeOrder(restaurantId, data.customerId, data.checkId);
+						console.log("checkId " + data.checkId); 
+						console.log("customerId " + data.customerId); 
+					})
+					.fail(function() { 
+						console.log("AJAX: getCheckPreview() FAILED"); 
+					})
+					.always(function() { 
+						console.log("AJAX: getCheckPreview() COMPLETED"); 
+					});
+				}
+			})
+			.fail(function() { 
+				console.log("AJAX: getCheckPreview() FAILED"); 
+			})
+			.always(function() { 
+				console.log("AJAX: getCheckPreview() COMPLETED"); 
+			});
+		});
+		$.mobile.changePage('#check', { changeHash: true });
+	}
+	
+	$("input#customerId").parent().addClass("achtung");
+	return false;
+	//console.log("DEBUG > END validateContactInfo"); 
+}
+/* 
+ * END validateContactInfo
+ **********/
+
+/* **********
+ * BEGIN validateEmailForCheck
+ * 
+ */
+function validateEmailForCheck() {
+	//console.info ("DEBUG > BEGIN validateContactInfo" );    
+	var emailMatch = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+	var phoneMatch = /^[0-9.-]+$/;
+	var phoneClean = /[.-]/g;
+	var custIdParam = "";
+	
+	customerId = $("input#customerId").val().trim().toLowerCase();
+	if (customerId == "") {
+		$("input#customerId").parent().addClass("achtung");
+		return false;
+	}
+	
+	if (emailMatch.test(customerId)) {
+		custIdParam = customerId;
+	}
+
+	if (custIdParam.length != "") {
+		// Make sure we can't go back to the order page we're leaving now.
+		myHistory.pop();
+		history.replaceState({}, "CookedSpecially", "#restaurants");
+		
+		$.each(restaurants, function() {
+			var checkId = $("#check #restaurant" + this + " #checkId").text();
+			if (checkId > 0) {
+				emailCheck(custIdParam, checkId, this);
+			}
+    	});
+    	$( "#popupEmail" ).popup( "close" );
+	}
+	else {
+		$("input#customerId").parent().addClass("achtung");
+	}
+	return false;
+	//console.log("DEBUG > END validateEmailForCheck"); 
+}
+/* 
+ * END validateEmailForCheck
+ **********/
+ 
+ function emailCheck(email, checkId, restaurantId){
+    console.info('emailCheck()');
+
+	// /order/emailCheck?checkId=<checkId>&email=<target email>&restaurantId=<restaurantId>
+	
+    var url = _emailCheck + 
+			  "checkId=" + checkId +
+			  "&email=" + email +
+			  "&restaurantId=" + restaurantId;
+			  	
+	$.ajax({
+      url: url,
+      dataType: 'json'
+    })
+    .done (function (data) {
+        //$('#email-check').html('Email Sent');
+		console.log("AJAX: emailCheck() Success");
+    })
+    .fail(function() { 
+        console.log("AJAX: emailCheck() FAILED"); 
+    })
+    .always(function() { 
+        console.log("AJAX: emailCheck() COMPLETED"); 
+    });
+}
+
+
+/***********
+ * BEGIN placeOrder
+ */
+function placeOrder(restaurantId, customerId, checkId){
+console.log("DEBUG > BEGIN placeOrder(" + restaurantId +")");	
+/*
+{"checkId":98,"table":1,"time":"","price":815,"items":[{"id":175,"name":"Shrimp with Citrus Sala","price":325,"smallImageUrl":"/static/1/175_Shrimp-Shrimp-Salad200x200.jpg"},{"id":178,"name":"Greek Village Salad","price":245,"smallImageUrl":"/static/1/178_178_Greek_Village_Salad200x200.JPG"},{"id":178,"name":"Greek Village Salad","price":245,"smallImageUrl":"/static/1/178_178_Greek_Village_Salad200x200.JPG"}]}
+*/
+
+    var jsonOrder = JSON.parse('{"checkId":' + checkId + ',"cust":' + customerId + ',"time":"","price":0,"items":[]}');
+
+	$.each($("#order #order-content #restaurant" + restaurantId + " div ul li a.item"), function() {
+		var itemContent = $(this).children("div.itemContent").children();
+		var smallImageUrl = $(this).children("img").attr("src");
+		var id = itemContent.filter("div#itemId").text();
+		var name = itemContent.filter("div#title").text();
+		//console.log(itemContent.filter("div#description").text());
+		var price = itemContent.filter("div.price").children("span#price").text();
+		var item = JSON.parse('{"id":' + id + ', "name":"' + name + '","price":' + price + ',"smallImageUrl":"' + smallImageUrl + '"}');
+		jsonOrder.price = jsonOrder.price + price;
+		jsonOrder.items.push(item);
+	});
+
+    if (jsonOrder.items.length > 0) {
+		$.ajax({
+			type: "POST",
+			contentType:"application/json; charset=utf-8",
+			url: _addToCheck,
+			data: JSON.stringify(jsonOrder),
+			success: function (data) {
+				// expected return: 
+				//{"orderId":1,"checkId":1,"restaurantId":1,"tableId":1,"error":"Error message","status":"Failed|Success"}
+				if ( data.status == "Success"){
+					// Empty out the order that we submitted to get here
+					$("a#order-button").addClass("ui-disabled");
+					$("div#order-content div#restaurant" + restaurantId + " ul").empty();
+					var theCollapsible = $("div#order-content div#restaurant" + restaurantId);
+					theCollapsible.hide();
+
+					getCheck(restaurantId, customerId, checkId);
+			
+				}else if ( data.status == "Failed"){
+					alert("An Error has occurred: " + data.checkId + 
+						  "\n Check Id: " + data.checkId );
+				}else{
+					alert("An Unknown Error has occurred.") 
+				}
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+				alert(thrownError);
+			}
+		});
+	}
+    
+console.log("DEBUG > END placeOrder(" + restaurantId +")");	
+}
+/* 
+ * END placeOrder
+ **********/
+
+/***********
+ * BEGIN getCheck
+ */
+function getCheck(restaurantId, customerId, checkId){
+console.log("DEBUG > BEGIN getCheck(" + restaurantId +")");	
+
+	var checkDataString = "";
+	var checkApi = _getCheck + "custId=" + customerId + "&restaurantId=" + restaurantId;
+	$.ajax(checkApi, {
+		isLocal: false
+	})
+	.done (function (data) {
+		if( console && console.log ) {
+			console.log("ajax success: " + checkApi);
+			var checkDataString = JSON.stringify(data);
+			console.log(checkDataString);
+		}
+		displayCheck(restaurantId, customerId, checkId, data);
+	})
+	.fail(function() { 
+		console.log("ajax error: " + checkApi); 
+	})
+	.always(function() { 
+		console.log("ajax complete: " + checkApi); 
+	});
+    
+console.log("DEBUG > END getCheck(" + restaurantId +")");	
+}
+/* 
+ * END getCheck
+ **********/
+
+/* **********
+ * BEGIN displayCheck
+ * Creates the home page with all the checks
+    Parameters: 
+ */
+function displayCheck(restaurantId, customerId, checkId, data) {
+	console.info("DEBUG > BEGIN displayCheck: " + checkId); 
+
+	var checkId = data.checkId;
+	var additionalChargesName1 = data.additionalChargesName1;
+	var additionalChargesName2 = data.additionalChargesName2;
+	var additionalChargesName3 = data.additionalChargesName3;
+	var total = data.bill + data.additionalChargesValue1 + data.additionalChargesValue2 + data.additionalChargesValue3;
+	var d=new Date();
+
+	var theCheck = '' +
+		'<div id="check' + checkId + '" class="ui-li ui-li-static ui-btn-up-c">' +
+			'<h4 id="status" class="ui-li-desc">' +
+			'	Check #<span id="checkId">' + checkId + '</span> Printed @ '+ d.toLocaleTimeString() + 
+
+			'</h4>' +
+		'</div>';
+	$(theCheck).appendTo("#check-content #restaurant" + restaurantId);
+	
+	$.each(data.orders, function() {
+		$.each(this.orderDishes, function() {
+			var name = this.name;
+			var quantity = this.quantity;
+			var price = this.price;
+			var theItem = '<strong>' + name + '</strong> ' + quantity + ' @ ' + currency + price + '<br/>';
+			$(theItem).appendTo("#check-content #restaurant" + restaurantId);
+		});
+	});
+
+	var theAdditions = '<br/>';
+	if (additionalChargesName1 && additionalChargesName1.length > 0) {
+		theAdditions = theAdditions + '<strong>' + additionalChargesName1 + ': </strong> ' + currency + data.additionalChargesValue1.toFixed(2) + '<br/>';
+	}
+	if (additionalChargesName2 && additionalChargesName2.length > 0) {
+		theAdditions = theAdditions + '<strong>' + additionalChargesName2 + ': </strong> ' + currency + data.additionalChargesValue2.toFixed(2) + '<br/>';
+	}
+	if (additionalChargesName3 && additionalChargesName3.length > 0) {
+		theAdditions = theAdditions + '<strong>' + additionalChargesName3 + ': </strong> ' + currency + data.additionalChargesValue3.toFixed(2) + '<br/>';
+	}
+	$(theAdditions).appendTo("#check-content #restaurant" + restaurantId);
+
+	var theSummary = '<br/><strong>Total: </strong> ' + currency + total.toFixed(2) + '<br/>';
+	$(theSummary).appendTo("#check-content #restaurant" + restaurantId);
+
+	$("#check-content #restaurant" + restaurantId).show();
+    $.mobile.loading( "hide" );
+
+	console.log("DEBUG > END displayCheck");	
+}
+/* 
+ * END displayCheck
+ **********/
+ 
+ 
+ /* 
+ *******************************************************
+                     DATA FUNCTIONS
+ ******************************************************* 
+ */
+ 
+/***********
+ * BEGIN updateAjaxDataRemote
+ */
+function updateAjaxDataRemote(restaurantId, restaurantName) {
+console.log("DEBUG > BEGIN updateAjaxDataRemote");    
+        
+		var comCookedSpeciallyMenuApi = comCookedSpeciallyApiPrefix + "/menu/getallmenusjson/" + restaurantId;
+		console.log( 'Using API: ' + comCookedSpeciallyMenuApi );
+
+        if (navigator.onLine) {
+                $.ajax(comCookedSpeciallyMenuApi, {
+                        isLocal: false
+                })
+                .done (function (data) {
+					if( console && console.log ) {
+							console.log("ajax success: " + comCookedSpeciallyMenuApi);
+							globalDataString = JSON.stringify(data);
+							//console.log(globalDataString);
+					}
+
+					globalData[restaurantId] = JSON.parse(globalDataString);
+					initHomePage(restaurantId, restaurantName);
+
+                })
+                .fail(function() { 
+                    console.log("ajax error: " + comCookedSpeciallyMenuApi); 
+                })
+                .always(function() { 
+                    console.log("ajax complete: " + comCookedSpeciallyMenuApi); 
+                });
+        }
+        else {
+			console.log("ajax error: offline"); 
+			if (confirm(strOfflineAlert)) {
+					updateAjaxDataRemote();
+			}
+        }
+                                
+//console.log("DEBUG > END updateAjaxDataRemote");      
+}
+/* 
+ * END updateAjaxDataRemote
+ **********/
+
+/***********
+ * BEGIN updateRestaurantInfo
+ */
+function updateRestaurantInfo(restaurantId) {
+console.log("DEBUG > BEGIN updateRestaurantInfo");	
+
+	orderItemCountArray[restaurantId] = 0;
+	var comCookedSpeciallyRestaurantApi = comCookedSpeciallyApiPrefix + "/restaurant/getrestaurantinfo?restaurantId=" + restaurantId;
+	console.log( 'Using API: ' + comCookedSpeciallyRestaurantApi );
+
+	$.ajax(comCookedSpeciallyRestaurantApi, {
+		isLocal: false
+	})
+	.done (function (data) {
+		if( console && console.log ) {
+			console.log("ajax success: " + comCookedSpeciallyRestaurantApi);
+			var restaurantDataString = JSON.stringify(data);
+			//console.log(restaurantDataString);
+		}
+
+		restaurantData[restaurantId] = JSON.parse(restaurantDataString);
+		
+		if (restaurantData[restaurantId].currency == "INR") {
+			currency = '₹'; 
+		}
+		if (restaurantData[restaurantId].currency == "USD") {
+			currency = '$';
+		}
+		if (restaurantData[restaurantId].country == "GBP") {
+			currency = '£'; 
+		}
+		if (restaurantData[restaurantId].country == "EUR") {
+			currency = '€'; 
+		}
+		if (restaurantData[restaurantId].country == "JPY") {
+			restaurantData[restaurantId].country = "日本";
+			currency = '¥'; 
+		}
+		
+		var theHtml = '' + 
+			'<div class="restaurant-check-content" id="restaurant' + restaurantId + '" data-collapsed="false" style="display:none">' + 
+			'	<h3>' + 
+			'		' + restaurantData[restaurantId].businessName + 
+			'	</h3>' + 
+			'	<ul data-role="listview" data-inset="true"></ul>' + 
+			'</div>';
+		$(theHtml).appendTo("div#restaurants div#restaurants-content");
+		theHtml = '' + 
+			'<div class="restaurant-check-content" id="restaurant' + restaurantId + '" data-collapsed="false" style="display:none">' + 
+			'	<h3>' + 
+			'		' + restaurantData[restaurantId].businessName + '<span class="ui-li-count">' + currency + '0.00' + '</span>' + 
+			'	</h3>' + 
+			'	<ul data-role="listview" data-inset="true"></ul>' + 
+			'</div>';
+		$(theHtml).appendTo("div#order div#order-content");
+
+		/*
+		if (restaurantData[restaurantId].appCacheIconUrl.length > 0) {
+			$("link#apple-touch-icon").attr('href', restaurantData[restaurantId].appCacheIconUrl);
+		}
+		if (restaurantData[restaurantId].buttonIconUrl.length > 0) {
+			$("img#homeBtn").attr('src', restaurantData[restaurantId].buttonIconUrl);
+		}
+		*/
+		if (restaurantData[restaurantId].businessLandscapeImageUrl.length > 0) {
+			$("div#restaurants div#restaurant" + restaurantId).css('background-image', 'url(' + restaurantData[restaurantId].businessLandscapeImageUrl + ')').css('background-size', 'cover');
+		}
+		if (restaurantData[restaurantId].businessName.length > 0) {
+			$("div#restaurants div#restaurant" + restaurantId + " h3 span.ui-btn-text").text(restaurantData[restaurantId].businessName);
+			//document.title = restaurantData[restaurantId].businessName;
+		}
+		
+		var restaurantCheckHeader = '' + 
+			'<div id="restaurant' + restaurantId + '" style="display:none;">' + 
+			'	<h2>' + 
+			'		' + restaurantData[restaurantId].businessName + 
+			'	</h2>' + 
+			'	<p>' + restaurantData[restaurantId].address1 + '<br/>' + restaurantData[restaurantId].address2 + '<br/>' + restaurantData[restaurantId].city + 
+			'</div>';
+		$(restaurantCheckHeader).appendTo("#check-content");
+		
+		updateAjaxDataRemote(restaurantId, restaurantData[restaurantId].businessName);
+		
+		$("#restaurants").on( "pagebeforeshow", function(event, ui) {
+			// do something before navigating to a new page
+		});
+		$("#restaurants").on( "pageshow", function(event, ui) {
+			// do something when the screen is shown
+		});
+
+		$.mobile.changePage("#restaurants", { changeHash: true });
+
+	})
+	.fail(function() { 
+		console.log("ajax error: " + comCookedSpeciallyRestaurantApi); 
+	})
+	.always(function() { 
+		console.log("ajax complete: " + comCookedSpeciallyRestaurantApi); 
+	});
+	
+console.log("DEBUG > END updateRestaurantInfo");	
+}
+/* 
+ * END updateRestaurantInfo
+ **********/
+
+/*
+ * http://stackoverflow.com/questions/11832914/round-up-to-2-decimal-places-in-javascript
+ * var n = 1.7777;    
+ * n.round(2); // 1.78
+ */
+Number.prototype.round = function(places) {
+	return +(Math.round(this + "e+" + places)  + "e-" + places);
+}
+
+ /* 
+ *******************************************************
+                     MAIN PROGRAM
+ ******************************************************* 
+ */
+
+try {
+        var startTime = new Date().getTime();
+        
+        //http://stackoverflow.com/questions/13986182/how-can-i-improve-the-page-transitions-for-my-jquery-mobile-app/13986390#13986390
+        $(document).one("mobileinit", function () {
+			$.mobile.ajaxEnabled = true;
+			$.mobile.allowCrossDomainPages = true;
+			$.mobile.autoInitializePage = true;
+			$.mobile.defaultPageTransition = "none";
+			$.mobile.loader.prototype.options.text = "loading";
+			$.mobile.loader.prototype.options.textVisible = true;
+			$.mobile.mobile.touchOverflowEnabled = true;
+			$.mobile.pageContainer = $("#allPages");
+			$.mobile.phonegapNavigationEnabled = true;
+        });
+
+        $(document).ready(function(){
+			// When the document is ready, Cordova isn't
+			$.mobile.loading( "show", {
+				text: "Loading…",
+				textVisible: true,
+				theme: $.mobile.loader.prototype.options.theme,
+				textonly: false,
+				html: ""
+			});
+
+			$.each(restaurants, function() {
+				updateRestaurantInfo(this);
+			});
+			
+			// TEMPORARY. REMOVE LATER
+			$("#allPages").css({ "visibility": "visible" });
+
+        });
+
+		$( document ).on( "pageinit", function() {
+			$( '#popupContact' ).on({
+				popupafterclose: function() {
+					$("input#customerId").parent().removeClass("achtung");
+				}
+			});
+			$("#order").on( "pageshow", function(event, ui) {
+				updateOrderTotals();
+			});
+			$("#check").on( "pageshow", function(event, ui) {
+				$.mobile.loading( "show" );
+				myHistory.pop();
+				history.replaceState({}, "CookedSpecially", "#restaurants");
+			});
+			$("#check").on( "pagebeforehide", function(event, ui) {
+				// clear check data and reset the app
+			});
+		});
+		
+        /* 
+         * http://css-tricks.com/forums/discussion/16123/reload-jquery-functions-on-ipad-orientation-change/p1
+         * http://www.ibm.com/developerworks/library/mo-jquery-mobile-api/
+         */
+        $('body').bind('orientationchange', function(event) {
+            console.log('orientationchange: '+ event.orientation);
+        });
+
+        $('body').trigger('orientationchange');
+
+} catch (error) {
+        console.error("Your javascript has an error: " + error);
+}
+	
+</script>
+</body>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-44124437-1', 'bakedspecially.com');
+	  ga('send', 'pageview');
+
+	</script>
+</html>

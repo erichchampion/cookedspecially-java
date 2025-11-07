@@ -1,0 +1,259 @@
+<!doctype html>
+<html manifest="/CookedSpecially/menu/manifest/1.manifest">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title> CookedSpecially </title>
+        
+		<!-- BEGIN: RESTAURANT-SPECIFIC CODE -->
+        <script type="text/javascript" charset="utf-8">
+			/**********
+			 * CONSTANTS
+			 */
+			var appVersion = '1.9.6';
+			var appLatestVersion = '1.9.6';
+
+			var restaurantId = "14"; //Tangra-KOD
+        </script>
+		<!-- END: RESTAURANT-SPECIFIC CODE -->
+		
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/json2.js">
+        </script>
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/jquery-1.9.1.js">
+        </script>
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/jquery-migrate-1.1.1.js">
+        </script>
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/jquery.mobile-1.3.0.js">
+        </script>
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/zepto.onpress.js">
+        </script>
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/jquery.isotope.min.js">
+        </script>
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/jquery.imagesloaded.js">
+        </script>
+
+        <!-- BEGIN: HTML5 AppCache Code -->
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/html5.js">
+        </script>
+        <!-- END: HTML5 AppCache Code -->
+
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/mobile.js">
+        </script>
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/mobile-order.js">
+        </script>        
+        <script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/mobile-admin.js">
+        </script>
+        
+        <link rel="stylesheet" type="text/css" href="/static/assets/shared/css/jquery.mobile-1.3.0.css" />
+        <link rel="stylesheet" type="text/css" href="/static/assets/shared/css/mobile.css" />
+        <link rel="stylesheet" type="text/css" href="/static/assets/shared/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/static/assets/shared/css/admin.css" />
+
+        <link rel="stylesheet" type="text/css" href="/static/assets/shared/css/jqm-survival-kit.css" />
+    </head>
+    <body>        
+    
+    
+        <div id="app-loader">    
+                <div id="loading">
+                  <img src="/static/assets/shared/css/images/app-loader.gif"/>
+                  <p id="loadingMsg">Loading...</p>
+                </div>
+        </div>
+        
+        
+        <!-- http://stackoverflow.com/questions/13986182/how-can-i-improve-the-page-transitions-for-my-jquery-mobile-app/13986390#13986390 -->
+        <div id="allPages" style="visibility:hidden;">
+            
+            <!-- Home -->
+            <div data-role="page" id="home">
+                <a href="#menus" data-transition="slideup">
+                <h1 style="color:#a00">Welcome</h1>
+                <p>
+                    Please touch the screen to start<br/>
+                    <ul id="applicationEvents">
+                        <li>&nbsp;</li>
+                    </ul>
+                </p>
+                </a>
+                <!-- a href="javascript:appSettings()" id="appSettings"><img src="/static/assets/shared/images/settings-black.png"/></a -->
+                <a href="#admin" id="appSettings"><img src="/static/assets/shared/images/settings-black.png"/></a>
+                
+            </div>
+            
+            
+            
+            <!-- Menus -->
+            <div data-role="page" id="menus">
+                <div data-theme="a" data-role="header" data-position="fixed">
+                    
+                    <img id="homeBtn" style="height:50px" data-role="button" onclick='location.href="#home"' src="/static/assets/shared/images/cs-button.png" />
+
+                    <div id="update" style="display:; float:right">
+                       <a href="javascript:showAppVersion()">AppVersion: Beta <script>document.write(appVersion)</script></a> | 
+                       <span id="applicationStatus"></span> | 
+                       <span id="cacheProgress">N/A</span> <br />
+                    </div>
+                    
+                    <div id="nav">
+                        
+						<div class="view-check-button" onclick="javascript:showCheck()">View My Check</div>
+                        <div class="view-order-button" onclick="javascript:showOrder()"><b>Pending Order</b></div> 
+						<!--
+                        <a class="view-check-button" href="javascript:showCheck()">View My Check</div>
+                        <a class="view-order-button" href="javascript:showOrder()">Pending Order</div>  
+						-->
+                    </div>
+                </div>
+                
+                <div id="topMenu"></div>
+        
+ 
+				<div class="order">
+					<div class="orderSummary">
+						<div class="orderTitle">
+							Pending Order
+						</div>
+						<div class="orderNumOfItems">
+							<span class="red label">Empty</span><span class="value"></span>
+						</div>
+						<div class="orderPrice">
+							<span class="label"></span><span class="value"></span>
+						</div>
+						<a href="javascript:placeOrder()" class="placeOrder">Place Order</a>
+					</div>
+					<div class="orderItems">
+					</div>
+				</div>
+                
+    
+                <br clear="both"/>
+                <div class="footer">
+					<b><span id="restaurantName"></span></b><br/>
+                    &copy; 2013 Cooked Specially. All rights reserved. 
+                </div>
+            </div>    
+            
+
+
+            <div id="check">
+                <div id="check_content"></div>
+				<div class="dismiss" onclick="dismissCheck();">Touch to dismiss</div> 
+            </div>            
+            
+            
+
+            
+            <!-- Admin -->
+            <div data-role="page" id="admin">
+                <div class="shade" display="block"></div>
+                
+                <div id="adminLogin">
+                    <h2>Access Code</h2>
+                    <div id="accessCodeField" class="diplayField"></div>
+                    <div class="keypad">
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn" value="1">1</div>
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn" value="2">2</div>
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn" value="3">3</div>
+                        <br/>
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn" value="4">4</div>
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn" value="5">5</div>
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn" value="6">6</div>
+                        <br/>
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn" value="7">7</div>
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn" value="8">8</div>
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn" value="9">9</div>
+                        <br/>
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn" value="0">0</div>
+                        <div onclick="keyDown('accessCode', this)" class="inputBtn OK" value="OK">OK</div>
+                    </div>
+                </div>
+            
+
+
+                <div id="controlPanel" style="display:none">
+                    <span id="controlPanelLoading" style="display:none;float:right;padding:6px;margin-left:-35px">
+                    	<img height="32" src="/static/assets/shared/css/images/app-loader.gif">
+                    </span>
+                    <h2>
+                    	Admin: Control Panel
+                    </h2>
+                    
+                    <!-- div id="closeControlPanel" onclick="closeControlPanel()">Close</div -->
+                    
+                    <div class="selectedTable">
+                        <div class="myLabel">Active Table:</div> 
+                        
+                        
+                        <div id="activeTableName" onclick="showRestaurantTables()">Select...</div>
+                        
+                        <a href="#" id="viewModeBtn" onclick="viewMode()" style="
+                                color:#aaa;
+                                float: right;
+                                height: 26px;
+                                margin-right: 12px;
+                                padding-top: 7px;
+                                vertical-align: middle;
+                                font-weight: 400;
+                                font-size: 16px;
+                                width: auto;">[ View Only Mode ]</a>
+
+                        <div id="restaurantTables" style="display:none"></div>
+                        
+                        <br clear="all"/>
+
+                        <div id="activeTableInfo">
+                            <!-- div class="myLabel">&nbsp;</div --> 
+                            <div class="activeTableDescription"></div>
+                            
+                            <!-- div class="myLabel" style="width:100%">Check</div -->
+                            <div id="tableCheck">
+                                <div class="myLabel">Active Check:</div> 
+                                <div id="tableCheckDetails"></div>
+                            </div>
+                        
+                        </div>
+
+                        <div id="numberOfGuest" style="display:none">
+                            <span class="myLabel">Guests:</span> <input type="text" id="showNumOfGuest" onclick="showNumOfGuest()">Select...</span>
+                        </div>
+                        
+                        
+                        
+                    </div>
+                    
+                    
+                    
+                    
+                    <div class="controlButtons"> 
+                        <div id="controlPanelSave" onclick="closeControlPanel('save')">Save</div>
+                        <div id="controlPanelCancel" onclick="closeControlPanel('cancel')">Cancel</div>
+                        <br clear="both"/>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+
+
+            
+        </div>        
+    </body>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-44124437-1', 'bakedspecially.com');
+	  ga('send', 'pageview');
+
+	</script>
+</html>
+
+
+
+

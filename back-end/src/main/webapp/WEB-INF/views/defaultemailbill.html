@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Template for HTML email with inline image</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+<body bgcolor="#D8D8D8">
+ <div>
+ <a th:href="${user.referenceLink}">
+ <img th:src="${'https://www.cookedspecially.com/'+user.marketingImage}"  th:alt="${user.alterMarketingText}" style="width:100%;"></img>
+ </a>
+ </div>
+<div th:if="${#bools.isTrue(checkRespone)}">
+<p>Hi <span th:text="${checkRespone.name}"></span><br clear="all"/>
+Thanks for choosing <span th:text="${user.restaurantName}"></span>. While our kitchen is busy whipping up your order, here is your order summary for order no. <span th:text="${checkRespone.orderId}"> </span>.</p>
+</div>
+<div style="align:center; width:100%;">
+<div style="float:left;" th:if="${#bools.isTrue(checkRespone)}"> 
+  <p><b  style="float:left;">Name: </b> <span style="float:right;" th:text="${checkRespone.name}"></span></p><br clear="all"/>
+  <p><b style="float:left;">Contact No.: </b><span style="float:right;"  th:text="${checkRespone.phone}"></span></p><br clear="all"/>
+  <p><b style="float:left;">Order Time: </b><span  style="float:right;" th:text="${checkDate}"></span></p><br clear="all"/>
+ <div th:if="${checkRespone.checkType.name() == 'Delivery'}">
+  <p><b style="float:left;">Delivery Time: </b><span style="float:right;"  th:text="${checkRespone.deliveryDateTime}"></span></p>
+</div>
+<div th:if="${checkRespone.checkType.name() == 'TakeAway'}">
+  <p><b style="float:left;">TakeAway Time: </b><span style="float:right;"  th:text="${checkRespone.deliveryDateTime}"></span></p>
+</div>
+</div>
+<div style="float:right;">
+<div th:if="${checkRespone.checkType.name() != 'TakeAway'}">
+<p><b style="float:left;">Delivery Area: </b><span style="float:right;" th:text="${checkRespone.deliveryArea}"></span></p><br clear="all"/>  
+<p><b style="float:left;">Address: </b><span style="float:right;" th:text="${checkRespone.deliverAddress}"></span></p><br clear="all"/>
+</div>
+<p><b style="float:left;">Order Source:</b><span style="float:right;"  th:text="${checkRespone.orderSource}"></span></p><br clear="all"/>
+<p><b style="float:left;">Payment Mode:</b><span style="float:right;"  th:text="${checkRespone.paymentMode}"></span></p>
+
+</div>
+</div>
+<table style="align:center; width:100%">
+<tr>
+<th width="33%"><p style="float:left">Item</p></th>
+<th width="33%"><p style="text-align:center">Quantity</p></th>
+<th width="33%"><p style="float:right">Amount</p></th>
+</tr>
+<div th:if="${not #maps.isEmpty(itemsMap)}">
+<div th:each="item : ${itemsMap}">
+	<div th:if="${item.value.dishSize !='Default'}">
+	<tr>
+	    <td width="33%" align="left" ><span th:text="${item.value.name}"></span> <span style="font-size:11px; font-weight:bold"  th:text="${item.value.dishSize}"></span></td>
+		<td width="33%" align="center"> <p><span>X</span><span th:text="${item.value.quantity}"></span></p></td>
+		<td width="33%" align="right" th:text="${#numbers.formatDecimal(item.value.price,0,2)}"></td>
+	</tr>
+	</div>
+	<div th:if="${item.value.dishSize =='Default'}">
+	<tr>
+		<td width="33%" align="left" th:text="${item.value.name}"></td>
+		<td width="33%" align="center"> <p><span>X</span><span th:text="${item.value.quantity}"></span></p></td>
+		<td width="33%" align="right" th:text="${#numbers.formatDecimal(item.value.price,0,2)}"></td>
+	</tr>
+	</div>
+	
+	 <div th:each="itemAdd : ${item.value.addOns}" >
+	<div  th:if="${itemAdd.dishId} == ${item.value.id}" >
+	<div th:if="${itemAdd.dishSize !='Default'}">
+	<tr>
+		 <td width="33%" style="font-size:11px; font-weight:bold" align="left" ><span th:text="${itemAdd.name}"></span>(<span style="font-size:11px; font-weight:bold"  th:text="${itemAdd.dishSize}"></span>)</td>
+		<td width="33%" style="font-size:11px;font-weight:bold" align="center"> <p><span>X </span><span th:text="${itemAdd.quantity}"></span></p></td>
+		<td width="33%" style="font-size:12px;font-weight:bold" align="right" th:text="${#numbers.formatDecimal(itemAdd.price * itemAdd.quantity,0,2)}"></td>
+	</tr>
+	</div>
+	<div th:if="${itemAdd.dishSize =='Default'}">
+	<tr>
+	  <td width="33%" style="font-size:11px; font-weight:bold" align="left" th:text="${itemAdd.name}"></td>
+		<td width="33%" style="font-size:11px;font-weight:bold" align="center"> <p><span>X </span><span th:text="${itemAdd.quantity}"></span></p></td>
+		<td width="33%" style="font-size:12px;font-weight:bold" align="right" th:text="${#numbers.formatDecimal(itemAdd.price * itemAdd.quantity,0,2)}"></td>
+	</tr>
+	</div>
+	</div>
+	</div>
+</div>
+</div>
+</table>
+<hr/>
+<div>
+<div style="float:left"><b>Sub Total</b></div>  <div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.amount,0,2)}"></div><br clear="all"/>
+<div th:each="itemCharge : ${checkRespone.chargeDetails}">
+<div th:if="${itemCharge.key != null}">
+<div style="float:left" th:text="${itemCharge.key}"></div> 
+<div style="float:right">+<span th:text="${#numbers.formatDecimal(itemCharge.value,0,2)}"></span></div>
+</div><br clear="all"/>
+</div>
+<div th:if="${checkRespone.amountAfterCharge} &gt; 0">
+<div style="float:left"><b>Total After Charges</b></div><div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.amountAfterCharge,0,2)}"></div><br clear="all"/>
+</div>
+<div th:each="item : ${checkRespone.discountDetails}">
+<div th:if="${item.key != null}">
+<div style="float:left" th:text="${item.key}"></div> 
+<div style="float:right"><span th:text="${#numbers.formatDecimal(item.value,0,2)}"></span></div>
+
+</div><br clear="all"/>
+</div>
+<div th:if="${checkRespone.discountflag} &gt; 0">
+<div style="float:left"><b>Total </b></div>  <div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.amountAfterDiscountCharges,0,2)}"></div><br clear="all"/>
+</div>
+<div th:if="${checkRespone.discountAmount} &gt; 0">
+<div style="float:left"><b>Discount</b></div>  <div style="float:right" th:text="${checkRespone.discountAmount}"></div><br clear="all"/>
+<div style="float:left"><b>Total After Discount</b></div><div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.amountAfterDiscount,0,2)}"></div><br clear="all"/>
+</div>
+<div th:each="item : ${checkRespone.taxDetails}">
+<div th:if="${item.key != null}">
+<div style="float:left" th:text="${item.key}"></div> 
+<div style="float:right"><span th:text="${#numbers.formatDecimal(item.value,0,2)}"></span></div>
+</div><br clear="all"/>
+</div>
+<!-- <div th:if="${not #strings.isEmpty(checkRespone.additionalChargeName3)}"> -->
+<div th:if="${checkRespone.outCircleDeliveryCharges} &gt; 0"> 
+<div style="float:left"><b>Delivery Charges</b></div><div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.outCircleDeliveryCharges,0,2)}"></div><br clear="all"/>
+</div>
+
+<div th:if="${checkRespone.waiveOffCharges} &gt; 0"> 
+<div style="float:left"><b>Waived off Delivery Charges</b></div><div style="float:right" th:text="- ${#numbers.formatDecimal(checkRespone.waiveOffCharges,0,2)}"></div><br clear="all"/>
+</div>
+
+<!-- </div> -->
+<div style="float:left"><b>Grand Total</b></div> 
+<div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.total, 0, 2)}">
+</div><br clear="all"/>
+
+
+<div th:if="${checkRespone.checkCreditBalance>0}">
+<div style="float:left"><b>Your total pending credit amount</b></div>
+<div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.checkCreditBalance, 0, 2)}"></div></div><br clear="all"/>
+</div>
+
+<div th:if="${checkRespone.checkCreditBalance<0}">
+<div style="float:left"><b>Credit amount</b></div>
+<div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.checkCreditBalance, 0, 2)}"></div><br clear="all"/>
+</div>
+
+<div th:if="${checkRespone.paymentMode=='CUSTOMER CREDIT'}">
+<div style="float:left"><b>Payable</b></div> 
+	<div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.checkCreditBalance, 0, 2)}"></div><br clear="all"/>
+</div>
+
+<div th:if="${checkRespone.paymentMode!='CUSTOMER CREDIT'}">
+<div style="float:left"><b>Payable</b></div> 
+	<div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.roundedOffTotal + checkRespone.checkCreditBalance,0, 2)}"></div><br clear="all"/>
+</div>
+
+<!-- <div th:if="${customer.credit.creditBalance<0}">
+<tr><td>Remaining Credit balance</td> 
+<div style="float:left"><b>Payable</b></div> 
+	<div style="float:right" th:text="${#numbers.formatDecimal(customer.credit.creditBalance,0, 2)}"></div><br clear="all"/>
+</div> -->
+
+
+<!-- <div style="float:left"><b>Payable</b></div><div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.roundedOffTotal,0,2)}"></div><br clear="all"/>
+</div> -->
+
+<div th:if="${checkRespone.amountSaved} &gt; 0">
+<div style="float:left"><b>Amount you saved  </b></div>  <div style="float:right" th:text="${#numbers.formatDecimal(checkRespone.amountSaved,0,2)}"></div><br clear="all"/>
+</div>
+
+<div><p align="center">For any cancellation or change please call the restaurant within 5 min. of placing your order at <span th:text="${user.bussinessPhoneNo}"></span></p></div> 
+<br clear="all"/>
+</body>
+</html>

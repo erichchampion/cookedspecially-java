@@ -1,0 +1,118 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<style type="text/css">
+body {
+	background: #F3F2E8;
+	color: #51463D;
+	font: normal 100%/1.5 "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+	padding: 1em;
+}
+
+h1 {
+	color: #A14141;
+	font: normal 1.5em Georgia, serif;
+	margin: 0;
+}
+
+em {
+	font-family: Palatino, Georgia, Times, serif;
+}
+
+img {
+	max-width: 100%;
+}
+</style>
+
+<script type="text/javascript" charset="utf-8">
+var imgSizer = {
+	Config : {
+		imgCache : []
+		,spacer : "/path/to/your/spacer.gif"
+	}
+
+	,collate : function(aScope) {
+		var isOldIE = (document.all && !window.opera && !window.XDomainRequest) ? 1 : 0;
+		if (isOldIE && document.getElementsByTagName) {
+			var c = imgSizer;
+			var imgCache = c.Config.imgCache;
+
+			var images = (aScope && aScope.length) ? aScope : document.getElementsByTagName("img");
+			for (var i = 0; i < images.length; i++) {
+				images[i].origWidth = images[i].offsetWidth;
+				images[i].origHeight = images[i].offsetHeight;
+
+				imgCache.push(images[i]);
+				c.ieAlpha(images[i]);
+				images[i].style.width = "100%";
+			}
+
+			if (imgCache.length) {
+				c.resize(function() {
+					for (var i = 0; i < imgCache.length; i++) {
+						var ratio = (imgCache[i].offsetWidth / imgCache[i].origWidth);
+						imgCache[i].style.height = (imgCache[i].origHeight * ratio) + "px";
+					}
+				});
+			}
+		}
+	}
+
+	,ieAlpha : function(img) {
+		var c = imgSizer;
+		if (img.oldSrc) {
+			img.src = img.oldSrc;
+		}
+		var src = img.src;
+		img.style.width = img.offsetWidth + "px";
+		img.style.height = img.offsetHeight + "px";
+		img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + src + "', sizingMethod='scale')"
+		img.oldSrc = src;
+		img.src = c.Config.spacer;
+	}
+
+	// Ghettomodified version of Simon Willison's addLoadEvent() -- http://simonwillison.net/2004/May/26/addLoadEvent/
+	,resize : function(func) {
+		var oldonresize = window.onresize;
+		if (typeof window.onresize != 'function') {
+			window.onresize = func;
+		} else {
+			window.onresize = function() {
+				if (oldonresize) {
+					oldonresize();
+				}
+				func();
+			}
+		}
+	}
+}
+
+addLoadEvent(function() {
+	imgSizer.collate();
+});
+
+function addLoadEvent(func) {
+	var oldonload = window.onload;
+	if (typeof window.onload != 'function') {
+		window.onload = func;
+	} else {
+		window.onload = function() {
+			if (oldonload) {
+				oldonload();
+			}
+			func();
+		}
+	}
+}
+</script>
+</head>
+<body>
+<p><img src="http://www.cookedspecially.com/static/21/portrait_SD_ComingSoon05.jpg" alt="Coming Soon" /></p>
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+[class*=sqs-col] {
+    float: left
+}
+[class*=sqs-col] .sqs-block {
+    padding-left: 5%;
+    padding-right: 5%
+}
+[class*=sqs-col]:last-child {
+    padding-right: 0
+}
+.sqs-col-12 {
+    width: 100%
+}
+.sqs-layout:not(.sqs-editing) .sqs-row+.sqs-row:not(:last-child) .sqs-block:last-child {
+    padding-bottom: 800px
+}
+.sqs-col-12 .sqs-col-4 {
+    width: 33.3333%
+}
+a {
+    color: #696763;
+}
+a:hover {
+    color: #000;
+}
+
+#services-paragraph-div {
+    margin-top: 35px;
+}
+
+#services-paragraph {
+    text-align: center;
+    margin-top: 40px;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+#services-top-content h1 {
+    font-family: BrandonGrotesque;
+}
+
+#services-top-content {
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.services-big-text {
+    font-size: 35px;
+    text-align: center;
+    color: #B0B0B0;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto 10px;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+}
+
+.text-align-center {
+    text-align: center;
+    color: #B0B0B0;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto 10px;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+    font-size: 25px;
+}
+
+#launching-in-delhi-soon {
+    font-size: 20px;
+}
+
+.text-align-center {
+    font-weight: 300;
+}
+
+.services-big-text {
+    font-weight: 200;
+}
+
+div {
+    display: block;
+}
+.sqs-block-image .intrinsic {
+    margin: auto;
+}
+.sqs-block:not(.sqs-block-html):not(.sqs-block-markdown) {
+    clear: both;
+}
+.sqs-block .yui3-resize-handle {
+    display: none;
+    position: absolute;
+    height: 50px;
+    width: 50px
+}
+
+.sqs-block .yui3-resize-handles-wrapper {
+    z-index: 10
+}
+.sqs-block .yui3-resize-handle-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -7px;
+    margin-left: -7px;
+    height: 13px;
+    width: 13px;
+    border-radius: 100px;
+    background-color: grey
+}
+.sqs-layout .sqs-row .sqs-block:first-child {
+    padding-top: 18px !important;
+}
+.text-align-right {
+    text-align: right
+}
+.columns-1 [class*=sqs-col-] {
+    width: 100% !important
+}
+.sqs-block {
+    position: relative;
+    height: auto;
+    outline: 1px solid transparent;
+    -webkit-transition: box-shadow .1s ease-in-out;
+    -moz-transition: box-shadow .1s ease-in-out;
+    -o-transition: box-shadow .1s ease-in-out;
+    transition: box-shadow .1s ease-in-out;
+    padding-top: 1px;
+    padding-bottom: 18px
+}
+.sqs-block.sqs-block-code img {
+    max-width: 100%
+}
+.sqs-block-hidden {
+    height: 0;
+    overflow: hidden
+}
+@media only screen and (max-width: 640px) {
+    .sqs-layout [class*=sqs-col] {
+        float: none !important;
+        width: auto !important
+    }
+    .sqs-layout .sqs-row .sqs-block:first-child {
+        padding-top: 1px !important
+    }
+    .sqs-layout .sqs-row .sqs-block:last-child {
+        padding-bottom: 1px !important
+    }
+    .sqs-layout .sqs-row+.sqs-row,
+    .sqs-layout .sqs-row+.sqs-block {
+        margin-top: 0 !important
+    }
+}
+.yui3-overlay-hidden {
+    display: block
+}
+.sqs-block-image .image-block-wrapper.sqs-default-image img {
+    display: inline-block
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic {
+    position: relative;
+    padding-top: 5px
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic .image-caption-wrapper,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic .image-caption-wrapper {
+    position: absolute;
+    overflow: hidden;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1%;
+    background: rgba(0, 0, 0, .7)
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic .image-caption-wrapper h1,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic .image-caption-wrapper h1,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic .image-caption-wrapper strong,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic .image-caption-wrapper strong {
+    color: #eee
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover:hover .image-caption-wrapper {
+    visibility: visible;
+    opacity: 1
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .image-caption-wrapper {
+    visibility: hidden;
+    opacity: 0;
+    color: red;
+    -webkit-transition: opacity .1s ease-out;
+    -moz-transition: opacity .1s ease-out;
+    -o-transition: opacity .1s ease-out;
+    transition: opacity .1s ease-out
+}
+.sqs-block-image .image-block-wrapper {
+    line-height: 4%;
+    text-align: center;
+    position: relative;
+    overflow: hidden
+}
+.sqs-block-image .intrinsic {
+    margin: auto
+}
+.sqs-block-image .intrinsic .image-block-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%
+}

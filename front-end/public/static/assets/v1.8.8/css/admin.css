@@ -1,0 +1,219 @@
+#admin{
+
+	background-image:url(../images/splash.jpg);
+    background-size: cover;
+    background-position: center center;
+	text-align: center;
+	overflow: hidden;
+	/*
+	height: 600px;
+    font-family: helvetica;
+	*/
+}   
+#admin .shade{
+    display:block;
+}
+
+
+		
+		
+#adminLogin,
+#setTableId{
+    z-index:101;
+    position:absolute;
+    width: 300px;
+    height: 440px;
+    margin: 50px 360px;
+    border: solid 2px #aaa;
+	left: 50%;
+	margin-left: -150px;
+	top: 50%;
+	margin-top: -250px;
+}   
+
+#adminLogin{
+    background: rgba(54, 25, 25, .5);
+} 
+#setTableId{
+    background: rgba(255, 255, 255, .5);
+}
+
+
+
+
+#controlPanel h2{
+    background: none repeat scroll 0 0 #222222;
+    color: #CECECE;
+    margin-top: 0;
+    padding: 10px;
+}
+
+#admin h1{
+    padding-top: 20px !important;
+    margin-bottom: 16px;
+    text-shadow: 2px 2px #666;
+}
+
+#adminLogin h2,
+#setTableId h2 {
+    padding: 10px;
+    margin: 0 0 28px 0;
+    background: #000;
+    color: #fff;
+}
+#setTableId h2 {
+	background: #006600;
+}
+
+#admin #inputField{
+    width: 230px;
+    height:44px;
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+#admin .keypad{
+	margin: 20px auto;
+	width: 225px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 60px;
+}
+#admin .diplayField{
+    width: 230px;
+    height:44px;
+    font-size: 38px;
+    margin-bottom: 20px;
+    text-align: center;
+	background: #fff;
+	margin: 0 auto;
+}
+
+#accessCodeField{
+	font-size: 42px;
+	line-height: 62px;
+}
+
+#adminLogin .inputBtn,
+#setTableId .inputBtn{
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    margin: 4px;
+    background: #111;
+    border: 2px solid #333;
+    color: #999;
+}
+#setTableId .inputBtn{
+    background: #202020;
+}
+#admin .inputBtn:active{
+    background: #000;
+    color: #fff;
+}
+#admin .inputBtn.OK{
+     display: inline-block;
+    width: 135px;
+}
+
+
+#controlPanel {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border: 2px solid #AAAAAA;
+    border: 1px solid #CC000000;
+    height: 80%;
+    left: 50%;
+    margin-left: -30%;
+    position: absolute;
+    top: 50px;
+    width: 60%;
+    z-index: 101;
+}
+
+#closeControlPanel{
+	float: right;
+	margin: -65px 4px 0 0;
+	color: #c00;
+	font-weight: 400;
+	font-size: 22px;
+	border: 1px solid #aaa;
+	padding: 6px;
+}
+
+#closeControlPanel:hover{
+	cursor: pointer;
+}
+#restaurantTables{
+    float: right;
+    margin-right: 15px;
+    max-height: 360px;
+    overflow: scroll;
+    width: 70%;
+	margin-top: -4px;
+}
+.selectedTable{
+	font-size: 24px;
+	text-align: left !important;
+	margin-left: 20px;
+	height: 360px;
+}
+
+
+.tableInfo{
+	border-bottom: 2px solid #ddd;
+	height: 40px;
+	background: #ccc;
+	padding: 5px 0 0 4px;
+	margin-top: 0px;	
+}
+
+
+.tableInfoHeader{
+	background: #333;
+	color: #ddd;
+}
+
+
+.selectedTable span.tableName,
+.selectedTable span.tableStatus,
+.selectedTable span.tableGuests{
+	display: inline-table;
+	width: 30%;
+	padding: 4px 0 0 6px;
+}
+
+.selectedTable span.tableStatus,
+.selectedTable span.tableGuests{
+	font-size: 14px;
+}
+
+.selectedTable .myLabel{
+	width: 160px !important;
+	font-weight: 600;
+	height: 50px;
+	margin-top: 4px;
+	vertical-align: middle;
+	display: block;
+	float: left;
+}
+#activeTableName {
+	margin-left: 13px;
+	width: 60%;
+	height: 50px;
+	margin-top: 5px;
+	vertical-align: middle;
+	float: left;	
+ }
+ 
+ 
+ #controlPanelCancel,
+ #controlPanelSave{
+    border: 1px solid #AAAAAA;
+    float: right;
+    height: 26px;
+    margin-right: 10px;
+    padding-top: 7px;
+    vertical-align: middle;
+    width: 200px;
+ }

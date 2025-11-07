@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Template for HTML email with inline image</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+<body bgcolor="#D8D8D8">
+<div style="align:center; width:100%;">
+<div style="float:left;"> 
+<p><b  style="float:left;">Name: </b> <span style="float:right;" th:text="${customerCreditBill.name}"></span></p><br clear="all"/>
+<p><b style="float:left;">Phone No.: </b><span style="float:right;"  th:text="${customerCreditBill.mobileNo}"></span></p><br clear="all"/>
+<p><b style="float:left;">Email .: </b><span style="float:right;"  th:text="${customerCreditBill.email}"></span></p><br clear="all"/>
+<p><b style="float:left;">Billing Address : </b><span  style="float:right;" th:text="${customerCreditBill.billingAddress}"></span></p><br clear="all"/>
+</div>
+<div style="float:right;">
+<p><b style="float:left;">Date: </b><span style="float:right;" th:text="${statementDate}"></span></p><br clear="all"/>
+<p><b style="float:left;">Total Amount: </b><span style="float:right;" th:text="${customerCreditBill.totalPurchases}"></span></p><br clear="all"/>
+</div>
+</div>
+<table style="align:center; width:100%">
+</table>
+<hr/>
+<table style="align:center; width:100%">
+<tr>
+		<th width="25%"><p style="float:left">Previous Amount Due</p></th>
+		<th width="25%"><p style="text-align:center">Payment</p></th>
+		<th width="25%"><p style="float:right">Purchase</p></th>
+		<th width="25%"><p style="float:right">Total Amount Due</p></th>
+</tr>
+<tr>
+		<td width="25%" align="left" th:text="${#numbers.formatDecimal(customerCreditBill.openingBanalce,0,2)}"></td>
+		<td width="25%" align="center" th:text="${#numbers.formatDecimal(customerCreditBill.paymentReceived,0,2)}"></td>
+		<td width="25%" align="right" th:text="${#numbers.formatDecimal(customerCreditBill.totalPurchases,0,2)}"></td>
+		<td width="25%" align="right" th:text="${#numbers.formatDecimal(customerCreditBill.outStandingBalance,0,2)}"></td>
+	</tr>
+</table>
+<table style="align:center; width:100%">
+<tr>
+		<td width="33%" align="left"><b>Credit Account </b></td>
+		<td width="33%" align="center"> <p><span></span></p></td>
+		<td width="33%" align="right" th:text="${customerCreditBill.creditName}"></td>
+</tr>
+<div th:if="${customerCreditBill.creditType !='ONE_OFF'}">
+<!-- <tr>
+		<td width="33%" align="left" ><b> Maximum Limit </b></td>
+		<td width="33%" align="center"> <p><span></span></p></td>
+		<td width="33%" align="right" th:text="${#numbers.formatDecimal(customerCreditBill.maxLimit,0,2)}"></td>
+</tr>
+<tr>
+		<td width="33%" align="left" ><b> Balance Limit </b></td>
+		<td width="33%" align="center"> <p><span></span></p></td>
+		<td width="33%" align="right" th:text="${#numbers.formatDecimal(customerCreditBill.availableCredit,0,2)}"></td>
+</tr> -->
+</div>
+</table>
+<hr/>
+<table style="align:center; width:100%">
+<tr>
+		<td width="25%" align="left" ><b>Transaction Date</b></td>
+		<td width="50%" align="center"><p><span th:text="${#dates.format(customerCreditBill.fromDate, 'dd-MMM-yyyy')}"></span> to  <span th:text="${#dates.format(customerCreditBill.toDate, 'dd-MMM-yyyy')}"></span></p></td>
+		<td width="25%" align="right"></td>
+</tr>
+</table>
+<hr/>
+<table style="align:center; width:100%">
+<tr>
+		<th width="25%"><p style="float:left">Date</p></th>
+		<th width="25%"><p style="text-align:center">Invoice Id</p></th>
+		<th width="25%"><p style="float:right">Description</p></th>
+		<th width="25%"><p style="float:right">Amount</p></th>
+</tr>
+<div th:each="transaction : ${customerCreditBill.transactions}">
+<tr>
+	    <td width="25%" align="left" th:text="${transaction.transactionDate}"></td>
+		<td width="25%" align="center" th:text="${transaction.invoiceId}"></td>
+		<td width="25%" align="right" th:text="${transaction.description}"></td>
+		<td width="25%" align="right" th:text="${#numbers.formatDecimal(transaction.amount,0,2)}"></td>
+</tr>
+</div>
+<tr></tr>
+</table>
+<hr/>
+<div>
+<!-- <div style="float:left"><b>Total Amount</b></div> <div style="float:right" th:text="${#numbers.formatDecimal(customerCreditBill.totalPurchases, 0, 2)}"></div><br clear="all"/> -->
+</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+body{
+    background: #dedede;
+    background: #151515;
+    padding: 0;
+    margin: 0;
+} 
+#pageContainer{
+    font-family: helvetica, arial, sans-serif;
+    font-size: 11pt;
+    margin:0 auto;
+    width: 960px;
+    overflow: hidden;    
+    background: #fff;;
+}
+ 
+header{
+    background: url('/images/banner.jpg');
+    padding: 20px;
+    height: 260px;
+}
+header h1{
+	text-shadow: 2px 2px 4px #999
+}
+ul{
+    padding-left:20px;
+}
+li{
+    list-style:none;
+}
+#logo{
+    width: 50px;
+    height:50px;
+    float: left;
+    overflow: hidden;
+    background: url(http://www.bakedspecially.com:8080/static/assets/generic/images/cs-logo.png);
+    margin-right: 6px;
+    margin-top: 10px;
+}
+
+header h1,
+#logo:hover{
+	cursor:pointer;
+}
+section{
+    margin: 0 60px 25px 25px;
+    width: 900px;
+}
+section.api{
+    border-top: 2px solid #ddd;
+    
+}
+h2{
+    margin-bottom: 4px;
+    font-size: 14pt;
+    color: #069;
+}
+.description{
+    margin-top: 4px;
+}
+.usage{
+    margin-top: 4px;
+}
+pre{
+    font-size: 10pt;
+    border: 1px solid #aaa;
+    display:inline-block;
+    padding: 10px 60px 0 0;
+    margin-top: -1px;
+    background: #fafafa;
+}
+.example{
+    display: none;
+}
+.showExample{
+    border: 1px solid #AAAAAA;
+    margin-bottom: 0;
+    padding: 5px;
+    width: 110px;    
+    color: #069;
+}
+.showExample:hover{
+    cursor:pointer;
+}

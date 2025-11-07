@@ -1,0 +1,100 @@
+<div class="container" style="margin-bottom: 15px;width: 100%;">
+	<div class="row" style="background-color: #EED8D3;">
+		<div class="col-md-3">
+			<div class="input-group">
+				<span class="input-group-addon">From-Date:</span> <input type="text"
+					class="form-control" style="background-color: white; cursor:pointer" readonly
+					my-date-picker ng-model="fromDateSelected">
+			</div>
+		</div>
+
+		<div class="col-md-3">
+			<div class="input-group">
+				<span class="input-group-addon">To-Date:</span> <input type="text"
+					class="form-control" style="background-color: white; cursor:pointer" readonly
+					ng-model="toDateSelected" my-date-picker><!--  <span
+					class="input-group-addon glyphicon glyphicon-calendar"
+					></span> -->
+			</div>
+		</div>
+
+		<div class="col-md-3">
+			<div class="input-group date" id='selectReport'>
+				<span class="input-group-addon">Select Report:</span> <select
+					ng-model="report" class="form-control"
+					ng-options="report as report.name for report in reportList">
+				</select>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<button type="button" class="btn btn-info" ng-click="getReport()">Get
+				Report</button>
+		</div>
+		<div class="col-md-auto" ng-show="export_enable">
+			<button class="button btn-link"
+				ng-click="exportToExcel('#report-chart-pri', 'Sheet', report.name)"
+				style="float: right">
+				<span class="glyphicon glyphicon-share"></span>Export to Excel
+			</button>
+		</div>
+		</div>
+</div>
+
+<div style="background-color: #fff;width: 100%;" id="chart-div-body">
+<!-- Section 1 One Chart -->
+<div class="container chart-sec" style="width: 100%;" id="chart-grid-1">
+<div class="row">
+	<div class="col borderCss">	
+		<article class="item">
+		<div class="chart table-responsive" id="chart-grid-11">
+		</div>	
+        </article>
+	</div> 
+</div>
+</div>
+<!-- Section 3 4 Chart 2x2 -->
+<div class="container chart-sec" style="width: 100%;" id="chart-div-3">
+<div class="row">
+	<div class="col-md-6">	
+		<article class="item">
+		<div class="chart " id="chart-grid-311">
+		</div>	
+        </article>
+	</div> 
+	<div class="col-md-6">	
+		<article class="item">
+		<div class="chart " id="chart-grid-312">
+		
+		</div>	
+        </article>
+	</div> 
+</div>
+<div class="row">
+	<div class="col-md-6">	
+		<article class="item">
+		<div class="chart" id="chart-grid-321">
+		</div>	
+        </article>
+	</div> 
+	<div class="col-md-6" >	
+		<article class="item">
+		<div class="chart " id="chart-grid-322">
+		</div>	
+        </article>
+	</div> 
+</div>
+</div>
+
+
+<!-- Section 4 One Chart-->
+<div class="container chart-sec" style="width: 100%;" id="chart-div-4">
+<div class="row">
+	<div class="col-md-12 borderCss">	
+		<article class="item">
+		<div class="chart" id="chart-grid-411">
+		</div>	
+        </article>
+	</div> 
+</div>
+</div>
+</div>

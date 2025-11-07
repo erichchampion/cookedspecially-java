@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Upload Image</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+</head>
+
+<body>
+
+<style>
+	#source-image-preview-container{
+		width:600px;
+		height:400px;
+		background:#efefef;
+		text-align:center;
+	}
+	#source-image-preview{
+		/*
+		width:400px;
+		height:400px;
+		*/
+	}
+	#image-preview-400{
+		width:400px;
+		height:400px;
+		border: 1px solid #aaa;
+	}
+	#image-preview-300{
+		width:300px;
+		height:300px;
+		border: 1px solid #aaa;
+	}
+	#image-preview-200{
+		width:200px;
+		height:200px;
+		border: 1px solid #aaa;
+	}
+	#image-preview-100{
+		width:100px;
+		height:100px;
+		border: 1px solid #aaa;
+	}		
+</style>
+	
+<form>
+	<input type="file" name="image-file" id="image-file-selector"/>
+	<input type="hidden" name="image-file-base64" id="image-file-base64" value=""/>
+	<div id="source-image-preview-container">
+	   <canvas id="source-image-preview"></canvas>
+	</div>
+	<p>
+	<input type="button" id="generate-images-btn" value="Generate Images" onclick="generateImages()" disabled="true"/>
+	</p>
+	<canvas id="image-preview-400"></canvas>
+	<canvas id="image-preview-300"></canvas>
+	<canvas id="image-preview-200"></canvas>
+	<canvas id="image-preview-100"></canvas>
+</form>
+	
+	
+
+<script>
+	var sourceImage;
+	
+	// Load source image	
+	$('#image-file-selector').on('change', function() {
+		console.log( "Loading source image...");
+        
+		// aspectRatio to generate large images 400x400 
+        var aspectRatio = 600 / 400 ; 
+
+        $.each(this.files, function() {
+            var canvas = document.getElementById("source-image-preview");
+            var canvasSrc = canvas.getContext("2d");
+            canvasSrc.clearRect(0, 0, canvas.width, canvas.height);
+            var imgWidth, imgHeight;
+            var image = new Image();
+            image.src = window.URL.createObjectURL(this);
+            image.onload = function() {
+                if ( image.width / image.height > aspectRatio ){ 
+                    // image is wider than canvas
+                    imgWidth  =  image.width > 600 ? 600 : image.width;
+                    imgHeight =  image.height > 400 ? image.height * imgWidth / image.width : image.height;
+                }else{
+                    // image is narrower than canvas 
+                    imgHeight = 400;
+                    imgWidth  = 400 * image.width / image.height;
+                }
+                // scale canvas and draw image
+                canvas.width  = imgWidth;
+                canvas.height = imgHeight;
+                canvasSrc.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+				//draw controls
+				/* NEEDS WORK
+				var frameMargin = (canvas.width - 400 ) / 2  
+				canvasSrc.lineWidth="2";
+				canvasSrc.strokeStyle="white";
+				canvasSrc.rect(frameMargin,2,396,396);
+				canvasSrc.stroke();
+				*/
+
+				
+                // put the file base64 code into a form variable
+                sourceImage = canvas.toDataURL("image/jpg");
+                //document.getElementById("image-file-base64").value = sourceImage;
+			};
+			
+			
+        });
+
+		// reset generate button
+		$('#generate-images-btn').val("Generate Images").removeAttr("disabled");
+
+    });
+	
+	
+
+		
+	
+	
+	function generateImages(){
+		//generateImages = function(){
+		console.log( "Generating images...");
+		var marginLeft;
+
+		// Large 400 x 400
+		var canvasLg = document.getElementById("image-preview-400");
+		var canvasLgSrc = canvasLg.getContext("2d");
+		//canvasLgSrc.clearRect(0, 0, 400, 400);
+		var imageLg = new Image();
+		//imageLg.src = sourceImage;
+		imageLg.src = document.getElementById("source-image-preview").toDataURL("image/jpg");
+		marginLeft = (canvasLg.width - 400 ) / 2;
+		
+		var sourceX = (imageLg.width - 400 ) / 2;
+		
+		console.log("imageLg.width " + imageLg.width + " imageLg.height " + imageLg.height);
+		
+		//var sourceX = 100;
+        var sourceY = 0;
+        var sourceWidth = imageLg.height;
+        var sourceHeight = imageLg.height;
+        var destWidth = imageLg.height;
+        var destHeight = imageLg.height;
+        
+		var destWidth = 310;
+        var destHeight = 150;
+        
+		var destX = 0;
+        var destY = 0; 
+		
+        canvasLgSrc.drawImage(imageLg, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+		
+		console.log('sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight');
+		console.log(sourceX + " " + sourceY + " " + sourceWidth + " " + sourceHeight + " " + destX + " " + destY + " " + destWidth + " " + destHeight);
+		
+		//canvasLgSrc.drawImage(imageLg, marginLeft, 0, canvasLg.height, canvasLg.height, 0, 0, 400, 400);
+		
+		
+		
+		// Medium 300 x 300
+		var canvasMd = document.getElementById("image-preview-300");
+		var canvasMdSrc = canvasMd.getContext("2d");
+		//canvasLgSrc.clearRect(0, 0, 300, 300);
+		var imageMd = new Image();
+		imageMd.src = document.getElementById("source-image-preview").toDataURL("image/jpg");
+		canvasMdSrc.drawImage(imageMd, 0, 0, 300, 300);		
+		
+		// Small 200 x 200
+		var canvasSm = document.getElementById("image-preview-200");
+		var canvasSmSrc = canvasSm.getContext("2d");
+		//canvasLgSrc.clearRect(0, 0, 200, 200);
+		var imageSm = new Image();
+		imageSm.src = document.getElementById("source-image-preview").toDataURL("image/jpg");
+		canvasSmSrc.drawImage(imageSm, 0, 0, 300, 300);				
+
+		
+		// reset generate button
+		//$('#generate-images-btn').attr("disabled", "true");
+		
+	}
+	
+		
+
+		
+		
+		
+	/* NEEDS WORK */
+	function drawControls(){
+		var canvas = document.getElementById("source-image-preview");
+        var canvasSrc = canvas.getContext("2d");
+		canvasSrc.strokeStyle="green";
+		canvasSrc.rect(0,100,400,400);
+		canvasSrc.clearRect(0, 0, 400, 400);
+		canvasSrc.stroke();
+	}	
+	
+
+		
+		
+	/*
+	$('#image-file-selector').on('change', function() {
+	    // iPad camera aspect ratio
+        var aspectRatio = 1; 
+		
+        $.each(this.files, function() {
+            var canvas = document.getElementById("source-image-preview");
+            var context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            var image = new Image();
+            image.src = window.URL.createObjectURL(this);
+
+            image.onload = function() {
+
+				var sourceWidth  =  image.width > 400 ? 400 : image.width; 
+				var sourceHeight  =  image.height > 400 ? 400 : image.height;  
+				var sourceX = 0;
+				var sourceY = 0;
+				var destX = 0;
+				var destY = 0;
+			
+				var destWidth = sourceWidth;
+				var destHeight = sourceHeight;
+				
+                if ( image.width > 400 ){ 
+                    // image is wider than canvas
+					var destX = canvas.width / 2 - destWidth / 2;
+					var destY = 0;
+                }else{
+					var destX = canvas.width / 2 - destWidth / 2;
+					var destY = 0;
+                }
+				
+                
+                // put the file base64 code into a form variable
+                var fileBase64 = canvas.toDataURL("image/png");
+                document.getElementById("image-file-base64").value = fileBase64;
+
+				context.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // draw image on canvas and display
+				console.log('sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight');
+
+				console.log(sourceX + " " + sourceY + " " + sourceWidth + " " +  sourceHeight + " " + destX + " " + destY + " " + destWidth + " " + destHeight);
+				
+				//context.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+				context.drawImage(image, destX, destY, destWidth, destHeight);
+
+                
+            };
+        });
+		
+    });
+	*/
+</script>

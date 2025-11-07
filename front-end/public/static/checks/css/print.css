@@ -1,0 +1,9 @@
+/* Put your custom CSS here */
+body {
+	font-family: monospace;
+}
+
+#status, #links, a {
+	display: none;
+	visibility: hidden;
+}

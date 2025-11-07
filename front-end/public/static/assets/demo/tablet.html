@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<script type="text/javascript" charset="utf-8" src="/static/assets/shared/js/jquery-1.9.1.js"></script>
+
+		<title> Axis </title>
+		
+	</head>
+    <style>
+        body{
+            background: #666;
+        }   
+        #container{
+            width:1024px;
+            height:600px;
+            margin: 10px auto;
+            color:#333;
+            text-align:center;
+            color:#ccc;
+            font-family: helvetica, arial;
+            font-size: 10px;
+        }
+        #container a{
+            text-decoration: none;
+            color: #eee;
+        }   
+        #container a:hover{
+            color: #fff;
+        }          
+        #tabletFrame {
+            border: 16px solid #202020;
+            border-radius: 12px 12px 12px 12px;
+            height: 600px;
+            width: 1024px;
+        }
+        #tabletScreen {
+            height: 536px;
+            width: 100%;
+			border:0;
+        }
+		#tabletMenu {
+            height: 24px;
+            width: 100%;
+			background: url(/static/assets/shared/images/androidmenu.png) #000 no-repeat right 1px;
+			
+        }
+		#tabletFooter {
+            height: 40px;
+            width: 100%;
+			background: url(/static/assets/shared/images/androidfooter.png) #000 no-repeat 390px 1px;
+        }		
+        @media all and (max-width: 999px) {
+            #container{
+                height:1024px;
+                width:600px;
+                margin: 10px auto;
+            }
+            #tabletFrame{
+                height:1024px;
+                width:600px;
+            }
+        }
+    </style>
+    
+   
+	<body>
+        <div id="container">
+        <p style="margin:0 0 4px"> 
+            ViewPort: <span style="color:#eee">1024x600</span> 
+            Orientation:
+           <a href="#" onclick="setOrientation('landscape')">Landscape</a> | 
+            <a href="#" onclick="setOrientation('portrait')">Portrait</a> </p>
+		<div id="tabletFrame">
+			<div id="tabletMenu">&nbsp;</div>
+			<iframe id="tabletScreen" src="index.html" width="" height=""></iframe>
+			<div id="tabletFooter">&nbsp;</div>
+			
+        </div>
+		<div id="appInfo" style="float:right;padding:5px 0"><a href="chrome://appcache-internals">chrome://appcache-internals</a></div>
+        </div>
+        
+	</body>
+	
+	
+	<script>
+	var isAndroid =  navigator.userAgent.toLowerCase().indexOf('android') > -1 ? true : false;
+	var isIOS =  navigator.userAgent.toLowerCase().indexOf('mobile') > -1 ? true : false;
+	//alert( navigator.userAgent.toLowerCase() );
+   
+	/*
+	if (location.href.indexOf('?generic') > -1) {
+		$('#appFrame').attr('src', 'generic/index.html');
+		$('#appInfo').html('Source: <a href="generic/index.html">generic/index.html</a>');
+
+    
+    }else{
+     	$('#appFrame').attr('src', 'index.html');
+     	$('#appInfo').html('Source: <a href="index.html">index.html</a>');
+    }
+    */
+	
+	
+	function setOrientation(v){
+	console.log('in setOrientation()');
+		if ( v == "landscape"){
+			$('#tabletFrame').css('height', 600).css('width', 1024);
+			$('#tabletScreen').css('height', 536).css('width', 1024);
+
+		}else{
+			$('#tabletFrame').css('height', 1024).css('width', 600);
+			$('#tabletScreen').css('height', 956).css('width', 600);
+			$('#tabletFooter').css('background-position-x', 180);
+		}
+
+	}
+
+
+    </script>
+    
+    
+</html>

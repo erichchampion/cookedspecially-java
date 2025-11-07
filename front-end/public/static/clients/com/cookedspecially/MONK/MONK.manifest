@@ -1,0 +1,57 @@
+CACHE MANIFEST
+
+# version 2013-08-08 18:18:00 v1
+# use /static/clients/com/cookedspecially/axis/assets/www/ for axis (1)
+# use /static/clients/com/cookedspecially/monk/assets/www/ for monk (8)
+# use /static/assets/demo/ for the demo app
+
+CACHE:
+/static/clients/com/cookedspecially/monk/assets/www/appCacheIcon.png
+/static/clients/com/cookedspecially/monk/assets/www/css/admin.css
+/static/clients/com/cookedspecially/monk/assets/www/css/images/ajax-loader.gif
+/static/clients/com/cookedspecially/monk/assets/www/css/images/app-loader.gif
+/static/clients/com/cookedspecially/monk/assets/www/css/jqm-survival-kit.css
+/static/clients/com/cookedspecially/monk/assets/www/css/jquery.mobile-1.3.0.css
+/static/clients/com/cookedspecially/monk/assets/www/css/mobile.css
+/static/clients/com/cookedspecially/monk/assets/www/css/style.css
+/static/clients/com/cookedspecially/monk/assets/www/images/androidfooter.png
+/static/clients/com/cookedspecially/monk/assets/www/images/androidmenu.png
+/static/clients/com/cookedspecially/monk/assets/www/images/arrow-down.png
+/static/clients/com/cookedspecially/monk/assets/www/images/restaurant-logo.png
+/static/clients/com/cookedspecially/monk/assets/www/images/restaurant.jpg
+/static/clients/com/cookedspecially/monk/assets/www/images/background.jpg
+/static/clients/com/cookedspecially/monk/assets/www/images/loading.gif
+/static/clients/com/cookedspecially/monk/assets/www/images/rating.png
+/static/clients/com/cookedspecially/monk/assets/www/images/scrolldown.png
+/static/clients/com/cookedspecially/monk/assets/www/images/settings-black.png
+/static/clients/com/cookedspecially/monk/assets/www/images/settings-gray.png
+/static/clients/com/cookedspecially/monk/assets/www/images/settings-red.png
+/static/clients/com/cookedspecially/monk/assets/www/images/splash.jpg
+/static/clients/com/cookedspecially/monk/assets/www/images/vegetarian.png
+/static/clients/com/cookedspecially/monk/assets/www/index.html
+/static/clients/com/cookedspecially/monk/assets/www/js/html5.js
+/static/clients/com/cookedspecially/monk/assets/www/js/images/ajax-loader.png
+/static/clients/com/cookedspecially/monk/assets/www/js/images/icons-18-black.png
+/static/clients/com/cookedspecially/monk/assets/www/js/images/icons-18-white.png
+/static/clients/com/cookedspecially/monk/assets/www/js/images/icons-36-black.png
+/static/clients/com/cookedspecially/monk/assets/www/js/images/icons-36-white.png
+/static/clients/com/cookedspecially/monk/assets/www/js/imgcache.js
+/static/clients/com/cookedspecially/monk/assets/www/js/jquery-1.9.1.js
+/static/clients/com/cookedspecially/monk/assets/www/js/jquery-migrate-1.1.1.js
+/static/clients/com/cookedspecially/monk/assets/www/js/jquery.imagesloaded.js
+/static/clients/com/cookedspecially/monk/assets/www/js/jquery.imagesloaded.min.js
+/static/clients/com/cookedspecially/monk/assets/www/js/jquery.isotope.min.js
+/static/clients/com/cookedspecially/monk/assets/www/js/jquery.mobile-1.3.0.js
+/static/clients/com/cookedspecially/monk/assets/www/js/jquery.mobile-1.3.0.min.js
+/static/clients/com/cookedspecially/monk/assets/www/js/json2.js
+/static/clients/com/cookedspecially/monk/assets/www/js/mobile-admin.js
+/static/clients/com/cookedspecially/monk/assets/www/js/mobile-order.js
+/static/clients/com/cookedspecially/monk/assets/www/js/mobile.js
+/static/clients/com/cookedspecially/monk/assets/www/js/zepto.onpress.js
+
+
+NETWORK:
+/CookedSpecially/menu/getallmenusjson/8
+*
+
+FALLBACK:

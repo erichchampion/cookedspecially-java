@@ -1,0 +1,240 @@
+window.console & console.log("in mobile-admin.js");
+
+var accessCode = '',
+	tableId = '',
+	active = 0,   
+	restaurantTables = {},
+	selectedTableId = '',
+	activeCheck = '';
+	newCheck = '';
+
+
+
+function keyDown(src, k){
+    if (src == "accessCode") {
+        if ( $(k).attr('value') != 'OK'){
+            accessCode = accessCode + $(k).attr('value');
+            $('#accessCodeField').html($('#accessCodeField').html() + '*');
+        }else{
+            checkAccessCode();
+        }
+        
+    }
+}
+
+function checkAccessCode(k){
+// DISABLED LOGIN FOR TESTING
+    if ( accessCode == "1984" || accessCode == ""){
+        $('#accessCodeField').html('');
+        $('#adminLogin').hide();
+         
+        initControlPanel();
+        $('#controlPanel').show();
+    
+    }else{
+        alert( 'Fail' );
+    }
+    accessCode = '';
+    $('#accessCodeField').html(accessCode);
+
+}
+
+
+
+function initControlPanel(){
+    //getRestaurantTables();
+}
+
+
+function showRestaurantTables(){
+	
+    $('#activeTableName').hide();
+	$('#activeTableInfo').hide();
+    $('#viewModeBtn').hide();
+    //$('#restaurantTables').html('').css('display','inline-table');
+    $('#restaurantTables').html('').show();
+
+    $('#restaurantTables').append( '<div class="tableInfoHeader"><span class="tableName"> Name</span>' +
+                                    '<span class="tableStatus">Status</span>' +
+                                    '<span class="tableGuests">Capacity</span>' +
+                                    '</div>');
+                                        
+	getRestaurantTables();
+
+}
+
+
+function getRestaurantTables(){
+    //alert ("getting tables for restaurant " + restaurantId );
+    //var url = 'http://www.bakedspecially.com:8080/CookedSpecially/seatingTable/gettablesjsonbyuname?username=axis@cookedspecially.com';
+    //var url = "http://www.bakedspecially.com/api/getTables.php?restaurantId=1";
+    //var url = "http://cookedspecially.miqueo.com/api/getTables.php?restaurantId=1";
+	var url = "/api/getTables.php?restaurantId=1";
+    
+    
+    // generate ramdom String to prevent caching
+	/* NOT NEEDED
+	var ramdomStr = "";
+    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for( var i=0; i < 3; i++ ){
+        ramdomStr += letters.charAt(Math.floor(Math.random() * letters.length));
+	}
+	var url = "/api/getTables.php?restaurantId=1&rs=" + ramdomStr;
+	console.log("getRestaurantTables(): " + url );
+	*/
+	
+
+		
+    $.ajax({
+      url: url,
+      dataType: 'json'
+    })
+    .done (function (data) {
+        restaurantTables = data;
+
+        for ( i=0; i < restaurantTables.tables.length; i++){
+        	//var _tableID   = restaurantTables.tables[i].seatingTableId;
+        	var _tableID   = restaurantTables.tables[i].id;
+        	var _tableName = restaurantTables.tables[i].name;
+        	var _tableGuests = restaurantTables.tables[i].seats;
+       	 	var _tableStatus = restaurantTables.tables[i].status;
+        	var _tableDesc = restaurantTables.tables[i].description;
+        
+       		$('#restaurantTables').append( '<div class="tableInfo '+ _tableStatus + 
+			'" onclick="selectActiveTable(\''+ _tableID + '\',\''+_tableName+'\',\''+_tableDesc +'\' )">'+ 
+			'<span class="tableName">' + _tableName + '</span>' +
+			'<span class="tableStatus">' + _tableStatus + '</span>' +
+			'<span class="tableGuests">' + _tableGuests + ' Guests</span>' +
+			'</div>');
+
+    	}
+        
+    
+    })
+    .fail(function() { 
+        console.log("AJAX: getRestaurantTables() FAILED"); 
+    })
+    .always(function() { 
+        console.log("AJAX: getRestaurantTables() COMPLETED"); 
+
+    });
+
+}
+
+
+
+
+
+
+function selectActiveTable(id, name, desc ){
+    selectedTableId = id ;
+
+    $('#restaurantTables').hide();
+    //$('#activeTableName').show().html( name );
+    $('#activeTableName').show().html( restaurantTables.tables[id-1].name );
+    $('#activeTableInfo').show();
+	$('.activeTableDescription').show().html( desc );
+	
+	$('#viewModeBtn').show();
+
+	// get and display check details
+	getCheckDetails();
+
+}
+
+
+function getCheckDetails(){
+		//var url = "http://cookedspecially.miqueo.com/api/getCheck.php?tableId=" + selectedTableId;
+		var url = "/api/getCheck.php?tableId=" + selectedTableId;
+		$('#tableCheckDetails').html('');
+		$.ajax({
+		  url: url,
+		  dataType: 'json'
+		})
+		.done (function (data) {
+			newCheck = data;
+			//$('#showTableNumbers').append( '<li>restaurantTables.tables[i].name</li>');
+			//$('#showTableNumbers').append('</ul>');
+			
+			$('#tableCheckDetails').append('<tt>' +
+				'Check#: ' + data.id + '</br>' +
+				'Table#: ' + data.tableId + '</br>' +
+				'Status:  ' + data.status + '</br>');
+			
+			if (data.items){
+				$('#tableCheckDetails').append('<tt>Ordered Items:  ' + data.items.length + '</tt>'); 
+			}
+			$('#tableCheckDetails').append('</tt>');
+			
+			newCheck = data;
+		
+		})
+		.fail(function() { 
+			console.log("AJAX: getCheck() FAILED"); 
+		})
+		.always(function() { 
+			console.log("AJAX: getCheck() COMPLETED"); 
+
+		});
+
+}
+
+
+
+
+
+function closeControlPanel(cmd){
+    
+    if ( cmd == 'save' ){
+
+		// set new active check if changed	
+		if ( activeCheck != newCheck ){
+			// set active check
+			activeCheck = newCheck;
+		
+			// first check for existing open orders
+        	var newOrder = true; // default value
+        	for ( i=0;i<=order.length;i++){
+        	    if ( typeof(order[i]) != "undefined" && order[i].table == selectedTableId ){
+        	        alert ('Existing Order.\nTable number has been changed to: ' + order[i].table);
+        	        newOrder = false;
+        	        active = i;
+        	    }
+        	}
+        	// not an existing order, create new one
+        	if ( newOrder && selectedTableId != '' ){
+        	    active = order.length;
+        	    order[active] = {number:'', table:selectedTableId, time:'',price:'', items:[]};   
+        	    alert ('New Order.\nTable number has been set to: ' + selectedTableId);
+        	}
+			// update UI elements
+			$('.addToOrder').show();
+			updateOrder();
+		
+		}
+		
+		
+    }else if (cmd == 'view'){
+			alert ('Device set to "View Mode"');
+			active = '';
+			$('.order-button').hide();
+			$('.order').hide();
+			$('.activeTableDescription').html('');
+	}
+
+    location.href = "#home";
+    $('#controlPanel').hide();
+    $('#adminLogin').show();
+
+}
+
+
+
+
+function viewMode(){
+    selectedTableId = '';
+	$('#activeTableName').show().html("Select...");
+	$('.addToOrder').hide();
+	closeControlPanel('view');
+}
+

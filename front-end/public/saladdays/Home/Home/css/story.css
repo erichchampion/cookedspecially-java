@@ -1,0 +1,60 @@
+[class*=sqs-col] {
+    float: left
+}
+[class*=sqs-col] .sqs-block {
+    padding-left: 4%;
+    padding-right: 4%
+}
+[class*=sqs-col]:first-child {
+    padding-left: 1%;
+    padding-right: 1%
+}
+[class*=sqs-col]:last-child {
+    padding-left: 1%;
+    padding-right: 1%
+}
+.sqs-col-12 .sqs-col-6 {
+    width: 50%
+}
+a {
+    color: #696763;
+}
+a:hover {
+    color: #FF6600;
+}
+.main-text {
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'sans-serif';
+    font-size: 16px;
+    line-height: 1.41em;
+    letter-spacing: 0px;
+    text-align: left;
+    font-weight: normal;
+    font-style: normal;
+}
+.sqs-block-html {
+    clear: none
+}
+.sqs-block-html .sqs-block-content {
+    outline: none
+}
+.sqs-block-html .sqs-block-content>*:first-child {
+    margin-top: 0
+}
+.sqs-block-html .sqs-block-content>*:last-child {
+    margin-bottom: 0
+}
+@media only screen and (max-width: 640px) {
+    .sqs-layout [class*=sqs-col] {
+        float: none !important;
+        width: auto !important
+    }
+    .sqs-layout .spacer-block {
+        display: none
+    }
+    .sqs-layout .sqs-row .sqs-block:first-child {
+        padding-top: 18px !important
+    }
+    .sqs-layout .sqs-row .sqs-block:last-child {
+        padding-bottom: 18px !important
+    }
+}

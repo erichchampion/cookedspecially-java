@@ -1,0 +1,194 @@
+p{
+	margin-right: 5%;
+	margin-left: 5%;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+    font-family: "Roboto",sans-serif;
+}
+
+.main-text p {
+    text-align: justify !important;
+}
+
+.line{
+	border-bottom: 1px solid #f5f5f5;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-bottom: 1px solid #f5f5f5;
+	margin-left: 2%;
+	margin-right: 2%;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+.sqs-block-image .image-block-outer-wrapper .image-block-wrapper img {
+    max-width: none
+}
+.sqs-block-image .image-block-lightbox {
+    cursor: pointer;
+    display: block
+}
+.sqs-block-image .lightbox img {
+    cursor: pointer
+}
+.sqs-block-image.sized .image-block-wrapper {
+    overflow: hidden;
+    padding-bottom: inherit !important
+}
+.sqs-block-image.sized .image-block-wrapper img {
+    text-align: inherit;
+    max-width: none
+}
+.sqs-block-image img {
+    display: block
+}
+.sqs-block-image .image-block-wrapper.sqs-default-image {
+    text-align: center
+}
+.sqs-block-image .image-block-wrapper.sqs-default-image img {
+    display: inline-block
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic {
+    position: relative;
+	max-width: 550.0px
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic .image-caption-wrapper,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic .image-caption-wrapper {
+    position: absolute;
+    overflow: hidden;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 18px;
+    background: rgba(0, 0, 0, .7)
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic .image-caption-wrapper h1,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic .image-caption-wrapper h1,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic .image-caption-wrapper strong,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic .image-caption-wrapper strong {
+    color: #eee
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic .image-caption-wrapper p,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic .image-caption-wrapper p {
+    color: #bbb;
+    line-height: 1.68em
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic .image-caption-wrapper p a,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic .image-caption-wrapper p a {
+    color: #bbb;
+    text-decoration: underline
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic .image-caption-wrapper p:first-child,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic .image-caption-wrapper p:first-child {
+    padding-top: 0;
+    margin-top: 0
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay .intrinsic .image-caption-wrapper p:last-child,
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .intrinsic .image-caption-wrapper p:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover:hover .image-caption-wrapper {
+    visibility: visible;
+    opacity: 1
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .image-caption-wrapper {
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: opacity .1s ease-out;
+    -moz-transition: opacity .1s ease-out;
+    -o-transition: opacity .1s ease-out;
+	padding-bottom:69%;
+	margin-left:10px;
+	margin-right:10px;
+    transition: opacity .1s ease-out
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover:hover .image-caption {
+    margin-bottom: 0
+}
+.sqs-block-image .image-block-outer-wrapper.layout-caption-overlay-hover .image-caption {
+    -webkit-transition: margin-bottom .1s ease-out;
+    -moz-transition: margin-bottom .1s ease-out;
+    -o-transition: margin-bottom .1s ease-out;
+    transition: margin-bottom .1s ease-out;
+    margin-bottom: -5px
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-left {
+    zoom: 1
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-left:after {
+    display: block;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+    clear: both;
+    content: "."
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-left .image-block-wrapper {
+    float: left
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-left .image-caption-wrapper {
+    float: left
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-left .image-caption {
+    padding-left: 50px
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-left .image-caption h1 {
+    font-size: 18px;
+    line-height: 2px
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-right {
+    zoom: 1
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-right:after {
+    display: block;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+    clear: both;
+    content: "."
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-right .image-block-wrapper {
+    float: right
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-right .image-caption-wrapper {
+    float: right;
+    text-align: right
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-right .image-caption {
+    padding-right: 50px
+}
+.sqs-block-image .image-block-outer-wrapper.layout-image-right .image-caption h1 {
+    font-size: 10px;
+    line-height: 24px
+}
+.sqs-block-image .image-block-wrapper {
+    line-height: 0;
+    text-align: center;
+    position: relative;
+	padding-bottom:69%;
+	margin-left:10px;
+	margin-right:10px;
+	max-width: 550.0px;
+    overflow: hidden
+}
+.sqs-block-image .image-block-wrapper img {
+    max-width: 100%
+}
+.sqs-block-image .image-block-wrapper img.block-stretch {
+    width: 100%
+}
+.sqs-block-image .image-block-wrapper.float-right .image-block-wrapper {
+    text-align: right
+}
+.sqs-block-image .intrinsic {
+    margin: auto
+}
+.sqs-block-image .intrinsic .image-block-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%
+}

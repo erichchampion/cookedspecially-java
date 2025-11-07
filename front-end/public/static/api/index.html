@@ -1,0 +1,332 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+
+    <title>CookedSpecially API Documentation</title>
+
+    <meta name="author" content="cookedspecially.com">
+    <meta name="description" content="CookedSpecially API Script Library">
+
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <script type="text/javascript" charset="utf-8" src="http://www.bakedspecially.com:8080/static/assets/v1.8.5/js/jquery-1.9.1.js">
+    
+      
+    </script>
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+<body>
+<style>
+
+</style>
+
+<div id="pageContainer">
+
+<header onclick="location.href='/index.html'">
+    <div id="logo"></div>
+    <h1>Cooked<span style="color:#090">Specially</span></h1>
+</header>
+
+<section>
+
+<img src="/images/kitchen-tools.png" style="float:right;opacity:.5;width:40%;"/>
+
+<h1>API library documentation</h1>
+
+<p>List of exiting APIs for CookedSpecially</p>
+
+<ul>
+    <!-- li><a href="dbdump.php" class="apiName">dbDump</a> <i>Real-time database dump</i></li -->
+    <li><a href="#getMenus" class="apiName">getMenus</a> <i>Used when the application starts</i></li>
+    <li><a href="#getTables" class="apiName">getTables</a> <i>Used to display the list of tables</i></li>
+    <li><a href="#setTable" class="apiName">setTable</a> <i>Used by the Save button in the admin panel</i></li>
+    <li><a href="#getCheck" class="apiName">getCheck</a> <i>Used to get a table's check data</i></li>
+    <li><a href="#addToOrder" class="apiName">addToOrder</a>  <i>In progress...</i></li>
+</ul>
+
+<br clear="all"/>
+
+</section>
+
+
+
+
+
+
+<a name="getMenus"></a>
+<section class="api">
+    <h2>getMenus.jsp</h2>
+    
+    <div class="description">
+        <p>
+        <b>Description:</b></br>
+        This API is used when the application starts-up and returns the data to populate all menus and menus items for the restaurant. 
+        <br/>
+        (Right now 
+        I am using a proxy server to get the menu json feed from the original 
+        <a href="http://www.bakedspecially.com:8080/CookedSpecially/menu/getallmenusjson/1">getRestaurantMenus.jsp</a> API)
+        </p>
+    </div>
+    
+    <div class="usage">
+        <p><b>Arguments:</b> 
+          <br/> - <tt>restaurantId</tt>: Restaurant ID from MenuMaker app.
+          <!--
+          <br/> - <tt>format</tt>: (optional|Future) The default is JSON. In the future we may use other formats (text, xml, etc...)
+          -->
+       <p>   
+       <p><b>Usage:</b> 
+          <br/>/api/getMenus.jsp?restaurantId=&lt;id&gt;
+       <p>
+    </div>
+
+    <p>
+    <a href="">Run Code</a>
+    </p>
+    
+    
+    
+</section>
+
+
+
+
+
+<a name="getTables"></a>
+<section class="api">
+    <h2>getTables.jsp</h2>
+    
+    <div class="description">
+        <p>
+        <b>Description:</b></br>
+        This API is used to display the list of tables list for a restaurant in the Control Panel window-- it returns all tables for a restaurant.  
+        <br/>
+        (In the future, it *could* be called with different arguments (restaurantId, userName, userId, ...)
+        </p>
+    </div>
+
+    <div class="usage">
+        <p><b>Arguments:</b> 
+          <br/> - <tt>restaurantId</tt>: restaurantId.
+          <!--
+          <br/> - <tt>userName</tt>: (otional|Future) <useName>.
+          <br/> - <tt>userId</tt>: (otional|Future) <useId>.
+          <br/> - <tt>format</tt>: (optional|Future) The default is JSON. In the future we may use other formats (text, xml, etc...)
+          -->
+       <p>   
+       <p><b>Usage:</b> 
+          <br/>/api/getTables.jsp?restaurantId=&lt;id&gt;
+       <p>
+       
+    </div>
+    
+    
+    <p>
+    <a href="">Run Code</a>
+    </p>
+    
+    
+</section>
+
+
+
+
+
+
+
+<a name="setTable"></a>
+<section class="api">
+    <h2>setTable.jsp</h2>
+    
+    <div class="description">
+        <p>
+        This API is used to set the table status in the database to:<br/>
+         - Busy<br/>
+         - Available<br/>
+         - Unavailable
+        </p>
+    </div>
+    
+    <div class="usage">
+        <p><b>Arguments:</b> 
+          <br/> - <tt>tableId</tt>: tableID.
+          <br/> - <tt>status</tt>:  Busy | Available | Unavailable
+       <p>   
+
+       <p>
+       <b>Usage:</b> 
+          <br/>/api/setTable.jsp?restaurantId=&lt;id&gt;&tableId=&lt;id&gt;&status=&lt;status&gt;
+       <p>
+    </div>
+    
+    <p>
+    <a href="">Run Code</a>
+    </p>
+    
+
+</section>   
+
+
+
+
+
+
+<a name="getCheck"></a>
+<section class="api">
+    <h2>getCheck.jsp</h2>
+    
+    <div class="description">
+        <p>
+        This API is used when a new or existing table is set in the device, or when the user clicks on the "View My Check" button.<br/>
+         - If the table has an open check,the API returns the order data.<br/>
+         - if the table has no open check, the API returns a new (blank) check id
+        </p>
+    </div>
+    
+    <div class="usage">
+        <p><b>Arguments:</b> 
+          <br/> - <tt>restaurantId</tt>: restaurantId.
+          <br/> - <tt>tableId</tt>: tableID.
+          <!--
+          <br/> - <tt>format</tt>: (optional|Future) The default is JSON. In the future we may use other formats (text, xml, etc...)
+          <br/> - <tt>status</tt>:  (Future) Posible values: (closed, active, canceled) 
+          <br/> - <tt>orderId</tt>: (Future) (orderId) regardless of the status
+          -->
+       <p>   
+       <p><b>Usage:</b> 
+          <br/>/api/getCheck.jsp?restaurantId=&lt;id&gt;&tableId=&lt;id&gt;
+       <p>
+    </div>
+    
+    
+    <p>
+    <a href="">Run Code</a>i
+        </p> 
+</section>
+
+
+
+
+
+
+
+<a name="addToOrder"></a>
+<section class="api">
+    <h2>addToOrder.jsp</h2>
+    
+    <div class="description">
+        <p>    
+        *** In progress *** 
+        </p>
+    </div>
+
+    <div class="usage">
+        <p><b>Arguments:</b> 
+        <br/>*** In progress *** 
+
+          
+          <!--
+          <br/> - <tt>format</tt>: (optional|Future) The default is JSON. In the future we may use other formats (text, xml, etc...)
+          -->
+       </p>   
+       <p><b>Usage:</b> 
+        <br/>*** In progress *** 
+       <p>
+    </div>
+
+    
+</section>
+    
+    
+    
+    
+
+
+
+
+<!--
+<a name="addToOrder"></a>
+<section class="api">
+    <h2>addToOrder.jsp</h2>
+    
+    <div class="description">
+        <p>    
+        *** In progress *** 
+        </p>
+    </div>
+
+    <div class="usage">
+        <p>
+            <b>Arguments:</b> 
+            <br/>
+            *** In progress *** 
+        </p>
+        <p>   
+            <b>Usage:</b> 
+            <br/>*** In progress *** 
+        <p>
+    </div>
+
+    
+</section>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+<br clear="all"/>
+
+<p style="text-align:center;font-family:courier">
+o o o o o o
+</p>
+<p id="footer">
+[
+<a href="#" style="color:#999">Home</a> | 
+<a href="#" style="color:#999">Product</a> | 
+<a href="#" style="color:#999">Clients</a> | 
+<a href="#" style="color:#999">About</a> | 
+<a href="#" style="color:#999">Contact</a> | 
+<a href="/demo/tablet.html" style="color:#999">Live Demo</a> |
+<a href="#" style="color:#999">Login</a>
+]
+</p>
+
+<div id="copyright" class="text">
+    <p>        
+    2013 Copyright CookedSpecially. All rights reserved.
+    </p>
+</div>
+
+
+    
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<script type="text/javascript" charset="utf-8" src="www/js/jquery-1.9.1.js"></script>
+
+		<title> Axis </title>
+		
+	</head>
+    <style>
+        body{
+            background: #666;
+        }   
+        #container{
+            width:1024px;
+            height:600px;
+            margin: 10px auto;
+            color:#333;
+            text-align:center;
+            color:#ccc;
+            font-family: helvetica, arial;
+            font-size: 10px;
+        }
+        #container a{
+            text-decoration: none;
+            color: #eee;
+        }   
+        #container a:hover{
+            color: #fff;
+        }          
+        #tabletFrame {
+            border: 16px solid #202020;
+            border-radius: 12px 12px 12px 12px;
+            height: 600px;
+            width: 1024px;
+        }
+        #tabletApp {
+            height: 536px;
+            width: 1024px;
+			border:0;
+        }
+		#tabletMenu {
+            height: 24px;
+            width: 1024px;
+			background: url(images/androidmenu.png) #000 no-repeat right 1px;
+			
+        }
+		#tabletFooter {
+            height: 40px;
+            width: 1024px;
+			background: url(images/androidfooter.png) #000 no-repeat 390px 1px;
+        }		
+        @media all and (max-width: 999px) {
+            #container{
+                height:1024px;
+                width:600px;
+                margin: 10px auto;
+            }
+            #tabletFrame{
+                height:1024px;
+                width:600px;
+            }
+        }
+    </style>
+    
+
+    
+	<body>
+        <div id="container">
+        <p style="margin:0 0 4px"> 
+            ViewPort: <span style="color:#eee">1024x600</span> 
+            Orientation:
+            <a href="#" onclick="$('#tabletFrame').css('height', 600).css('width', 1024)">Landscape</a> | 
+            <a href="#" onclick="$('#tabletFrame').css('height', 1024).css('width', 600)">Portrait</a> </p>
+		<div id="tabletFrame">
+			<div id="tabletMenu">&nbsp;</div>
+			<iframe id="tabletApp" src="index.html" width="" height=""></iframe>
+			<div id="tabletFooter">&nbsp;</div>
+			
+        </div>
+		<div id="appInfo" style="float:right;padding:5px 0"></div>
+        </div>
+        
+	</body>
+	
+	
+	<script>
+	var isAndroid =  navigator.userAgent.toLowerCase().indexOf('android') > -1 ? true : false;
+	var isIOS =  navigator.userAgent.toLowerCase().indexOf('mobile') > -1 ? true : false;
+	
+	//alert( navigator.userAgent.toLowerCase() );
+	
+   
+	if (location.href.indexOf('?v2.0') > -1 || location.href.indexOf('?v5') > -1) {
+		if ( isAndroid || isIOS ){
+			location.href = "v2.0";
+		}else{
+			$('#appFrame').attr('src', 'v2.0/index.html');
+			$('#appInfo').html('Source: <a href="v2.0/index.html">v2.0/index.html</a>');		
+		}
+		
+    
+    }else if (location.href.indexOf('?v1.1') > -1 || location.href.indexOf('?v1') > -1) {
+		$('#appFrame').attr('src', 'v1.1/index.html');
+     	$('#appInfo').html('Source: <a href="v1.1/index.html">v1.1/index.html</a>');
+
+
+	}else if (location.href.indexOf('?v1.2') > -1 || location.href.indexOf('?v2') > -1) {
+    	$('#appFrame').attr('src', 'v1.2/index.html');
+     	$('#appInfo').html('Source: <a href="v1.2/index.html">v1.2/index.html</a>');		
+
+ 
+	}else if (location.href.indexOf('?v1.3') > -1 || location.href.indexOf('?v3') > -1) {
+    	$('#appFrame').attr('src', 'v1.3/index.html');
+     	$('#appInfo').html('Source: <a href="v1.3/index.html">v1.3/index.html</a>');		
+
+
+	}else if (location.href.indexOf('?generic') > -1) {
+		$('#appFrame').attr('src', 'generic/index.html');
+		$('#appInfo').html('Source: <a href="generic/index.html">generic/index.html</a>');
+
+    
+    }else{
+     	$('#appFrame').attr('src', 'www/index.html');
+     	$('#appInfo').html('Source: <a href="www/index.html">www/index.html</a>');
+    }
+    
+    </script>
+    
+    
+</html>

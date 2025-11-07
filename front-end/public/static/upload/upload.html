@@ -1,0 +1,272 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Upload Image</title>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" href="css/jquery.Jcrop.css" type="text/css" />
+</head>
+
+<body>
+
+<style>
+	#image-file-selector{
+		border: 1px solid #aaa;
+		border-radius: 25px;
+		background: #dedede;
+		padding: 80px 20px;
+	}
+
+	#source-image-preview-container{
+		width:600px;
+		height:400px;
+		background:#efefef;
+		text-align:center;
+	}
+	#source-image-preview{
+		width:0px;
+		height:0px;
+		display:block;
+	}
+	#cancel-btn,
+	#generate-btn{
+		display:none;
+	}
+	#image-preview-400{
+		width:400px;
+		height:400px;
+		border: 1px solid #aaa;
+	}
+	#image-preview-300{
+		width:300px;
+		height:300px;
+		border: 1px solid #aaa;
+	}
+	#image-preview-200{
+		width:200px;
+		height:200px;
+		border: 1px solid #aaa;
+	}
+	#image-preview-100{
+		width:100px;
+		height:100px;
+		border: 1px solid #aaa;
+	}
+	.preview{
+		display:none;
+		float:left;
+		/* margin-right:8px; */
+	}
+	#step{
+		font-family: verdana, helvetica, arial;
+	}
+	#step span{
+		color: #aaa;
+	}
+</style>
+	
+<form>
+	<h3 id="step"><span>Step 1:</span> Select an image to upload<h3>
+	<input type="file" name="image-file" id="image-file-selector"/>
+	
+	<input type="hidden" name="image-file-base64" id="image-file-base64" value=""/>
+	<!--
+	<div id="source-image-preview-container">
+	   <canvas id="source-image-preview"></canvas>
+	</div>
+	-->
+	 <img id="source-image-preview" src=""/>
+
+	<p>
+	<input type="button" id="cancel-btn" value="Cancel" onclick="location.reload()"/>
+
+	<input type="button" id="generate-btn" value="Generate Images" onclick="generateImages()"/>
+	</p>
+	<canvas class="preview" id="image-preview-400"></canvas>
+	<canvas class="preview" id="image-preview-300"></canvas>
+	<canvas class="preview" id="image-preview-200"></canvas>
+	<canvas class="preview" id="image-preview-100"></canvas>
+</form>
+	
+	
+
+<script>
+
+	// Load source image	
+	$('#image-file-selector').on('change', function() {
+		console.log( "Loading source image...");
+
+		// aspect ratio to generate large images 400x400 
+        var ASPECT_RATIO = 600 / 400 ; 
+		
+		var sourceImage,  // holds the scaled image 
+			sourceWidth,  // original image width
+			sourceHeight, // original image height
+			imgWidth,     // scaled image width
+			imgHeight,    // scaled image height
+			cImgXCoord,	  // cropped image X coordinate
+			cImgYCoord,	  // cropped image Y coordinate
+			cImgWidth,    // cropped image width
+			cImgHeight;   // cropped image height
+
+		
+
+		// hide file selector
+		$('#image-file-selector').hide();		
+
+        $.each(this.files, function() {
+		
+			//create a canvas to hold the cropped image
+            //var canvas = document.createElement("canvas");
+            //var canvasSrc = canvas.getContext("2d");
+            //canvasSrc.clearRect(0, 0, canvas.width, canvas.height);
+			
+            // process selected image
+			var image = new Image();
+            image.src = window.URL.createObjectURL(this);
+            image.onload = function() {
+				
+				sourceImage  = image.src;
+				sourceWidth  = image.width;
+				sourceHeight = image.height;
+				
+				console.log("sourceWidth " + sourceWidth + " sourceHeight " + sourceHeight)
+				
+                if ( sourceWidth / sourceHeight > ASPECT_RATIO ){ 
+                    // image is wider than canvas
+                    imgWidth  =  sourceWidth > 600 ? 600 : sourceWidth;
+                    imgHeight =  sourceHeight > 400 ? sourceHeight * imgWidth / sourceWidth : sourceHeight;
+                }else{
+                    // image is narrower than canvas 
+                    imgHeight = 400;
+                    imgWidth  = 400 * sourceWidth / sourceHeight;
+                }
+				
+                //scale canvas and draw image
+                //canvas.width  = imgWidth;
+                //canvas.height = imgHeight;
+                //canvasSrc.drawImage(image, 0, 0, canvas.width, canvas.height);
+				
+                // put the file base64 code into a form variable
+                //sourceImage = canvas.toDataURL("image/jpg");
+                //document.getElementById("image-file-base64").value = sourceImage;
+				
+				// resize image preview to match image dimensions
+				$("#source-image-preview").attr("src", sourceImage).css({"width":imgWidth,"height":imgHeight});
+				
+				$('#source-image-preview').Jcrop({
+					aspectRatio: 1,
+					onSelect: setSelection
+				});
+				
+				
+		
+			};
+
+			
+        });
+		
+		
+		// show cancel button
+		$("#cancel-btn").show();
+
+		// update step help
+		$('#step').hide();
+		$('#step').html("<span>Step 2:</span> Drag to make your selection").fadeIn("3000");
+		
+		
+		
+		// ************************** 
+		// Function: setSelection() 
+		// **************************  
+		setSelection = function(c){
+			// variables can be accessed here as
+			// c.x, c.y, c.x2, c.y2, c.w, c.h
+			cImgXCoord  = c.x;
+			cImgYCoord  = c.y;
+			cImgWidth   = c.w;
+			cImgHeight  = c.h;
+
+			// show generate button 
+			$('#generate-btn').show();
+
+			// update step help
+			$('#step').hide();
+			$('#step').html("<span>Step 3:</span> Click <i>Generate Images</i>").fadeIn("3000");
+			
+		}
+		
+		
+		// ************************** 
+		// Function: generateImages() 
+		// **************************  
+		generateImages = function(){
+			console.log( "Generating images...");
+
+			var srcX       = cImgXCoord * (sourceWidth / imgWidth),
+			    srcY       = cImgYCoord * (sourceHeight / imgHeight),
+			    srcWidth   = cImgWidth  * (sourceWidth / imgWidth), 
+			    srcHeight  = cImgHeight * (sourceHeight / imgHeight),
+			    destX      = 0,
+			    destY      = 0,
+			    destWidth,
+			    destHeight;			
+
+			var image = new Image("image/jpeg");
+				image.src = sourceImage;
+
+				
+			// Large 400 x 400
+			var canvasLg = document.getElementById("image-preview-400");
+			var canvasLgImg = canvasLg.getContext("2d");
+				canvasLg.width  = 400;
+				canvasLg.height = 400;
+			destWidth  = 400;
+			destHeight = 400;
+			canvasLgImg.drawImage(image, srcX, srcY, srcWidth, srcHeight, destX, destY, destWidth, destHeight);
+			
+
+			// Medium 300 x 300
+			var canvasMd = document.getElementById("image-preview-300");
+			var canvasMdImg = canvasMd.getContext("2d");
+				canvasMd.width  = 300;
+				canvasMd.height = 300;
+			destWidth  = 300;
+			destHeight = 300;
+			canvasMdImg.drawImage(image, srcX, srcY, srcWidth, srcHeight, destX, destY, destWidth, destHeight);
+
+			
+			// Small 200 x 200
+			var canvasSm = document.getElementById("image-preview-200");
+			var canvasSmImg = canvasSm.getContext("2d");
+				canvasSm.width  = 200;
+				canvasSm.height = 200;
+			destWidth  = 200;
+			destHeight = 200;
+			canvasSmImg.drawImage(image, srcX, srcY, srcWidth, srcHeight, destX, destY, destWidth, destHeight);
+			
+
+			// Extra small 100 x 100
+			var canvasXs = document.getElementById("image-preview-100");
+			var canvasXsImg = canvasXs.getContext("2d");
+				canvasXs.width  = 100;
+				canvasXs.height = 100;
+			destWidth  = 100;
+			destHeight = 100;
+			canvasXsImg.drawImage(image, srcX, srcY, srcWidth, srcHeight, destX, destY, destWidth, destHeight);
+			
+			
+			// Show generated images
+			$('.preview').show();
+			
+			// put images into variables
+			var imageLg = canvasLg.toDataURL("image/jpeg");
+			var imageMd = canvasMd.toDataURL("image/jpeg");
+			var imageSm = canvasSm.toDataURL("image/jpeg");
+			var imageXs = canvasXs.toDataURL("image/jpeg");
+		}
+    });
+
+</script>
+

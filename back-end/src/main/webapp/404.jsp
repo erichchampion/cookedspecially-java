@@ -1,0 +1,1 @@
+<img src="/CookedSpecially/images/404.jpg" />

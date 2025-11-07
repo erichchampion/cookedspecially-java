@@ -1,0 +1,287 @@
+body{
+    background: #dedede;
+    background: #151515;
+    padding: 0;
+    margin: 0;
+} 
+#pageContainer{
+    font-family: helvetica, arial, sans-serif;
+    font-size: 11pt;
+    margin:0 auto;
+    width: 960px;
+    width: 1024px;
+    overflow: hidden;    
+    background: #fff;
+	height: 100%;
+}
+
+#nav {
+	background: #f9f9f9;
+	height: 54px;
+	padding-top: 16px;
+	
+	
+background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.3))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.3) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.3) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.3) 100%); /* IE10+ */
+background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.3) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#66000000',GradientType=1 ); /* IE6-9 */
+	
+}	
+#nav #logo{
+	margin: -5px 5px 0 10px;
+}
+#nav h1{
+	text-shadow: 2px 2px 4px #999;
+	font-size: 32px;
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+#nav ul{
+	float: right;
+	margin: 5px 12px;
+	margin: 15px 2px;
+}
+
+#nav li{
+	display: inline-block;
+	width: 67px;
+	height: 28px;
+	border: 1px solid #aaa;
+	padding-top: 9px;
+	padding-left: 36px;
+	margin: 0 -3px;
+	background: #eee;
+	width: 92px;
+	padding-left: 0px;
+	text-align:center;
+}
+#nav li:hover{
+	border-top: 3px solid #a00;
+	padding-top: 6px;
+	cursor: pointer;
+	color: #c30;
+	background-position-y: -2px;
+}
+#nav li.selected{
+	border-top: 3px solid #a00;
+	color: #666;
+	padding-top: 6px;
+	background: #f3f3f3;
+	border-bottom: 1px solid #eee;
+}
+#nav a{
+	text-decoration: none;
+	color: #111;
+}
+/*
+#nav li.yellow{
+	background:url(/-images/nav-li-yellow.jpg) #efefef no-repeat;
+}
+#nav li.red{
+	background:url(/-images/nav-li-red.jpg) #efefef no-repeat;
+}
+#nav li.green{
+	background:url(/-images/nav-li-green.jpg) #efefef no-repeat;
+}
+#nav li.blue{
+	background:url(/-images/nav-li-blue.jpg) #efefef no-repeat;
+}
+*/
+
+
+header{
+	background: url('../images/banner-home.jpg');
+	padding: 205px 20px 0 20px;
+	height: 75px;
+}
+header h1{
+	text-shadow: 2px 2px 4px #999;
+	font-size: 32px;
+	margin-top: 8px;
+	font-weight: 400;
+	margin: 0;
+	color: #202020;
+}
+
+
+header h2{
+	font-size: 24px;
+	margin-top: 0px;
+	font-weight: 200;
+	color:#fff;
+	text-shadow: 2px 2px 2px #666;
+
+}
+#logo{
+    width: 50px;
+    height:50px;
+    float: left;
+    overflow: hidden;
+    background: url(http://www.bakedspecially.com:8080/static/assets/generic/images/cs-logo.png);
+    margin-right: 6px;
+}
+
+
+.homeSectionWide{
+	float: left;
+	width:600px;
+	width:645px;
+	margin: 20px 0 0px 25px;
+	padding: 0 12px;
+	overflow: hidden;	
+	border: 1px solid #aaa;
+	border-radius: 15px;
+	
+	border: 0px solid #aaa;
+	padding: 0;
+	
+
+}
+.homeSectionWide b{
+	color: #505050;
+}	
+
+
+.homeSectionLogin{
+	float: left;
+	width: 240px;
+	width: 260px;
+	margin: 20px 0 0px 20px;
+	padding: 0px 20px;	
+	border: 1px solid #aaa;
+	border-radius: 15px;
+	background: #eaeaea;
+	
+background: rgb(226,226,226); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
+	
+}
+
+
+.homeSection{
+	float: left;
+	width:285px;
+	width:305px;
+	height:250px;
+	background: #dedede;
+	background: #f3f3f3;
+	margin: 20px 0 20px 25px;
+	border:1px solid #aaa;
+	padding: 0;
+	overflow: hidden;
+}
+
+.homeSection:hover{
+	background: #eaeaea;
+	cursor:pointer;
+}
+.homeSection  img{
+	opacity: .7;
+	border-bottom: 1px solid #bebebe;
+}
+.homeSection h2{
+	color: #c30; 
+	margin: 20px 12px 0 12px;
+	text-shadow: 1px 1px 1px #999;
+	font-weight: 200;
+	background: ;
+
+}
+.homeSection p{
+	margin: 10px 12px;
+}
+.homeSection .readmore{
+	text-align:right;
+}
+.homeSection .readmore a{
+	color:#a30;
+	text-decoration: none;
+}
+.homeSection .readmore a:hover{
+	color:#a00;
+}
+
+#footer{
+	text-align:center;
+	font-family:verdana;
+	font-size:12px;
+		color: #aaa;
+
+}
+
+#copyright{
+	background: #404040;
+	text-align: center;
+	color: #dedede;
+	padding: 10px 0 5px;
+}
+#footer a,
+#copyright a{
+	color: #aaa;
+	text-decoration: none;
+}
+
+
+.text{
+	font-family: verdana, sans-serif;
+	font-size: 12px;
+	line-height: 16px;
+	color: #202020;
+}
+
+
+.demo iframe {
+	border:0;
+}
+
+
+
+
+
+
+/* responsive overrides: tablet */
+@media screen and (min-width:751px) and (max-width:970px) { 
+
+	#pageContainer{
+		width: 100%;
+	}
+	#nav li{
+		width: 64px;
+	}
+	.homeSectionWide{
+		width:62%;
+		margin: 20px 0 10px 16px;
+	}	
+	.homeSectionLogin{
+		width:25%;
+		margin: 20px 0 10px 20px;
+		padding-left:15px;
+	}
+	.homeSectionLogin input{
+		width:55%;
+	}		
+	.homeSection{
+		width:30%;
+		margin: 20px 0 10px 16px;
+	}
+
+}
+
+
+@media screen and (max-width:750px){ 
+	#nav ul{
+		float: none;
+	}
+}
+
+

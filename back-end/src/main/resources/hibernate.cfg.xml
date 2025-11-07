@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+ 
+<hibernate-configuration>
+    <session-factory>
+    	<mapping class="com.cookedspecially.domain.Dish" />
+    	<!--  <mapping class="com.cookedspecially.domain.Category" /> -->
+    	<mapping class="com.cookedspecially.domain.Section" />
+    	<mapping class="com.cookedspecially.domain.Menu" />
+    	<mapping class="com.cookedspecially.domain.User" />
+    	<mapping class="com.cookedspecially.domain.Restaurant" />
+    	<mapping class="com.cookedspecially.domain.Customer" />
+		<mapping class="com.cookedspecially.domain.Coupon" />
+    	<mapping class="com.cookedspecially.domain.CouponFlatRules" />
+    	<mapping class="com.cookedspecially.domain.Order" />
+    	<mapping class="com.cookedspecially.domain.SeatingTable" />
+    	<mapping class="com.cookedspecially.domain.OrderDish" />
+    	<mapping class="com.cookedspecially.domain.Check" />
+    	<mapping class="com.cookedspecially.domain.DeliveryArea" />
+    	<mapping class="com.cookedspecially.domain.CustomerAddress" />
+    	<mapping class="com.cookedspecially.domain.DishType" />
+    	<mapping class="com.cookedspecially.domain.TaxType" />
+    	<mapping class="com.cookedspecially.domain.DishAddOn" />
+    	<mapping class="com.cookedspecially.domain.AddOnDishType" />
+    	<mapping class="com.cookedspecially.domain.AddOnDish" />
+    	<mapping class="com.cookedspecially.domain.StockManagement" />
+    	<mapping class="com.cookedspecially.domain.OrderAddOn" />
+    	<mapping class="com.cookedspecially.domain.FulfillmentCenter" />
+    	<mapping class="com.cookedspecially.domain.MicroKitchenScreen" />
+    	<mapping class="com.cookedspecially.domain.Role" />
+    	<mapping class="com.cookedspecially.domain.UserPortrayal" />
+    	<mapping class="com.cookedspecially.domain.Discount_Charges"/>
+    	<mapping class="com.cookedspecially.domain.Order_DCList"/>
+    	<mapping class="com.cookedspecially.domain.OTP"/>
+    	<mapping class="com.cookedspecially.domain.Nutrientes"/>
+    	<mapping class="com.cookedspecially.domain.NutrientInfo"/>
+    	<mapping class="com.cookedspecially.domain.AddOnNutrientInfo"/>
+    	<mapping class="com.cookedspecially.domain.OrderSource"/>
+    	<mapping class="com.cookedspecially.domain.PaymentType"/>
+    	<mapping class="com.cookedspecially.domain.Till"/>
+    	<mapping class="com.cookedspecially.domain.Transaction"/>
+    	<mapping class="com.cookedspecially.domain.HandoverRequest"/>
+    	<mapping class="com.cookedspecially.domain.DishSize"/>
+    	<mapping class="com.cookedspecially.domain.Dish_Size"/>
+    	<mapping class="com.cookedspecially.domain.AddOnDish_Size"/>
+    	<mapping class="com.cookedspecially.domain.Notifier"/>
+    	<mapping class="com.cookedspecially.domain.Subscription"/>
+    	<mapping class="com.cookedspecially.domain.CustomerCredit"/>
+    	<mapping class="com.cookedspecially.domain.CreditType"/>
+    	<mapping class="com.cookedspecially.domain.CreditTransactions"/>
+    	<mapping class="com.cookedspecially.domain.CreditBill"/>
+    	<mapping class="com.cookedspecially.domain.CreditPayment"/>
+    	<mapping class="com.cookedspecially.domain.EditChecks"/>
+        <mapping class="com.cookedspecially.domain.GiftCard"/>
+        <mapping class="com.cookedspecially.domain.GiftCardSell"/>
+        <mapping class="com.cookedspecially.domain.GiftCardRedemption"/>
+        <mapping class="com.cookedspecially.domain.SocialConnector"/>
+    	</session-factory>
+</hibernate-configuration>

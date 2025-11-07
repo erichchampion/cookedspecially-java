@@ -1,0 +1,78 @@
+/* Put your custom CSS here */
+
+.ui-page { -webkit-backface-visibility: hidden; }
+
+/* jquery mobile overrides */
+.ui-btn {
+    display: block;
+    float: left;
+}
+.ui-btn-inner {
+	font-size: 36px;
+	font-family: 'Great Vibes', cursive !important;
+	text-overflow: ellipsis;
+	/* white-space: normal; */
+}
+
+.ui-btn-up-c {
+    text-shadow: 5px 1px 5px #FFFFFF;
+}
+
+/* end jquery mobile overrides */
+
+
+#nav{
+    display:inline-block;  
+    float:right;
+    padding: 15px;
+}
+
+#home{
+	background: url(../images/background.jpg);  
+}
+
+#topMenu{
+	margin:80px auto;
+	text-align: center;	
+}
+#container{
+	margin:20px auto;
+	text-align: center;	
+}
+
+.ui-mobile .ui-page .topMenuBtn {
+	min-height: 200px;
+	/* background:rgba(0,0,0,0.2); */
+	padding-bottom: 250px;
+}
+.topMenuBtn{
+	/* height: 200px; */
+    width: 200px;
+	margin:20px;
+}
+.topMenuBtn:hover{
+    opacity:.8;
+    border-color: red;
+}
+.topMenuBtn:active{
+    opacity:.8; 
+    border-color: red;
+}
+
+
+.footer{
+	position:fixed; 
+	bottom: 20px;
+	text-align:center; 
+	font-size:12px;
+	width:100%
+}
+
+.item{
+    display: block;
+}
+
+/* http://www.adobe.com/devnet/phonegap/articles/creating-apps-with-phonegap-lessons.html */
+div.page { 
+	/* -webkit-transform: translate3d(0,0,0); */
+} 

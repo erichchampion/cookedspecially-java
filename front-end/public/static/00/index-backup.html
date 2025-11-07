@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Mobile Web App</title>
+	<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.10.1.custom.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.3.0.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme-1.0.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.0.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" charset="utf-8" src="js/cordova-2.4.0.js">
+	</script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery-1.9.1.js">
+	</script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery-migrate-1.1.1.js">
+	</script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery-ui-1.10.1.custom.js">
+	</script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.3.0.js">
+	</script>
+	<script type="text/javascript" charset="utf-8" src="js/jquery.isotope.min.js">
+	</script>	
+	<script type="text/javascript" charset="utf-8" src="js/imgcache.js">
+	</script>	
+	<script type="text/javascript" charset="utf-8" src="js/jquery.imagesloaded.js">
+	</script>	
+	<script type="text/javascript" charset="utf-8">
+	//CONSTANTS
+	//http://50.131.243.226:8080/CookedSpecially/menu/getjson/2
+	var comCookedSpeciallyRestaurantApi = "http://www.bakedspecially.com/axis.js";
+	var comCookedSpeciallyHostPrefix = "http://www.bakedspecially.com";
+	var comCookedSpeciallyMenuPrefix = "/CookedSpecially/menu/getjson";
+	var comCookedSpeciallyImagePrefix = "http://50.131.243.226:8080";
+	
+	</script>
+	<script type="text/javascript" charset="utf-8">
+	var globalData = "";
+	
+	$(updateAllMenus);
+
+	function updateOneMenu(menuId) {
+		var comCookedSpeciallyMenuApi = comCookedSpeciallyHostPrefix + comCookedSpeciallyMenuPrefix + "/" + menuId;
+
+		$.getJSON(comCookedSpeciallyMenuApi, function(data) {
+			if( console && console.log ) {
+				console.log("ajax success: " + comCookedSpeciallyMenuApi);
+				console.log(JSON.stringify(data));
+			}
+			
+			$.each(data.categories, function() {
+			$.each(this.dishes, function() {
+
+				var dishId = this.dishId;
+				var name = this.name;
+				var description = this.description;
+				var shortDescription = this.shortDescription;
+				var imageUrl = this.imageUrl;
+				var price = this.price;
+
+		        var theContent = '<div class="box"><h2 class="box-title">' + name + '</h2><div class="box-text"><img src="' + comCookedSpeciallyImagePrefix + imageUrl + '" /> ' + shortDescription + '</div></div>';
+				$(theContent).appendTo("#menu" + menuId + "content");
+			})
+			});
+		});
+	}
+
+	function updateAllMenus() {
+		$.getJSON(comCookedSpeciallyRestaurantApi, function(data) {
+			if( console && console.log ) {
+				console.log("ajax success: " + comCookedSpeciallyRestaurantApi);
+				console.log(JSON.stringify(data));
+			}
+
+			$.each(data.menus, function() {
+				var menuId = this.menuId;
+				var name = this.name;
+				var description = this.description;
+				//var modificationDate = new Date(this.modificationDate);;
+				var modificationDate = new Date();
+		        /*
+		        alert("modificationDate:" + modificationDate.toJSON());
+		        */
+		        var thePage = '<div data-role="page" id="menu' + menuId + '" data-url="menu' + menuId + '"><div data-role="header" data-inline="true"><a href="javascript:window.history.back();" data-icon="back" data-role="button">Back</a><h1>'+ name + '<\/h1><\/div><div data-role="content" id="menu' + menuId + 'content"><\/div><div data-role="footer"><h4>' + description + '<\/h4><\/div><\/div>';
+		        var theListItem = '<li><a href="#menu' + menuId + '">' + name + '</a></li>';
+				$(thePage).appendTo($.mobile.pageContainer);
+				$("#menu" + menuId).page();
+				$(theListItem).appendTo("#listview");
+				$('ul').listview('refresh');
+				updateOneMenu(menuId);
+			});
+		});
+	}
+
+	$.ajax("ajax/menu.json", {
+		isLocal: true
+	})
+	.done(function ( data ) {
+		globalData = JSON.stringify(data);
+		if( console && console.log ) {
+			console.log("ajax success: " + "ajax/menu.json");
+			console.log(data);
+		}
+	})
+	.fail(function() { console.log("ajax error"); })
+    .always(function() { console.log("ajax complete"); });
+
+	$(document).ready(function(){
+		var $container = $('#content');
+		$container.isotope({
+			// options...
+			resizable: false, // disable normal resizing
+			// set columnWidth to a percentage of container width
+			masonry: { columnWidth: $container.width() / 3 },
+			filter: '*',
+			animationOptions: {
+				duration: 750,
+				easing: 'linear',
+				queue: false,
+			}
+		});
+
+		$('#nav a').click(function(){
+			var selector = $(this).attr('data-filter');
+			$container.isotope({ 
+				filter: selector,
+				animationOptions: {
+					duration: 750,
+					easing: 'linear',
+					queue: false,
+				}
+			});
+		return false;
+		});
+		
+		// update columnWidth on window resize
+		$(window).smartresize(function(){
+	  		$container.isotope({
+	    		// update columnWidth to a percentage of container width
+	    		masonry: { columnWidth: $container.width() / 3 }
+			});
+		});
+		
+		$('#page2').live('pageshow', function(event, ui) {
+        	$container.isotope({
+	    	// update columnWidth to a percentage of container width after the mobile page is shown
+	    		masonry: { columnWidth: $container.width() / 3 }
+			});
+        });
+        
+		$container.imagesLoaded(function( $images, $proper, $broken ) {
+			
+			$proper.each( function() {
+				console.log("proper: " + this.src);
+			});
+
+			$broken.each( function() {
+				console.log("broken: " + this.src);
+				var $this = $(this).css({ display:"none" });
+			});
+			
+		});
+
+	});
+	</script>
+	
+    <script type="text/javascript" charset="utf-8">
+	// http://docs.phonegap.com/en/2.0.0/cordova_file_file.md.html#File
+	
+	var prefsDir = "com.cookedSpecially";
+	var prefsFile = "local.json";
+	var prefsPath = prefsDir + "/" + prefsFile;
+	
+    // Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+		/*
+        var element = document.getElementById('deviceProperties');
+        element.innerHTML = 'Device Name: '     + device.name     + '<br />' + 
+                            'Device Cordova: '  + device.cordova + '<br />' + 
+                            'Device Platform: ' + device.platform + '<br />' + 
+                            'Device UUID: '     + device.uuid     + '<br />' + 
+                            'Device Version: '  + device.version  + '<br />';
+		*/
+		checkConnection();
+		cacheImages();
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, getFSForWriting, onFileError);
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, getFS, onFileError);
+    }
+
+	function cacheImages() {
+		// see console output for debug info
+		ImgCache.init();
+		console.log("ImgCache: " + ImgCache.getCacheFolderURI());
+		
+		$('img').each(function() {
+			console.log("ImgCache: " + $(this).attr('src'));
+			ImgCache.cacheFile($(this).attr('src'));
+			ImgCache.useCachedFile($(this));
+			//ImgCache.useOnlineFile($(this));
+		});
+
+	};
+
+	function checkConnection() {
+	    var networkState = navigator.network.connection.type;
+	
+	    var states = {};
+	    states[Connection.UNKNOWN]  = 'Unknown connection';
+	    states[Connection.ETHERNET] = 'Ethernet connection';
+	    states[Connection.WIFI]     = 'WiFi connection';
+	    states[Connection.CELL_2G]  = 'Cell 2G connection';
+	    states[Connection.CELL_3G]  = 'Cell 3G connection';
+	    states[Connection.CELL_4G]  = 'Cell 4G connection';
+	    states[Connection.NONE]     = 'No network connection';
+	
+	    console.log('Connection type: ' + states[networkState]);
+	}
+
+/* File writing */
+    function getFSForWriting(fileSystem) {
+    	// Retrieve an existing directory, or create it if it does not already exist
+        fileSystem.root.getDirectory(prefsDir, {create: true, exclusive: false}, checkDirSuccess, onFileError); 
+        fileSystem.root.getFile(prefsPath, {create: true, exclusive: false}, getFileForWriting, onFileError);
+    }
+
+    function getFileForWriting(fileEntry) {
+    	console.log(fileEntry.toURL());
+        fileEntry.createWriter(getFileWriter, onFileError);
+    }
+
+    function getFileWriter(writer) {
+        writer.write(globalData);
+    }
+    
+/* File reading */
+    function getFS(fileSystem) {
+        fileSystem.root.getFile(prefsPath, null, getFile, onFileError);
+    }
+
+    function getFile(file){
+        //readDataUrl(file);
+        readAsText(file);
+    }
+
+    function readDataUrl(file) {
+        var reader = new FileReader();
+        reader.onloadend = function(evt) {
+            console.log("Read as data URL");
+            console.log(evt.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function readAsText(file) {
+        var reader = new FileReader();
+        reader.onloadend = function(evt) {
+            console.log("Read as text");
+            console.log(evt.target.result);
+        };
+        reader.readAsText(file);
+    }
+    
+	function checkDirSuccess(parent) {
+	    console.log("Parent Name: " + parent.name);
+	}
+
+	function onFileSuccess(fileSystem) {
+    	console.log("File success: " + fileSystem.name);
+    	console.log(fileSystem.name);
+	}
+
+	function onFileError(error) {
+    	console.log("File error: " + error.code);
+        console.log(error.code);
+    }
+
+    </script>
+</head>
+<body>
+<div data-role="page" id="toc">
+	<div data-role="header">
+		<h1>
+			Welcome to Axis
+		</h1>
+	</div>
+	<div data-role="content">
+		<ul data-role="listview" id="listview">
+			<li><a href="#page2">Appetizers</a></li>
+			<li><a href="#page3">Soups</a></li>
+			<li><a href="#page4">Lunch Specials</a></li>
+		</ul>
+	</div>
+	<div data-role="footer">
+		<h4>
+			Axis
+		</h4>
+		<div id="deviceProperties"> </div>
+	</div>
+</div>
+<div data-role="page" id="page2">
+	<div data-role="header">
+		<h1>
+			Appetizers
+		</h1>
+	</div>
+	<div data-role="content" id="page2content">
+		<div id="nav">
+				<p><a href="" data-filter="*">All</a></p>
+				<p><a href="" data-filter=".cat1">Vegetarian</a></p>
+				<p><a href="" data-filter=".cat2">Category 2</a></p>
+				<p><a href="" data-filter=".cat3">Category 3</a></p>
+		</div>
+		<div id="content">
+			<div class="box cat1 cat3">
+				<h2 class="box-title">
+					Lorem Ipsum
+				</h2>
+				<div class="box-text">
+					<img src="http://farm8.staticflickr.com/7008/6439902521_2775065bbc_s.jpg"/> Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. Nunc montes tristique purus auctor. Nascetur? Vut amet, phasellus pulvinar et odio. Ut aliquet integer sed enim ac amet nunc? Tincidunt sit, cum ridiculus, placerat cum, vut magna ridiculus ut phasellus ridiculus? Eu hac, mattis adipiscing, montes adipiscing urna montes rhoncus! 
+				</div>
+			</div>
+			<div class="box cat1">
+				<h2 class="box-title">
+					Lorem Ipsum
+				</h2>
+				<div class="box-text">
+					<img src="http://farm9.staticflickr.com/8305/8010535407_2719d431f3_s.jpg"/> Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. Nunc montes tristique purus auctor. Nascetur? Vut amet, phasellus pulvinar et odio. Ut aliquet integer sed enim ac amet nunc? Tincidunt sit, cum ridiculus, placerat cum, vut magna ridiculus ut phasellus ridiculus? Eu hac, mattis adipiscing, montes adipiscing urna montes rhoncus! Odio placerat pellentesque risus urna elit, odio phasellus, rhoncus, est ridiculus purus etiam, penatibus integer! 
+				</div>
+			</div>
+			<div class="box cat2 cat3">
+				<h2 class="box-title">
+					Lorem Ipsum
+				</h2>
+				<div class="box-text">
+					<img src="http://farm8.staticflickr.com/7151/6760135001_58b1c5c5f0_s.jpg"/> Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. Nunc montes tristique purus auctor. Nascetur? 
+				</div>
+			</div>
+			<div class="box cat1">
+				<h2 class="box-title">
+					Lorem Ipsum
+				</h2>
+				<div class="box-text">
+					<img src="http://farm8.staticflickr.com/7151/blah.jpg"/> Amet dolor? Diam cras ac quis a ut, augue massa cursus natoque cursus in sociis rhoncus, scelerisque mus ac. Pellentesque odio rhoncus, aliquet tempor? Nisi cursus lorem tincidunt penatibus eu scelerisque! Scelerisque mid rhoncus turpis eros? Nunc rhoncus in turpis, mus, nec augue, odio, mid tempor aliquam, ultricies. 
+				</div>
+			</div>
+			<div class="box cat2">
+				<h2 class="box-title">
+					Lorem Ipsum
+				</h2>
+				<div class="box-text">
+					Diam cras ac quis a ut, augue massa cursus natoque cursus in sociis rhoncus, scelerisque mus ac. Pellentesque odio rhoncus, aliquet tempor? Nisi cursus lorem tincidunt penatibus eu scelerisque! Scelerisque mid rhoncus turpis eros? Nunc rhoncus in turpis, mus, nec augue, odio, mid tempor aliquam, ultricies. 
+				</div>
+			</div>
+			<div class="box cat2">
+				<h2 class="box-title">
+					Lorem Ipsum
+				</h2>
+				<div class="box-text">
+					Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. Nunc montes tristique purus auctor. Nascetur? Vut amet, phasellus pulvinar et odio. Pellentesque odio rhoncus, aliquet tempor? Nisi cursus lorem tincidunt penatibus eu scelerisque! Scelerisque mid rhoncus turpis eros? Nunc rhoncus in turpis, mus, nec augue, odio, mid tempor aliquam, ultricies. 
+				</div>
+			</div>
+			<div class="box cat2 cat3">
+				<h2 class="box-title">
+					Lorem Ipsum
+				</h2>
+				<div class="box-text">
+					Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. 
+				</div>
+			</div>
+			<div class="box cat1">
+				<h2 class="box-title">
+					Lorem Ipsum
+				</h2>
+				<div class="box-text">
+					Amet dolor? Diam cras ac quis a ut, augue massa cursus natoque cursus in sociis rhoncus, scelerisque mus ac. Pellentesque odio rhoncus, aliquet tempor? Nisi cursus lorem tincidunt penatibus eu scelerisque! Scelerisque mid rhoncus turpis eros? Nunc rhoncus in turpis, mus, nec augue, odio, mid tempor aliquam, ultricies. 
+				</div>
+			</div>
+			<div class="box cat2 cat3">
+				<h2 class="box-title">
+					Lorem Ipsum
+				</h2>
+				<div class="box-text">
+					Urna vut, eros aliquet sagittis augue? Augue adipiscing duis? Et a placerat, magna enim? Lacus sit. Nunc montes tristique purus auctor. Amet dolor? Diam cras ac quis a ut, augue massa cursus natoque cursus in sociis rhoncus, scelerisque mus ac. Pellentesque odio rhoncus, aliquet tempor? Nisi cursus lorem tincidunt penatibus eu scelerisque! Scelerisque mid rhoncus turpis eros? Nunc rhoncus in turpis, mus, nec augue, odio, mid tempor aliquam, ultricies. 
+				</div>
+			</div>
+		</div>
+	</div>
+	<div data-role="footer">
+		<h4>
+			Appetizers
+		</h4>
+	</div>
+</div>
+<div data-role="page" id="page3">
+	<div data-role="header">
+		<h1>
+			Page Three
+		</h1>
+	</div>
+	<div data-role="content">
+		Content 
+	</div>
+	<div data-role="footer">
+		<h4>
+			Page Footer
+		</h4>
+	</div>
+</div>
+<div data-role="page" id="page4">
+	<div data-role="header">
+		<h1>
+			Page Four
+		</h1>
+	</div>
+	<div data-role="content">
+		Content 
+	</div>
+	<div data-role="footer">
+		<h4>
+			Page Footer
+		</h4>
+	</div>
+</div>
+</body>
+</html>

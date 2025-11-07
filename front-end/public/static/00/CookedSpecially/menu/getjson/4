@@ -1,0 +1,63 @@
+{
+    "menuId": 4,
+    "restaurantId": null,
+    "userId": 2,
+    "name": "BEVERAGES",
+    "description": "",
+    "categories": [
+        {
+            "categoryId": 7,
+            "userId": 2,
+            "name": "SEASONAL FRESH JUICES",
+            "description": "",
+            "dishes": [
+                {
+                    "dishId": 7,
+                    "restaurantId": null,
+                    "userId": 2,
+                    "name": "Pineapple",
+                    "description": "Fresh pineapple juice",
+                    "shortDescription": null,
+                    "imageUrl": "/static/2/7_beer_icon.jpg",
+                    "price": 185
+                }
+            ]
+        },
+        {
+            "categoryId": 11,
+            "userId": 2,
+            "name": "FRESH FRUIT SMOOTHIES",
+            "description": "",
+            "dishes": [
+                {
+                    "dishId": 20,
+                    "restaurantId": null,
+                    "userId": 2,
+                    "name": "Melon Madness",
+                    "description": "Watermelon, Honeydew Melon, Lime Juice with Low Fat Yogurt & Ice",
+                    "shortDescription": null,
+                    "imageUrl": "/static/2/null_beer_icon.jpg",
+                    "price": 185
+                }
+            ]
+        },
+        {
+            "categoryId": 12,
+            "userId": 2,
+            "name": "OTHER BEVERAGES",
+            "description": "",
+            "dishes": [
+                {
+                    "dishId": 24,
+                    "restaurantId": null,
+                    "userId": 2,
+                    "name": "Red Bull",
+                    "description": "",
+                    "shortDescription": null,
+                    "imageUrl": "/static/2/null_beer_icon.jpg",
+                    "price": 195
+                }
+            ]
+        }
+    ]
+}

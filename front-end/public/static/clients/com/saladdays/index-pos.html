@@ -1,0 +1,3503 @@
+<!DOCTYPE html>
+<html xmlns:fb="https://ogp.me/ns/fb#">
+<head prefix="og: https://ogp.me/ns# fb: http://ogp.me/ns/fb# business: http://ogp.me/ns/business#">
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE" /> 
+	<link rel="canonical" href="http://www.cookedspecially.com/static/clients/com/saladdays/index.html" />
+	<script type="text/javascript" charset="utf-8">
+	/**********
+	 * CONSTANTS
+	 */
+	var debug = false;
+	var alwaysOpen = true;
+	var workflowValidated = false;
+	//var webkitContentEditing = 'WebkitAppearance' in document.documentElement.style;
+	var webkitContentEditing = false;
+	var appVersion = '2014.09.01';
+	var appLatestVersion = '2014.12.26';
+	var parentId = "21"; //SaladDays
+	var restaurantName = "";
+	var restaurantId = "21"; //SaladDays
+	//var restaurantId = "22"; //SaladDays - Deloitte
+	var restaurants = [];
+	restaurants.push(restaurantId);
+	</script>
+	<meta charset="utf-8" > <meta>
+	<meta id="og_title" property="og:title" content="Salad Days"> <meta>
+	<meta id="og_description" property="og:description" content="Bringing real salads to India"> <meta>
+	<meta id="og_image" property="og:image" content="https://static.squarespace.com/static/52dae045e4b050691872aeee/52dc34fce4b0845775fa4f80/53093ad3e4b0dd985a43dfc4/1393113819369/Veggie.jpg?format=1000w"> <meta>
+	<meta property="fb:app_id"                            content="226697114202871" /> 
+	<meta property="og:type"                              content="restaurant.restaurant" /> 
+	<meta property="og:url"                               content="http://www.cookedspecially.com/static/clients/com/saladdays/index.html" /> 
+	<meta property="business:contact_data:street_address" content="U 60/37 Dlf city phase 3" /> 
+	<meta property="business:contact_data:locality"       content="Gurgaon, Haryana" /> 
+	<meta property="business:contact_data:postal_code"    content="122002" /> 
+	<meta property="business:contact_data:country_name"   content="India" /> 
+	<meta property="place:location:latitude"              content="28.4700" /> 
+	<meta property="place:location:longitude"             content="77.0300" /> 
+	<title>CookedSpecially</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <meta>
+	<meta name="apple-mobile-web-app-capable" content="yes" > <meta>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" > <meta>
+	<link rel="apple-touch-icon" href="icons/57px_Bookmark-01.jpg"/>  
+	<link rel="apple-touch-icon" sizes="72x72" href="icons/72px_Bookmark-01.jpg"/>  
+	<link rel="apple-touch-icon" sizes="114x114" href="icons/114px_Bookmark-01.jpg"/>  
+	<link rel="apple-touch-icon" sizes="144x144" href="icons/144px_Bookmark-01.jpg"/>  
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css' />
+	
+	<link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	  <link href="css/timeTo.css" type="text/css" rel="stylesheet"/>  
+	   <!--  <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" ></link>   -->
+ <link rel="stylesheet" type="text/css" href="../../../checks/css/jquery.timepicker.css" ></link>    
+ 	<style>
+	html { background-color: light-gray; }
+	@media only screen and (min-width: 1024px){
+		.header-content, #restaurants-content, #closed-content, #order-content, #check-content, #menu-content, .footer-content {
+			max-width: 1024px !important;
+			margin: 0 auto !important;
+		}
+	}
+	.ui-listview>.ui-li-static {
+		padding-left:0;
+		padding-right:0;
+		padding-bottom:4em;
+	}
+	#order-button.ui-btn {
+		padding-right:0;
+	}
+	#order-content .ui-collapsible-heading .ui-li-count {
+		right:0px;
+	}
+	.header-content .right-controlgroup .ui-controlgroup-controls a:last-child {
+		padding-right:0;
+	}
+	body {
+	  font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+	  font-size: 14px;
+	  line-height: 2em;
+	  letter-spacing: 0px;
+	  text-align: left;
+	  font-weight: normal;
+	  font-style: normal;
+	  background-color: light-gray;
+	}
+	.itemContent {
+		line-height: 1.3em;
+	}
+	.controlSeparator {
+		cursor: pointer;
+		font-weight: bold;
+		float: right;
+	}
+	.addItemToOrder, .removeItemFromOrder {
+		cursor: pointer;
+		font-weight: bold;
+	}
+	.addItemToOrder:hover, .removeItemFromOrder:hover {
+		color: red;
+	}
+	input {
+		border: 1px inset;
+	}
+	
+	.left {
+ 		 float: left;
+  		width: 125px;
+  		text-align: right;
+  		margin: 4px 10px;
+  		display: inline;
+  		width:500px;
+		}
+
+	.right {
+  		float: left;
+  		text-align: left;
+		margin: 4px 10px;
+  		display: inline;
+  		width:500px;
+		}
+	
+	#splash {
+	  background-size: cover;
+	  width: 100%;
+	  height: 100%;
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  z-index: 8888888;
+	}
+	#closed-content {
+		text-align:center;
+	}
+	.right-controlgroup {
+		float:right;
+	}
+	.achtung {
+		color:red !important;
+		-webkit-text-fill-color: rgb(f, 0, 0) !important;
+		border: 1px solid red;
+		border-color:red !important;
+	}
+	.itemContent .title, .itemContent .description, .itemContent .price {
+		white-space:normal;
+		text-overflow:ellipsis;
+	}
+	.breadcrumb {
+		font-size:xx-small;
+		font-style:plain;
+		font-weight:lighter;
+		opacity: 0.7;
+	}
+	.smaller, .itemContent .description, .itemContent .price {
+		font-size:smaller;
+		font-style:plain;
+		font-weight:normal;
+	}
+	h3.sectionTitle, .itemContent .title {
+		font-size: 18px;
+		font-weight: bold;
+	}
+	h3.sectionTitle {
+		text-transform:uppercase;
+	}
+	.itemContent .description, .itemContent .price {
+		font-size: 14px;
+		font-weight: normal;
+	}
+	.itemContent .title, .itemContent .description {
+		padding-right:10px;
+	}
+	
+	#restaurants .ui-collapsible-heading, #restaurants .ui-collapsible-content {
+		opacity: 0.7;
+	}
+	.itemDetailPrice {
+		font-size: 22px;
+		font-weight: 200;
+		text-align: right;
+		margin-top: 10px;
+	}	
+	.itemType {
+		display:none;
+	}
+	.ui-listview .ui-li-has-thumb>img:first-child, .ui-listview .ui-li-has-thumb>.ui-btn>img:first-child, .ui-listview .ui-li-has-thumb .ui-li-thumb, 
+	.ui-li-static .ui-li-has-thumb>img:first-child, .ui-li-static .ui-li-has-thumb .ui-li-thumb {
+		max-height: inherit;
+		/* -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0))); */
+	}
+	#popupContact form, #popupNameAddress form, #popupEmail form{
+		padding:10px 20px;
+		width: 720;
+	}
+	
+	#check-content {
+		font-family: courier;
+		font-size: smaller;
+	}
+	#email-check {
+		background: url("shared/css/images/at.png") no-repeat scroll center 0 rgba(0, 0, 0, 0);
+		height: auto;
+		padding: 25px;
+		text-align: center;
+		z-index: 100;
+	}
+
+	#email-check a {
+		text-decoration: none;
+	}
+
+	.ui-footer-fixed {
+		height: 46px;
+		clear:both;
+	}
+	
+	.fb-like, .g-plus-container, .pin-it, .tweet {
+		float:left;
+		padding-right:6px;
+		display:none;
+	}
+	.g-plus-container, .pin-it, .tweet {
+		padding-top:8px;
+	}
+	.poweredBy {
+		vertical-align: bottom;
+	}
+	.restaurantName img, .poweredBy img {
+		height:20px;
+		width:20px;
+		vertical-align: text-bottom;
+	}
+	.restaurantName {
+		padding: 1em 0 1em 0;
+		line-height: 2em;
+		float:left;
+		font-weight:800;
+		cursor:pointer;
+	}
+	#clockvalue { 
+  			text-align: center;
+		}
+	#outsideDeliveryArea {
+		width: 274px;
+	}
+	#orderConfirmation-content {
+		text-align:center;
+	}
+	/* JQM theme overrides */
+	.ui-page .ui-content {
+		padding-left:1em;
+		padding-right:1em;
+	}
+	.ui-page .ui-collapsible-content {
+		padding-left:0;
+		padding-right:0;
+	}
+	.ui-header, .ui-footer, .ui-popup-container {
+		background:white;
+	}
+	.ui-header, .ui-footer, .ui-header-fixed, .ui-footer-fixed {
+		border: none;
+		border-style: none;
+		border-width: 0;
+	}
+	#order .ui-collapsible-heading, #order .ui-collapsible-heading-toggle.ui-btn.ui-icon-minus.ui-btn-icon-left.ui-btn-inherit {
+		pointer-events: none;
+		cursor: default;
+		left: 0;
+		padding-left: 0;
+	}
+	#order .ui-collapsible-heading-toggle.ui-btn.ui-icon-minus.ui-btn-icon-left.ui-btn-inherit:after {
+		background-image: none;
+		background-color: transparent;
+	}
+	.ui-collapsible-heading, .ui-collapsible-themed-content .ui-collapsible-content {
+		border: none;
+	}
+	li, li>a, .ui-listview>.ui-li-static, .ui-listview, .ui-listview>.ui-li-divider, .ui-li-static>.ui-li-divider, .ui-collapsible-inset .ui-collapsible-heading .ui-btn, .ui-collapsible-inset.ui-collapsible-themed-content .ui-collapsible-content {
+		border:none !important; 
+		box-shadow: none;
+	}
+	.choose-address{
+		margin-bottom: 0px;
+	}
+	p.Charges_message
+		{
+		width:20em; 
+		text-wrap:none;
+		text-align:center;
+     }
+     p.error_message {
+		width:14em; 
+		text-wrap:none;
+		text-align:center;
+	}
+	.ui-listview>.ui-li-static, .ui-listview>li.ui-first-child, .ui-listview>li.ui-first-child>a.ui-btn, .ui-li-static>li.ui-first-child, .ui-li-static>li.ui-first-child>a.ui-btn {
+		border-top: none;
+	}
+	.ui-listview>li.ui-last-child, .ui-listview>li.ui-last-child>a.ui-btn, .ui-li-static>li.ui-last-child, .ui-li-static>li.ui-last-child>a.ui-btn {
+		border-bottom: none;
+		box-shadow: none;
+	}
+	.ui-listview>.ui-li-static {
+		padding-top:0;
+	}
+	.ui-shadow {
+		-webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, .15);
+		-moz-box-shadow: 0 1px 0 rgba(0, 0, 0, .15);
+		box-shadow: 0 1px 0px rgba(0, 0, 0, .15);
+	}
+	ul.ui-listview.ui-shadow, ul.ui-li-static.ui-shadow {
+		-webkit-box-shadow: none; 
+		-moz-box-shadow: none;
+		box-shadow: none;
+		}
+
+	* {
+		-webkit-column-rule-color: rgb(0, 0, 0);
+		-webkit-text-emphasis-color: rgb(0, 0, 0);
+		-webkit-text-fill-color: rgb(0, 0, 0);
+		-webkit-text-stroke-color: rgb(0, 0, 0);
+		border-bottom-color: rgb(0, 0, 0);
+		border-left-color: rgb(0, 0, 0);
+		border-right-color: rgb(0, 0, 0);
+		border-top-color: rgb(0, 0, 0);
+		color: rgb(0, 0, 0);
+		outline-color: rgb(0, 0, 0);
+	}
+	.ui-page .ui-corner-all {
+		-webkit-border-radius: 0em;
+		border-radius: 0em
+	}
+	.ui-popup .ui-corner-all {
+		-webkit-border-radius: .3125em;
+		border-radius: .3125em
+		
+	}
+	.ui-popup{
+	width:720;
+	}
+	.ui-popup .ui-btn-corner-all, .ui-popup .ui-btn.ui-corner-all, .ui-popup .ui-slider-track.ui-corner-all,
+	.ui-popup .ui-flipswitch.ui-corner-all, .ui-popup .ui-li-count {
+		-webkit-border-radius: .3125em;
+		
+		border-radius: .3125em
+	}
+	.ui-popup .ui-btn-icon-notext.ui-btn-corner-all, .ui-popup .ui-btn-icon-notext.ui-corner-all {
+		-webkit-border-radius: 1em;
+		border-radius: 1em
+	}
+	.ui-icon-plus:after {
+		background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4yLjEsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8Zz4NCgk8cGF0aCBkPSJNMzg0LDI2NUgyNjR2MTE5aC0xN1YyNjVIMTI4di0xN2gxMTlWMTI4aDE3djEyMGgxMjBWMjY1eiIvPg0KPC9nPg0KPC9zdmc+DQo=') !important;
+		background-size:2em;
+	}
+	.ui-icon-delete:after {
+		background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNy4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCIgWw0KCTwhRU5USVRZIG5zX2Zsb3dzICJodHRwOi8vbnMuYWRvYmUuY29tL0Zsb3dzLzEuMC8iPg0KCTwhRU5USVRZIG5zX2V4dGVuZCAiaHR0cDovL25zLmFkb2JlLmNvbS9FeHRlbnNpYmlsaXR5LzEuMC8iPg0KCTwhRU5USVRZIG5zX2FpICJodHRwOi8vbnMuYWRvYmUuY29tL0Fkb2JlSWxsdXN0cmF0b3IvMTAuMC8iPg0KCTwhRU5USVRZIG5zX2dyYXBocyAiaHR0cDovL25zLmFkb2JlLmNvbS9HcmFwaHMvMS4wLyI+DQpdPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxuczp4PSImbnNfZXh0ZW5kOyIgeG1sbnM6aT0iJm5zX2FpOyIgeG1sbnM6Z3JhcGg9IiZuc19ncmFwaHM7Ig0KCSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczphPSJodHRwOi8vbnMuYWRvYmUuY29tL0Fkb2JlU1ZHVmlld2VyRXh0ZW5zaW9ucy8zLjAvIg0KCSB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPHBhdGggZD0iTTM1Mi45LDE3MS45TDI2OCwyNTYuN2w4NC4xLDg0LjFsLTEyLDEyTDI1NiwyNjguN2wtODQuMSw4NC4xbC0xMi0xMmw4NC4xLTg0LjFsLTg0LjktODQuOWwxMi0xMmw4NC45LDg0LjlsODQuOS04NC45DQoJCUwzNTIuOSwxNzEuOXoiLz4NCjwvZz4NCjwvc3ZnPg0K') !important;
+		background-size:2em;
+	}
+	.ui-icon-delivery:after {
+		background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAMAAADDpiTIAAADAFBMVEX///8zMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMvIC5hAAAA/3RSTlMAYPCgOCgB/gQC/P0FyPv4CQMOBvn68w3n8vYU8Qju795cFQ8cfuoYEyQH1eYZOr/aCh5Y7fRPRJggEcCIDENC7HZm9xI5NjRX6RtRzsfr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') !important;
+		background-size: contain;
+		background-color: #fff;
+		background-color: rgba(f, f, f, .3);
+		background-position: center center;
+		background-repeat: no-repeat;
+		-webkit-border-radius: 2em;
+		border-radius: 0;
+	}
+	.ui-btn-icon-notext.ui-icon-plus:after, .ui-btn-icon-notext.ui-icon-delete:after {
+		background-color: #fff;
+		background-color: rgba(f, f, f, .3);
+		background-position: center center;
+		background-repeat: no-repeat;
+		-webkit-border-radius: 2em;
+		border-radius: 2em;
+	}
+	.ui-controlgroup-controls a {
+		border-color: white !important;
+		float: right;
+	}
+	#order-button.ui-icon-info:after, #order-button-disabled.ui-icon-info:after {
+		background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNy4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCIgWw0KCTwhRU5USVRZIG5zX2Zsb3dzICJodHRwOi8vbnMuYWRvYmUuY29tL0Zsb3dzLzEuMC8iPg0KCTwhRU5USVRZIG5zX2V4dGVuZCAiaHR0cDovL25zLmFkb2JlLmNvbS9FeHRlbnNpYmlsaXR5LzEuMC8iPg0KCTwhRU5USVRZIG5zX2FpICJodHRwOi8vbnMuYWRvYmUuY29tL0Fkb2JlSWxsdXN0cmF0b3IvMTAuMC8iPg0KCTwhRU5USVRZIG5zX2dyYXBocyAiaHR0cDovL25zLmFkb2JlLmNvbS9HcmFwaHMvMS4wLyI+DQpdPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxuczp4PSImbnNfZXh0ZW5kOyIgeG1sbnM6aT0iJm5zX2FpOyIgeG1sbnM6Z3JhcGg9IiZuc19ncmFwaHM7Ig0KCSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczphPSJodHRwOi8vbnMuYWRvYmUuY29tL0Fkb2JlU1ZHVmlld2VyRXh0ZW5zaW9ucy8zLjAvIg0KCSB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDcyIDcyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA3MiA3MiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8ZyBpZD0iTGF5ZXJfNiI+DQoJPHBvbHlnb24gZmlsbD0iIzAxMDEwMSIgcG9pbnRzPSIyMy43LDQzLjkgNTAuMyw0My45IDU4LDI0LjggMjMuOSwyNC44IDIxLjIsMTguMSAxMy41LDE4LjEgMTMuNSwyMS45IDE4LjcsMjEuOSAxOS45LDI0LjggDQoJCTE5LjgsMjQuOCAJIi8+DQoJPHBhdGggZmlsbD0iIzAxMDEwMSIgZD0iTTI2LjYsNDYuNGMtMi4xLDAtMy44LDEuNy0zLjgsMy44YzAsMi4xLDEuNywzLjgsMy44LDMuOGMyLjEsMCwzLjgtMS43LDMuOC0zLjgNCgkJQzMwLjQsNDguMSwyOC43LDQ2LjQsMjYuNiw0Ni40eiIvPg0KCTxwYXRoIGZpbGw9IiMwMTAxMDEiIGQ9Ik00Ni44LDQ2LjRjMi4xLDAsMy44LDEuNywzLjgsMy44YzAsMi4xLTEuNywzLjgtMy44LDMuOGMtMi4xLDAtMy44LTEuNy0zLjgtMy44DQoJCUM0Myw0OC4xLDQ0LjcsNDYuNCw0Ni44LDQ2LjR6Ii8+DQo8L2c+DQo8L3N2Zz4NCg==') !important;
+		background-size: 2em;
+		background-color: #fff;
+		background-color: rgba(f, f, f, .3);
+		background-position: center center;
+		background-repeat: no-repeat;
+		-webkit-border-radius: 2em;
+		border-radius: 0;
+	}
+	li {
+		margin-top: 16px;
+		margin-bottom: 16px;
+	}
+
+	label.countLabel { display: none; }
+	span#count div, span#count input#count { display: inline-block; }
+		
+	/* #### Tablets and Desktops #### */
+	@media screen and (max-device-width: 768px) {
+		.shortDescription { 
+			display: block;
+		}
+		.longDescription { 
+			display: none;
+		}
+	}
+	/* #### Desktops #### */
+	/* The large images don't display properly on a Galaxy Note with a resolution of 1280x800 */
+	@media screen and (min-device-width: 1024px) {
+		.shortDescription { 
+			display: none;
+		}
+		.longDescription { 
+			display: block;
+		}
+		li {
+			margin-top: 16px;
+			margin-bottom: 16px;
+		}
+		li img {
+			height: 64px;
+			min-height: 64px;
+			width:64px;
+			min-width: 64px;
+		}
+		.itemContent {
+			min-height: 64px;
+		}
+		.itemDetailContent {
+			width: 64px;
+		}
+		.ui-listview img, .ui-li-static img {
+			width: 64px;
+			height: 64px;
+		}
+		
+	}
+	.print {display:none}
+	@media print {  
+		.section {
+			float:left;
+			display:inline;
+			width:600px;
+			margin-right:10px;
+		}
+		br {display:none}
+		.shortDescription { 
+			display: none;
+		}
+		.longDescription { 
+			display: block;
+		}
+		li {
+			margin-top: 16px;
+			margin-bottom: 16px;
+		}
+		li img {
+			height: 64px;
+			min-height: 64px;
+			width:64px;
+			min-width: 64px;
+		}
+		
+		.itemContent {
+			min-height: 64px;
+		}
+		.itemDetailContent {
+			width: 64px;
+		}
+		.ui-listview img, .ui-li-static img {
+			width: 64px;
+			height: 64px;
+		}
+		#order-button {display:none}
+		.print {display:inline} 
+		.ui-listview, .ui-li-static {-webkit-region-break-inside: avoid;page-break-inside: avoid;page-break-after: always;}
+		h3.sectionTitle {page-break-before: always;}
+		.addItemToOrder {display:none}
+		.ui-footer {display:none}
+	}  
+	
+	[contenteditable="plaintext-only"] { outline: 1px dashed #CCC; }
+	[contenteditable="plaintext-only"]:hover { outline: 1px dashed #0090D2; }
+	
+	.ui-block-a { padding-right:10px; }
+	.ui-block-b { padding-left:10px; padding-right:10px; }
+	.ui-block-c { padding-right:10px; }
+	.longDescription {
+		display: none;
+	}
+	</style>
+</head>
+<body>
+<div id="fb-root"></div>
+<div id="splash"></div>
+<!-- http://stackoverflow.com/questions/13986182/how-can-i-improve-the-page-transitions-for-my-jquery-mobile-app/13986390#13986390 -->
+<div id="allPages" style="visibility:hidden;">
+	<div data-role="page" data-theme="d" id="restaurants">
+		<div data-role="header" data-id="globalHeader" data-position="fixed">
+			<div class="header-content">
+			<div class="right-controlgroup" id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<a id="order-button" href="#order" data-role="button" data-inline="true" data-icon="info" class="ui-disabled">My Order</a>
+			</div>
+			</div>
+		</div>
+		<div id="restaurants-content" data-role="content">
+			<!--h3>
+				Our Family of Restaurants
+			</h3-->
+		</div>
+		<div data-role="footer" data-id="globalFooter" data-position="fixed">
+			<div class="footer-content">
+				<span class="fb-like" data-href="http://www.cookedspecially.com/static/clients/com/saladdays/index.html" data-layout="button_count" data-action="like" data-width="50%" data-max-rows="1" data-show-faces="false" data-share="true"></span>
+				<span class="g-plus-container"><span class="g-plus" data-action="share" data-annotation="bubble" data-height="20"></span></span>
+				<span class="pin-it"><a href="//www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.cookedspecially.com%2Fstatic%2Fclients%2Fcom%2Fsaladdays%2Findex.html&media=http%3A%2F%2Fstatic.squarespace.com%2Fstatic%2F52dae045e4b050691872aeee%2F52dc34fce4b0845775fa4f80%2F53093ad3e4b0dd985a43dfc4%2F1393113819369%2FVeggie.jpg%3Fformat%3D1000w&description=Bringing%20real%20salads%20to%20India" data-pin-do="buttonPin" data-pin-config="beside" data-pin-color="white"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_white_20.png" /></a></span>
+    			<span class="tweet" ><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></span>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" data-theme="d" id="closed">
+		<div data-role="header" data-id="globalHeader" data-position="fixed">
+			<div class="header-content">
+			<div class="restaurantName" onclick="javascript:top.location.href=('http://www.saladdays.co');">CookedSpecially</div>
+			<div class="right-controlgroup" id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<a href="#" onclick="$.mobile.pageContainer.pagecontainer ('change', initialHash, {changeHash: true});" data-role="button" data-inline="true" data-icon="back">Continue Browsing</a>
+			</div>
+			</div>
+		</div>
+		<div id="closed-content" data-role="content">
+			<p>
+				Thank you for visiting. We’re open from 9 AM to 10 PM all seven days. We look forward to serving you during our open hours.
+			</p>
+		</div>
+		<div data-role="footer" data-id="globalFooter" data-position="fixed">
+			<div class="footer-content">
+				<span class="fb-like" www.facebook.com/saladdays.co/app_226697114202871="//www.facebook.com/saladdays.co/app_226697114202871" data-layout="button_count" data-action="like" data-width="50%" data-max-rows="1" data-show-faces="false" data-share="true"></span>
+				<span class="g-plus-container"><span class="g-plus" data-action="share" data-annotation="bubble" data-height="20"></span></span>
+				<span class="pin-it"><a href="//www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.cookedspecially.com%2Fstatic%2Fclients%2Fcom%2Fsaladdays%2Findex.html&media=http%3A%2F%2Fstatic.squarespace.com%2Fstatic%2F52dae045e4b050691872aeee%2F52dc34fce4b0845775fa4f80%2F53093ad3e4b0dd985a43dfc4%2F1393113819369%2FVeggie.jpg%3Fformat%3D1000w&description=Bringing%20real%20salads%20to%20India" data-pin-do="buttonPin" data-pin-config="beside" data-pin-color="white"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_white_20.png" /></a></span>
+				<span class="tweet" ><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></span>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" data-theme="d" id="order">
+		<div data-role="header" data-id="globalHeader" data-position="fixed">
+			<div class="header-content">
+			<div class="restaurantName"><span class="restaurantLink" onclick="javascript:top.location.href=('http://www.saladdays.co');">CookedSpecially</span> <span class="poweredBy"><a target="cs" href="http://www.cookedspecially.com"><img alt="Powered by CookedSpecially" src="/static/assets/shared/images/cs-button.png"/></a></span></div>
+			<div class="right-controlgroup" id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<a id="delivery-btn" href="http://www.saladdays.co/contact-1-1/" target="_blank" data-role="button" data-inline="true" data-icon="delivery">Delivery Area</a>
+				<a href="#" onclick="$.mobile.pageContainer.pagecontainer ('change', initialHash, {changeHash: true});" data-role="button" data-inline="true" data-icon="back">Continue Shopping</a>
+				<a href="#popupContact" data-role="button" data-inline="true" data-icon="forward" data-rel="popup" data-position-to="window">Place Your Order</a>
+			</div>
+			</div>
+		</div>
+		<div id="order-content" data-role="content">
+		</div>
+		<div data-role="footer" data-id="globalFooter" data-position="fixed">
+			<div class="footer-content">
+			<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+			</div>
+			</div>
+		</div>
+			
+		<!-- Construction for DeliveryTime   -->
+		<div data-role="popup" id="popupContact" data-theme="d" class="ui-corner-all"   data-dismissible="false">
+			<a href="#" onclick="$('#popupContact').popup('close');"  data-role="button" data-theme="d" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
+			<form onsubmit="return false;">
+				<table>
+				<div id="insideDeliveryArea" >
+				<tr><td>
+				<input  maxlength="20" type="tel" name="customerPhone" id="customerPhone" value="" placeholder="Telephone" data-theme="d"/></td>
+				<td><button id="contactContinue" type="button" onclick="validateContactInfo();" class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-icon-left ui-icon-check">Find</button>
+				<!-- <label for="customerEmail" class="ui-hidden-accessible">Email Address</label> -->
+				</td></tr></div>
+				<tr><td><input type="text" maxlength="50" name="customerName" id="customerName" value="" placeholder="Your Name" data-theme="d"/></td><td><input type="email" name="customerEmail" id="customerEmail" value="" placeholder="Email Address" data-theme="d"/></tr>
+				<tr>
+				<td>
+				<div data-role="content" data-width="100%">
+				<h4 style="margin-bottom: 0;"><p style="text-align:left" id="addressText"  class="Charges_message choose-address" ></p>
+				</h4>
+				<!--span class="ui-hidden-accessible">Other Saved Address</span-->
+				<div id="addressRadio" class="Charges_message choose-address">
+				
+				</div>
+				<label for="customerAddress1" class="ui-hidden-accessible">Street Address</label>
+				<input type="text" maxlength="300" name="customerAddress1" id="customerAddress1" value="" placeholder="Street Address" data-theme="d"/>
+				<div data-role="fieldcontain">
+				<label for="select-delivery-area" class="select ui-hidden-accessible">Delivery Area:</label>
+				<select data-mini="true" name="select-delivery-area" id="select-delivery-area" onchange="setDeliveryText();" class="ui-disabled">
+				</select>
+				<span id="cityState" >Gurgaon, Haryana</span>
+				<p id="Charges_message"  class="Charges_message"></p>
+				</div>
+				<textarea id="deliveryInstructions" maxlength="250" style="height:45px;-webkit-text-fill-color:grey;color:grey;"  name="deliveryInstructions" placeholder="Delivery Instructions: e.g. Leave the salads at reception; I'm busy all day." id="deliveryInstructions" ></textarea>				
+				<label style="display:none" for="customerAddress2" class="ui-hidden-accessible">City, State ZIP/Postal Code</label>
+				<input style="display:none" class="ui-disabled" type="text" name="customerAddress2" id="customerAddress2" value="Gurgaon, Haryana" placeholder="City, State ZIP/Postal Code" data-theme="d"/>
+				</div></td>
+				<td><div data-role="content" data-width="100%">
+ 					<h4>When should we deliver?</h4>
+ 					<select  name="select-delivery-day" id="select-delivery-day" onchange="resetTime();">
+ 					<option value="Today" data-theme="d">Today</option>
+ 					<option value="Tomorrow"  data-theme="d">Tomorrow</option>
+					</select>
+					<p id="time_warning"  class="Charges_message" ></p>				
+					<select  name="select-delivery-time" id="select-delivery-time" onchange="checkTime();">
+					</select>
+					<span class="input-group-addon" ><span class="glyphicon glyphicon-time" data-theme="d"></span></span>
+					<span><b style="align:center">Mark if Subscription</b></span>
+					<label style="text-align:center;"><input type="radio" name="paymentThirdParty" id="paymentThirdParty" value="Subscription" style="z-index:1000; display:none;" >Subscription</label>
+					<label style="text-align:center;"><input type="radio" name="paymentThirdParty" id="paymentThirdParty" value="ThirdParty_Paid" style="z-index:1000; display:none;" >Third Party Paid</label>
+					<label style="text-align:center;"><input type="radio" name="paymentThirdParty" id="paymentThirdParty" value="ThirdParty_Unpaid" style="z-index:1000; display:none;" >Third Party Unpaid</label>
+					<button  id="continue" type="button" onclick="setDeliveryTime();" class="ui-disabled ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-icon-left ui-icon-check">Place  Order</button>
+				</div></td>
+				</tr>	
+				</table>
+			</form>
+			<!-- <div data-role="content">
+				<div class="fb-login-button" data-width="100%" data-max-rows="1" data-show-faces="true">&nbsp;</div>
+			</div> -->
+		</div>
+	</div>
+	
+	<div data-role="page" data-theme="d" id="check">
+		<div data-role="header" data-id="globalHeader" data-position="fixed">
+			<div class="header-content">
+			<div class="restaurantName"><span class="restaurantLink" onclick="javascript:top.location.href=('http://www.saladdays.co');">CookedSpecially</span> <span class="poweredBy"><a target="cs" href="http://www.cookedspecially.com"><img alt="Powered by CookedSpecially" src="/static/assets/shared/images/cs-button.png"/></a></span></div>
+			<div class="right-controlgroup" id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+				<a id="done-button" href="#" onclick="reset();" data-role="button" data-inline="true" data-icon="home">Done</a>
+			<!-- 	<a id="emailcheck-button" href="#popupEmail" data-rel="popup" data-role="button" data-inline="true" data-icon="check" data-position-to="window">Email Check</a>
+ -->			</div>
+			</div>
+		</div>
+		<div id="check-content" data-role="content">
+		</div>
+		<div data-role="footer" data-id="globalFooter" data-position="fixed">
+			<div class="footer-content">
+			<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">
+			</div>
+			</div>
+		</div>
+		<div data-role="popup" id="popupOrderConfirmation" data-theme="d" class="ui-corner-all" data-dismissible="false">
+			<a href="#" onclick="$('#popupOrderConfirmation').popup('close');" data-role="button" data-theme="d" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
+			<div id="orderConfirmation-content" data-role="content">
+				<p>Your order is confirmed.</p>
+				<p>Treat Yourself!</p>
+			</div>
+		</div>
+		<div data-role="popup" id="popupEmail" data-theme="d" class="ui-corner-all" data-dismissible="false">
+			<a href="#" onclick="$('#popupEmail').popup('close');"  data-role="button" data-theme="d" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
+		    <form onsubmit="return false;">
+				<h3>Please let us email your receipt.</h3>
+				<label for="customerEmail" class="ui-hidden-accessible">Email Address</label>
+				<input type="email" name="customerEmail" id="customerEmail" value="" placeholder="Email Address" data-theme="d"/>
+				
+				<!-- <label for="pw" class="ui-hidden-accessible">Password</label>
+				<input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="d"/>
+				 -->
+				<button type="button" onclick="validateEmailForCheck();" class="ui-btn ui-corner-all ui-shadow ui-btn-d ui-btn-icon-left ui-icon-check">Continue</button>
+			</form> 
+		</div>
+	</div>
+</div>
+<!-- End allPages -->
+<!-- End of script for the counter or digital clock -->
+
+
+<script type="text/javascript" charset="utf-8">
+try {
+/**********
+ * CONSTANTS
+ */
+var DELIVERY = "Delivery";
+var TAKEAWAY = "TakeAway";
+
+/**********
+ * CONSTANTS
+ */
+var comCookedSpeciallyImagePattern = /\/static\/\d+\//;
+var comCookedSpeciallyImagePrefix = "";
+var comCookedSpeciallyApiPrefix = "/CookedSpecially";
+//var comCookedSpeciallyApiPrefix = "http://localhost:8080/CookedSpecially";
+var mediaWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+var isPhone = (window.matchMedia('(max-device-width: 568px)').matches);
+
+// temporary hack
+var serverName = location.hostname + ":" + location.port;
+
+var db;
+var strConnectionAlert = "You appear to be online, but we have a connection problem. Please click Ok to try to download today's menu again.";
+var strOfflineAlert = "You appear to be offline. Please go online and click Ok to download today's menu.";
+
+var changeCount = 0;
+var menuCount = 0;
+
+/* *********
+ * GLOBALS
+ */
+var globalMenuIndex = 0; // counter to see if we even have more that one menu at all
+var initialHash = "#restaurants";
+var initialURL = window.location.protocol + "//" + window.location.host + window.location.pathname + window.location.search;
+var restaurantsParamMatch = /\[[0-9,]+?\]/;
+var overallTotal = 0;
+var fbLogin = false;
+var customerInfo = {};
+var customerId = "";
+var customerEmail = "";
+var customerPhone = "";
+var customerName = "";
+var customerAddress1 = "";
+var customerAddress2 = "";
+var emailMatch = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+var phoneMatch = /^[0-9.-]+$/;
+var phoneClean = /[.-]/g;
+var custIdParam = "";
+var restaurantDataString = "";
+var restaurantData = [];
+var globalDataString = "";
+var globalData = [];
+var startTime;
+var endTime;
+var loadingTime;
+// Preloading images -- http://engineeredweb.com/blog/09/12/preloading-images-jquery-and-javascript/
+var preloadCache = [];
+var currency = '&#x20B9;'; // Indian rupee (&#x20B9;)
+var orderItemCount = 0;
+var orderItemCountArray = [];
+var myHistory = [];
+var checks = {1:null, 8:null};
+var chooseLocationPrompt = "Choose a delivery location";
+var chooseDeliveryTime ="Choose Delivery Time";
+var deliveryCharges=0;
+var flagForFirstData=0;
+var checkTypeFlag="";
+var menuME;
+var timeME;
+// APIs
+    var _getTables  = '/CookedSpecially/seatingTable/getRestaurantTables.json?', 
+    _setTable   = '/CookedSpecially/seatingTable/setStatus?', 
+    _custInfo   = '/CookedSpecially/customer/getCustomerInfo.json?restaurantId=' + restaurantId + '&', 
+	_deliveryAreaInfo   = '/CookedSpecially/restaurant/getDeliveryAreas?', 
+	_setDeliveryArea   = '/CookedSpecially/order/setDeliveryArea?', 
+    _setCustInfo   = '/CookedSpecially/customer/setCustomerInfo.json?', 
+    _getCheck   = '/CookedSpecially/order/getCheckWithOrders.json?', 
+    _addToCheck = '/CookedSpecially/order/addToCheck.json?', 
+    _getTime = '/CookedSpecially/order/time.json?'
+    _emailCheck = '/CookedSpecially/order/emailTemplatedCheck?templateName=saladdaysemailbill';  
+    _getPosMenu = '/menu/getallposmenusjson/'; 
+    
+     /*  var _getTables = comCookedSpeciallyApiPrefix + '/seatingTable/getRestaurantTables.json?', 
+    _setTable = comCookedSpeciallyApiPrefix + '/seatingTable/setStatus?', 
+    _custInfo = comCookedSpeciallyApiPrefix + '/customer/getCustomerInfo.json?restaurantId=' + parentId + '&', 
+    _deliveryAreaInfo = comCookedSpeciallyApiPrefix + '/restaurant/getDeliveryAreas?', 
+    _setDeliveryArea = comCookedSpeciallyApiPrefix + '/order/setDeliveryArea?', 
+    _setCustInfo = comCookedSpeciallyApiPrefix + '/customer/setCustomerInfo.json?', 
+    _getCheck = comCookedSpeciallyApiPrefix + '/order/getCheckWithOrders.json?', 
+    _addToCheck = comCookedSpeciallyApiPrefix + '/order/addToCheck.json?', 
+    _getTime = comCookedSpeciallyApiPrefix + '/order/time.json?',
+    _emailCheck = comCookedSpeciallyApiPrefix + '/order/emailTemplatedCheck?templateName=saladdaysemailbill'
+    */
+// hardcoded global variable for Salad Days
+// the deliveryArea implementation is not generic for the multiple restaurant case
+
+
+
+var deliveryArea = "";
+
+var searchParam = decodeURIComponent(window.location.search).substring(1);
+if (restaurantsParamMatch.test(searchParam)) {
+	restaurantsParamJson = JSON.parse('{"restaurants":' + restaurantsParamMatch.exec(searchParam) + '}');
+	restaurants = restaurantsParamJson.restaurants;
+}
+
+var isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i) ? true : false;
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i) ? true : false;
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i) ? true : false;
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
+    }
+};
+
+// Avoid `console` errors in browsers that lack a console.
+// http://stackoverflow.com/questions/7585351/testing-for-console-log-statements-in-ie
+(function() {
+    var method;
+    var noop = function () {};
+    var methods = [
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+        'timeStamp', 'trace', 'warn'
+    ];
+    var length = methods.length;
+    var console = (window.console = window.console || {});
+
+    while (length--) {
+        method = methods[length];
+
+        // Only stub undefined methods.
+        if (!console[method]) {
+            console[method] = noop;
+        }
+    }
+}());
+
+/* **********
+ * 0. PREREQUISITE checkBusinessHours
+ */
+function isOpen() {
+	debugLog("DEBUG > BEGIN isOpen");    
+	if (alwaysOpen) {
+		debugLog("DEBUG > ALWAYS OPEN");  
+		return true;
+	}
+	
+	// Translate your hours to UTC
+	// http://www.worldtimebuddy.com/india/noida/to/gmt
+
+	// Opening hour in UTC is 16, Closing hour is 0 the next day
+	var d      = new Date(), 
+		open   = new Date(), 
+		closed = new Date();
+
+	// Statically set UTC date for open
+	open.setUTCHours(3);
+	open.setUTCMinutes(30);
+	open.setUTCSeconds(0);
+	open.setUTCMilliseconds(0);
+
+	// Statically Set UTC date for closing
+	//closed.setUTCDate(d.getUTCDate()+1); // UTC time rotates back to 0, add a day
+	closed.setUTCHours(16);
+	closed.setUTCMinutes(30);
+	closed.setUTCSeconds(0);
+	closed.setUTCMilliseconds(0);
+
+	// Debugging
+	debugLog("user's date:" + d);
+	debugLog("store open time in user's timezone:" + open);
+	debugLog("store close time in user's timezone:" + closed);
+	debugLog(d > open); // user's time is greater than opening time
+	debugLog(d < closed); // is user's time less than closing time
+						   // (you don't have to go home...)
+
+	// Test for store open?
+	// Salad Days is open all week; no need to check Days
+	/*
+	if (d.getDay() !== 0 && d.getDay() !== 6 && (d > open && d < closed)) {
+		//open
+	}
+	else {
+		//closed
+	}
+	*/
+	if (d > open && d < closed) {
+		debugLog("Open for business.")
+	}
+	else {
+		debugLog("Closed. Come again.")
+		return false;
+	}
+	
+	return true;
+	debugLog("DEBUG > END isOpen");      
+}
+/* 
+ * END initHomePage
+ **********/
+
+/* **********
+ * 1. BEGIN initHomePage
+ * Iterates through all menus in data file and add menus to the home page
+   Function Calls 
+    - addMenuToHomePage() for each menu
+    - updateAllMenus()
+ */
+function initHomePage(restaurantId, restaurantName) {
+        debugLog("DEBUG > BEGIN initHomePage");    
+        debugLog("DEBUG > About to iterate through globalData");
+
+        if (globalData[restaurantId] != null && typeof(globalData[restaurantId].menus != "undefined") && globalData[restaurantId].menus != null) {
+			// special-case the lonely menu situation
+			if (restaurants.length == 1 && globalData[restaurantId].menus.length == 1) {
+				initialHash = "#menu" + globalData[restaurantId].menus[0].menuId;
+				updateMenuPage(restaurantId, restaurantName, 0);
+				$("#restaurants").on( "pagebeforeshow", function(event, ui) {
+					// do something before navigating to a new page
+					if (initialHash != "#restaurants") {
+						// deprecated in 1.4
+						// $.mobile.changePage(initialHash, { changeHash: true });
+						$.mobile.pageContainer.pagecontainer ("change", initialHash, {changeHash: true});
+					}
+				});
+				$("#restaurants").on( "pageshow", function(event, ui) {
+					// do something before navigating to a new page
+					if (initialHash != "#restaurants") {
+						// deprecated in 1.4
+						// $.mobile.changePage(initialHash, { changeHash: true });
+						$.mobile.pageContainer.pagecontainer ("change", initialHash, {changeHash: true});
+					}
+				});
+				$("a#restaurants-button").addClass("ui-disabled");
+				$("a#menu-button").addClass("ui-disabled");
+				// deprecated in 1.4
+				// $.mobile.changePage(initialHash, { changeHash: true });
+				$.mobile.pageContainer.pagecontainer ("change", initialHash, {changeHash: true});
+			}
+			// general logic that allows for multiple restaurants and multiple menus
+			else {
+				var theRestaurant = $("div#restaurants div div#restaurant" + restaurantId);
+				var theRestaurantOrder = $("div#order div div#restaurant" + restaurantId);
+				var theMenuUl = $("div#restaurants div div#restaurant" + restaurantId + " ul");
+				var theMenuOrderUl = $("div#order div div#restaurant" + restaurantId + " ul");
+
+				if (theMenuUl.hasClass('ui-listview')) {
+					theMenuUl.listview('refresh');
+					debugLog("Refreshing list.");
+				} else {
+					theMenuUl.listview();
+					debugLog("Creating list.");
+				}
+
+				// iterate through data file and create menus in homepage
+				var menuIndex = 0;
+				$.each(globalData[restaurantId].menus, function() {
+					if (typeof(globalData[restaurantId].menus[menuIndex].menuId) != "undefined" && globalData[restaurantId].menus[menuIndex].menuId != null) {
+						if(globalData[restaurantId].menus[menuIndex].posVisible==true){
+							menuME=globalData[restaurantId].menus[menuIndex].menuId;
+						}
+						addMenuToHomePage(restaurantId, menuIndex);
+						updateMenuPage(restaurantId, restaurantName, menuIndex);
+						menuIndex++;
+					}
+				});
+		
+				if (theMenuUl.hasClass('ui-listview')) {
+					debugLog("Refreshing list.");
+					theMenuUl.listview('refresh');
+				} else {
+					debugLog("Creating list.");
+					theMenuUl.listview();
+				}
+		
+				if (theRestaurant.hasClass('ui-collapsible')) {
+					debugLog("Refreshing collapsible.");
+					//theMenuUl.parent().collapsible('refresh');
+				} else {
+					debugLog("Creating collapsible.");
+					theRestaurant.collapsible();
+					// worked in jqm 1.3.2, not in 1.4
+					//theRestaurant.trigger('expand');
+				}
+		
+				$(theRestaurant).show();
+				menuIndex = 0;
+				$.each(globalData[restaurantId].menus, function() {
+					// create each menu page
+					addMenuLinksToControlGroup(restaurantId, menuIndex);
+					menuIndex++;
+				});				
+			}
+        }
+        else {
+                debugLog("DEBUG > globalData invalid");
+        }
+
+        if (!isOpen()) {
+        	//needs to apply both to a.addItemToOrder and span.addItemToOrder
+			$(".addItemToOrder").attr('onclick', '$.mobile.pageContainer.pagecontainer ("change", "#closed", {changeHash: true});');
+		}
+
+		$("span.restaurantLink").html('<img alt="' + restaurantName + '" src="images/SD_Graphic.png"/>');
+
+		$("#allPages").css({ "visibility": "visible" });
+		$.mobile.loading( "hide" );
+		$(".ui-fixed-hidden").removeClass("ui-fixed-hidden");
+		$("div#splash").css({ "display": "none" });
+
+		$(document).on( "hashchange", function( event ) {
+			//parent.postMessage("0", 'http://www.saladdays.co');
+		});
+		$(document).on( "pagechange", function( event ) {
+			//parent.postMessage($("div#" + $.mobile.activePage.attr('id')).outerHeight(), 'http://www.saladdays.co');
+		});
+		//parent.postMessage(document.body.scrollHeight, 'http://www.saladdays.co');
+		
+		//Twitter
+		var s = document.createElement("script");
+		s.type = "text/javascript";
+		s.innerHTML = "!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');";
+		$("head").append(s);
+		
+		// Facebook
+		// Use '//connect.facebook.net/en_US/all.js' for production
+		// Use the Login Button Social Plugin https://developers.facebook.com/docs/reference/plugins/login/
+		// By default, jQuery timestamps asynchronous requests to avoid them being cached by the browser. 
+		// You’ll want to disable this functionality using the ajaxSetup() method, so that the SDK is cached locally between pages.
+		$.getScript('//connect.facebook.net/en_UK/all/debug.js#xfbml=1&appId=362187947188195', function(){
+			FB.init({
+				appId	: '226697114202871',
+				status	: true,					// Check Facebook Login status
+				cookie	: true,					// enable cookies to allow the server to access the session
+				xfbml	: true					// Look for social plugins on the page
+			});     
+		
+			FB.Event.subscribe('xfbml.render', function(response) {
+				// xfbml.render - fired when a call to FB.XFBML.parse() completes. 
+				// The response parameter to the callback function is empty for this event.
+			});
+			// Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
+			// for any authentication related change, such as login, logout or session refresh. This means that
+			// whenever someone who was previously logged out tries to log in again, the correct case below 
+			// will be handled. 
+			FB.Event.subscribe('auth.authResponseChange', function(response) {
+				// Here we specify what we do with the response anytime this event occurs. 
+				if (response.status === 'connected') {
+				  // The response object is returned with a status field that lets the app know the current
+				  // login status of the person. In this case, we're handling the situation where they 
+				  // have logged in to the app.
+				  queryFB();
+				} else if (response.status === 'not_authorized') {
+				  // In this case, the person is logged into Facebook, but not into the app, so we call
+				  // FB.login() to prompt them to do so. 
+				  // In real-life usage, you wouldn't want to immediately prompt someone to login 
+				  // like this, for two reasons:
+				  // (1) JavaScript created popup windows are blocked by most browsers unless they 
+				  // result from direct interaction from people using the app (such as a mouse click)
+				  // (2) it is a bad experience to be continually prompted to login upon page load.
+				  FB.login();
+				} else {
+				  // In this case, the person is not logged into Facebook, so we call the login() 
+				  // function to prompt them to do so. Note that at this stage there is no indication
+				  // of whether they are logged into the app. If they aren't then they'll see the Login
+				  // dialog right after they log in to Facebook. 
+				  // The same caveats as above apply to the FB.login() call here.
+				  FB.login();
+				}
+			});
+		});
+
+		// Google+
+		(function() {
+			var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+			po.src = 'https://apis.google.com/js/plusone.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		})();
+
+		// Pinterest
+		/*
+		(function(d){
+			var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');
+			p.type = 'text/javascript';
+			p.async = true;
+			p.src = '//assets.pinterest.com/js/pinit.js';
+			f.parentNode.insertBefore(p, f);
+		}(document));
+		*/
+		// https://github.com/pinterest/widgets/issues/13
+		$.each($(".pin-it"), function() {
+			try{
+				if (typeof(doBuild) == "function") doBuild(this);
+			}catch(ex){}
+		});
+		
+		$( "#popupOrderConfirmation" ).bind({
+		   popupafterclose: function(event, ui) { fbShare(); }
+		});
+
+		$(".fb-like").show();
+		if ($( window ).width() > 568) {
+			$(".g-plus-container").show();
+			$(".pin-it").show();
+			$(".tweet").show();
+		}
+
+        debugLog("DEBUG > END initHomePage");      
+}
+/* 
+ * END initHomePage
+ **********/
+	function regularOrders(){
+
+		if(checkTypeFlag==""){
+			checkTypeFlag="Delivery";
+			$("#select-delivery-day").val("Today");
+			 $("#select-delivery-day-button > span").text("Today");
+			setAllTime();
+		}
+		else if(checkTypeFlag!="Delivery"){
+			var bol;
+ 			if(removeItems.length>0 && orderItemCount>0){
+ 			 bol = confirm("This menu is served right away and is not available with early morning delivery. Adding items from this menu will clear previous items from cart");
+ 			}	
+				if(bol==true){
+					checkTypeFlag="Delivery";
+					$("#select-delivery-day").val("Today");
+					 $("#select-delivery-day-button > span").text("Today");
+					setAllTime();
+					resetOrder();
+				}
+				else if(bol==false){
+					window.location.href="#";
+				return false;
+				}
+			}
+			
+	}
+ 
+ 	function morningExpress(){
+ 	
+ 		if(checkTypeFlag==""){
+ 			 checkTypeFlag="MorningExpress";
+ 			 $("#select-delivery-day").val("Tomorrow");
+ 			 $("#select-delivery-day-button > span").text("Tomorrow");
+ 		  	 timeME=["7:00","7:30","8:00","8:30","9:00"];
+ 		  	  morningExpressTime();
+ 			}
+ 		else if(checkTypeFlag!="MorningExpress"){
+			var bol;
+ 			if(removeItems.length>0 && orderItemCount>0){
+ 			 bol = confirm("This menu is served right away and is not available with Regular menu. Adding items from this menu will clear previous items from cart");
+			}
+ 			 if(bol==true){
+				checkTypeFlag="MorningExpress";
+				morningExpressTime();
+				resetOrder();
+			}
+			else if(bol==false){
+				window.location.href="#";
+				return false;
+				}
+		}
+ 		}
+
+ 	function resetOrder(){
+		if(removeItems.length>0 && orderItemCount>0){
+			for(var i in removeItems ){
+			$("#"+removeItems[i]).attr("data-count","0");
+			removeItemFromOrderList($("#"+removeItems[i]).closest("li"));
+			}
+			orderItemCount=0;
+			orderItemCountArray[restaurantId]=0;
+			removeItems=[];
+		}
+	}
+ 	
+	function morningExpressTime(){
+		$("#select-delivery-day").val("Tomorrow");
+		 $("#select-delivery-day-button > span").text("Tomorrow");
+		 $('#select-delivery-time-button > span').text(chooseDeliveryTime);
+		var setTimeZone =_getTime+"tz=IST&day=Tomorrow";   
+	 	var deliveryTime = $.ajax({
+	 		  crossDomain: true,
+	 		  type: 'GET',
+	 		  url : setTimeZone,
+	 		  dataType: 'json'
+	 	     })
+	 		deliveryTime.then(function (data) {
+	 			serverDate=data.date;
+	 			 timeME=["7:00","7:30","8:00","8:30","9:00"];
+	 		},function() {
+	 			alert("AJAX: get delivery zone info FAILED. " + setTimeZone); 
+	 		});
+	 	
+             var  theOptions = '<option id="placeholder" data-theme="d" data-placeholder="true" value="' + chooseDeliveryTime + '">' + chooseDeliveryTime + '</option>';
+	 			var optionCount = 0;
+	 			$('#select-delivery-time').html('');
+	 			//$("#select-delivery-time-button > span").text(chooseDeliveryTime);
+	 			for (var time in timeME) {
+	 				theOptions = theOptions + '<option data-theme="d" value="' +timeME[time] + '">' + timeME[time] + '</option>';	
+	 				optionCount ++;
+	 			}
+	 			if (optionCount >= 1) {
+	 				$("#popupDeliveryTime button#continue").removeClass("ui-disabled");
+					$('#select-delivery-time').html(theOptions);
+					$('#time_warning').text('');
+	 			}
+	 			
+	 		}
+
+/* 
+ *******************************************************
+                     UI FUNCTIONS
+ ******************************************************* 
+ */
+ 
+/* **********
+ * 2. BEGIN addMenuToHomePage
+ * Creates the home page with all the menus
+    Parameters: 
+    m - menu index 
+ */
+function addMenuToHomePage(restaurantId, m) {
+    debugLog("DEBUG > BEGIN addMenuToHomePage: " + globalData[restaurantId].menus[m].name); 
+
+    var menuId = globalData[restaurantId].menus[m].menuId;
+    var name = globalData[restaurantId].menus[m].name;
+    var imageUrl = globalData[restaurantId].menus[m].imageUrl;
+    var theMenuLi;    
+    	
+             theMenuLi =	'<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="d" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-first-child ui-btn-up-c">' +
+						'	<div class="ui-btn-inner ui-li">' + 
+						'		<div class="ui-btn-text">' + 
+						'			<a href="#menu' + menuId + '" class="ui-link-inherit">' + name + '</a>' + 
+						'		</div>' + 
+						'		<span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span>' + 
+						'	</div>' + 
+						'</li>'; 
+		var theMenuLiHtml ;
+		if(menuME!=undefined){
+			 theMenuLiHtml = '<li id="menu' + menuId + '" ><a href="#menu' + menuId + '" onclick="return morningExpress()">' + name + '</a></li>';
+	    }
+		else {
+			theMenuLiHtml = '<li id="menu' + menuId + '" ><a href="#menu' + menuId + '" onclick="return regularOrders()">' + name + '</a></li>';
+		}
+		$(theMenuLiHtml).appendTo("div#restaurants div div#restaurant" + restaurantId + " ul");
+		var theMenuLi = $("div#restaurants div div#restaurant" + restaurantId + " ul li#menu" + menuId);
+
+		/*
+		if (imageUrl.length != 0) {
+				var menuSelector = "a#menu" + menuId;
+				var imageUrl = "url(" + comCookedSpeciallyImagePrefix + imageUrl + ")";
+				$(menuSelector).css({"background-image": imageUrl, "background-size": "cover"});
+		}
+        */
+        
+        debugLog("DEBUG > END addMenuToHomePage"); 
+}
+/* 
+ * END addMenuToHomePage
+ **********/
+ 
+ 
+/* **********
+ * 3. BEGIN updateMenuPage
+ * Create each menu page
+    Parameters: 
+    m - menu index 
+ */
+ function updateMenuPage(restaurantId, restaurantName, m) {
+        debugLog("DEBUG > BEGIN updateMenuPage: " + m);   
+
+        if (typeof(globalData[restaurantId].menus[m].menuId) != "undefined" && globalData[restaurantId].menus[m].menuId != null) {
+                var menuId = "menu" + globalData[restaurantId].menus[m].menuId;
+                var smallImageUrl = "";
+                if (typeof(globalData[restaurantId].menus[m].smallImageUrl) != "undefined" && globalData[restaurantId].menus[m].smallImageUrl != null) {
+                        smallImageUrl = globalData[restaurantId].menus[m].smallImageUrl;
+                }               
+                var modifiedTime = new Date(globalData[restaurantId].menus[m].modifiedTime);
+                var sectionId = "";
+                
+                // Create menu page container
+                addMenuPage(restaurantId, restaurantName, m);
+
+                // iterate through each section
+                var s = 0;
+                $.each(globalData[restaurantId].menus[m].sections, function() {
+                        if (typeof(sectionId) != "undefined" && sectionId != null && sectionId.length == 0) {
+                                sectionId = "section" + this.sectionId;
+                        }
+                        // Create section container
+                        addSectionToMenuPage(restaurantId, restaurantName, m, s);
+                        s++;
+                });
+                
+                $("#menu" + menuId + "-sections").collapsible();
+                $("#menu" + menuId + "-sections").trigger('expand');
+        
+        }else {
+                debugLog("updateMenuPage: menuId undefined");
+        }
+        debugLog("DEBUG > END updateMenuPage");    
+}
+
+/* **********
+ * 4 BEGIN addMenuLinksToControlGroup
+ * Create each menu page
+    Parameters: 
+    m - menu index 
+ */
+ function addMenuLinksToControlGroup(restaurantId, m) {
+        debugLog("DEBUG > BEGIN addMenuLinksToControlGroup: " + m);   
+
+        if (typeof(globalData[restaurantId].menus[m].menuId) != "undefined" && globalData[restaurantId].menus[m].menuId != null) {
+                var menuId = "menu" + globalData[restaurantId].menus[m].menuId;
+				var menuName = globalData[restaurantId].menus[m].name;
+
+				var theMenuItems = $("div#restaurants div#restaurant" + restaurantId + " ul").html();
+				$(theMenuItems).appendTo('div#' + menuId + ' ul#' + menuId + '-menu-nav-list');
+                $('div#' + menuId + ' ul#' + menuId + '-menu-nav-list li#' + menuId + ' a').addClass("ui-disabled");
+
+        }else {
+                debugLog("updateMenuPage: menuId undefined");
+        }
+        debugLog("DEBUG > END addMenuLinksToControlGroup");    
+}
+
+/* 
+ * END addMenuLinksToControlGroup
+ **********/
+ 
+ 
+
+
+/* **********
+ * BEGIN addMenuPage
+ * Creates page container for each menu
+   Parameters: 
+    i - menu index 
+ */
+//function addMenuPage(menuId, name, description) {
+function addMenuPage(restaurantId, restaurantName, m) {
+        debugLog("DEBUG > BEGIN addMenuPage: " + m );
+        var menuId = globalData[restaurantId].menus[m].menuId;
+		var menuName = globalData[restaurantId].menus[m].name;
+		var menuDescription = globalData[restaurantId].menus[m].description;
+        var thePage = '' + 
+'	<div data-role="page" data-theme="d" id="menu' + menuId + '">' + 
+'		<div data-role="header" data-id="globalHeader" data-position="fixed">' + 
+'			<div class="header-content">' + 
+'			<div class="restaurantName"><span class="restaurantLink" onclick="javascript:top.location.href=(\'http://www.saladdays.co\');">' + restaurantName + '</span> <span class="poweredBy"><a target="cs" href="http://www.cookedspecially.com"><img alt="Powered by CookedSpecially" src="/static/assets/shared/images/cs-button.png"/></a></span> <span class="print">T: 9643 800 901/02/03 E: hello@saladdays.co</span></div>' + 
+'			<div class="right-controlgroup" id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">' + 
+'				<a id="order-button" href="#order" data-role="button" data-inline="true" data-icon="info" class="ui-disabled">My Order</a>' + 
+'			</div>' + 
+'			</div>' + 
+'		</div>' + 
+'		<div id="menu-content" data-role="content">' + 
+'			<div id="menu' + menuId + '-sections">' + 
+'				<div class="ui-grid-b">' +
+'				</div>' + 
+'			</div>' + 
+'		</div>' + 
+'		<div data-role="footer" data-id="globalFooter" data-position="fixed">' + 
+'			<div class="footer-content">' + 
+'				<span class="fb-like" data-href="http://www.cookedspecially.com/static/clients/com/saladdays/index.html" data-layout="button_count" data-action="like" data-width="50%" data-max-rows="1" data-show-faces="false" data-share="true"></span>' + 
+'				<span class="g-plus-container"><span class="g-plus" data-action="share" data-annotation="bubble" data-height="20"></span></span>' + 
+'				<span class="pin-it"><a href="//www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.cookedspecially.com%2Fstatic%2Fclients%2Fcom%2Fsaladdays%2Findex.html&media=http%3A%2F%2Fstatic.squarespace.com%2Fstatic%2F52dae045e4b050691872aeee%2F52dc34fce4b0845775fa4f80%2F53093ad3e4b0dd985a43dfc4%2F1393113819369%2FVeggie.jpg%3Fformat%3D1000w&description=Bringing%20real%20salads%20to%20India" data-pin-do="buttonPin" data-pin-config="beside" data-pin-color="white"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_white_20.png" /></a></span>' + 
+'				<span class="tweet"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></span>' +
+'			</div>' + 
+'		</div>' + 
+'		<div data-role="popup" id="menu' + menuId + '-menu-nav" data-overlay-theme="d">' + 
+'			<div data-role="content">' + 
+'				<ul id="menu' + menuId + '-menu-nav-list" data-role="listview">' + 
+'				</ul>' + 
+'			</div>' + 
+'		</div>' + 
+'	</div>';
+
+        if ($("div#menu" + menuId).length == 0) {
+                $(thePage).appendTo($.mobile.pageContainer);
+        }else {
+                debugLog("DEBUG > Skipping menu page " + globalData[restaurantId].menus[m].name + "because it has already been added");
+        }
+
+        debugLog("DEBUG > END addMenuPage");       
+}
+/* 
+ * END addMenuPage
+ **********/
+ 
+ 
+ 
+  
+ /* **********
+ * BEGIN addSectionToMenuPage
+ * Creates sections and filter links for each menu page
+   Parameters: 
+    m - menu index 
+    s - section index
+ */ 
+function addSectionToMenuPage(restaurantId, restaurantName, m, s) {
+        debugLog("DEBUG > addSectionToMenuPage() >  Menu: " + m + " Section: " + s);      
+        
+        if (typeof(globalData[restaurantId].menus[m].sections[s].sectionId) != "undefined" && globalData[restaurantId].menus[m].sections[s].sectionId != null) {
+                var name = globalData[restaurantId].menus[m].sections[s].name;
+                var menuId = globalData[restaurantId].menus[m].menuId;
+				var menuName = globalData[restaurantId].menus[m].name;
+                var sectionId = globalData[restaurantId].menus[m].sections[s].sectionId;
+
+				var theHtml = "";
+				if (s % 3 == 0) {
+					theHtml = '<div class="ui-block-a">';
+				}
+				if (s % 3 == 1) {
+					theHtml = '<div class="ui-block-b">';
+				}
+				if (s % 3 == 2) {
+					theHtml = '<div class="ui-block-c">';
+				}
+                theHtml = theHtml + 
+'				<div class="section">' + 
+'				<h3 class="sectionTitle" id="section' + sectionId + '">' + 
+'					<hr/>' + name + '' + 
+'				</h3>' + 
+'				<ul id="section' + sectionId + '" data-role="listview" data-inset="true" data-filter="false">' + 
+'				</ul>' + 
+'				<br>' +
+'				</div>' +
+'				</div>';
+
+				$(theHtml).appendTo("#menu" +  menuId + "-sections div.ui-grid-b");
+				
+				var theSectionUl = $("ul#section" + sectionId);
+                // iterate through each item
+                var itemIndex = 0;
+                $.each(globalData[restaurantId].menus[m].sections[s].items, function() {
+                        addItemToMenuPage(restaurantId, m,s,itemIndex);
+                        addItemDetailPage(restaurantId, m,s,itemIndex);
+                        itemIndex++;
+                });
+        }       
+        debugLog("DEBUG > END addSectionToMenuPage");      
+}
+/* 
+ * END addSectionToMenuPage
+ **********/
+
+ 
+
+/* **********
+ * BEGIN addItemToMenuPage
+ * Populates menu page containers
+    Parameters: 
+    m - menu index 
+    s - section index
+    i - item index
+ */
+function addItemToMenuPage(restaurantId, m,s,i) {
+        debugLog("DEBUG > BEGIN addItemToMenuPage" );    
+
+        var menuId = "menu" + globalData[restaurantId].menus[m].menuId;
+        var sectionId = "section" + globalData[restaurantId].menus[m].sections[s].sectionId;
+        var item = globalData[restaurantId].menus[m].sections[s].items[i];
+        
+        
+        if (typeof(item.itemId) != "undefined" && item.itemId != null) {
+                var itemId = "item" + item.itemId;
+                var name = item.name;
+                var description = item.description;
+                var shortDescription = item.shortDescription;
+                var price = item.price;
+                var itemType = item.itemType;
+                var vegetarian = item.vegetarian ? '<div class="vegetarian"></div>' : '';
+                var alcoholic = item.alcoholic;
+                var imageUrl = "";
+                var smallImageUrl = "";
+                
+                
+                // cache images
+                if (typeof(item.imageUrl) != "undefined") {
+                    imageUrl = item.imageUrl;
+                }
+                else {
+                	imageUrl = "/static/assets/shared/images/defaultDetail50Percent.png"
+                }
+				var fullImageUrl = comCookedSpeciallyImagePrefix + imageUrl;
+				var cacheImage = document.createElement('img');
+				cacheImage.src = fullImageUrl;
+				preloadCache.push(cacheImage);
+                if (typeof(item.smallImageUrl) != "undefined" && item.smallImageUrl != null) {
+					smallImageUrl = item.smallImageUrl;
+                }
+                else {
+                	smallImageUrl = "/static/assets/shared/images/defaultDetail50Percent200x200.png"
+                }
+				var fullsmallImageUrl = comCookedSpeciallyImagePrefix + smallImageUrl;
+				var cacheImage = document.createElement('img');
+				cacheImage.src = fullsmallImageUrl;
+				preloadCache.push(cacheImage);
+				var popup = 'data-rel="popup" data-position-to="window"';
+				if (isPhone) {
+					popup = '';
+				}
+                var theItem = '' + 
+'					<li id="' + itemId + '">' + 
+'					<img src="' + fullImageUrl + '">' + 
+'					<div class="itemContent">' +
+'					    <div class="title">' + vegetarian + name + '</div>' +
+'					    <div class="description longDescription">' + description + '</div>' +
+'					    <div class="description shortDescription">' + shortDescription + '</div>' +
+'					    <div class="price"><span class="addItemToOrder" onclick="addItemToOrder(' + restaurantId + ',' + m + ',' + s + ',' + i + ',500);" >Add to My Order</span> @ ' + currency + '<span id="price">' + price + '</span></div>' + 
+'					    <div class="itemType" style="display:none">' + itemType + '</div>' +
+'					</div>' +
+'					</li>';
+
+				var theSectionUl = $("ul#" + sectionId);
+                $(theItem).appendTo(theSectionUl);
+
+        }
+        debugLog("DEBUG > END addItemToMenuPage"); 
+}
+/* 
+ * END addItemToMenuPage
+ **********/
+
+
+ 
+/* **********
+ * BEGIN addItemDetailPage
+ * Creates menu item popup pages
+    Parameters: 
+    m - menu index 
+    s - section index
+    i - item index
+ */
+function addItemDetailPage(restaurantId, m,s,i) {
+        debugLog("DEBUG > BEGIN addItemDetailPage" );    
+
+        var menuId = "menu" + globalData[restaurantId].menus[m].menuId;
+        var sectionId = "section" + globalData[restaurantId].menus[m].sections[s].sectionId;
+        var item = globalData[restaurantId].menus[m].sections[s].items[i];
+        
+        
+        if (typeof(item.itemId) != "undefined" && item.itemId != null) {
+                var itemId = "item" + item.itemId;
+                var name = item.name;
+                var description = item.description;
+                var shortDescription = item.shortDescription;
+                var price = item.price;
+                var itemType = item.itemType;
+                var vegetarian = item.vegetarian ? '<div class="vegetarian"></div>' : '';
+                var alcoholic = item.alcoholic;
+                var imageUrl = "";
+                var smallImageUrl = "";
+                
+				if (description.length == 0) {
+					description = shortDescription;
+				}
+		
+                // cache images
+                /*
+                 * This design doesn't use the full-size images
+                 *
+                if (typeof(item.imageUrl) != "undefined") {
+                    imageUrl = item.imageUrl;
+                }
+                else {
+                	imageUrl = "/static/assets/shared/images/defaultDetail50Percent.png"
+                }
+				var fullImageUrl = comCookedSpeciallyImagePrefix + imageUrl;
+				var cacheImage = document.createElement('img');
+				cacheImage.src = fullImageUrl;
+				preloadCache.push(cacheImage);
+				*/
+                if (typeof(item.smallImageUrl) != "undefined" && item.smallImageUrl != null) {
+					smallImageUrl = item.smallImageUrl;
+                }
+                else {
+                	smallImageUrl = "/static/assets/shared/images/defaultDetail50Percent200x200.png"
+                }
+				var fullsmallImageUrl = comCookedSpeciallyImagePrefix + smallImageUrl;
+				var cacheImage = document.createElement('img');
+				cacheImage.src = fullsmallImageUrl;
+				preloadCache.push(cacheImage);
+				var popup = 'data-role="popup"';
+				if (isPhone) {
+					popup = 'data-role="page"';
+				}
+
+				var header = '<a href="#"  data-role="button" data-theme="d" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>';
+				if (isPhone) header = '' + 
+'					<div data-role="header" data-id="globalHeader" data-position="fixed">' + 
+'						<!-- h1><a data-role="button" href="http://www.cookedspecially.com" target="CookedSpecially">CookedSpecially</a></h1 -->' + 
+'						<div class="right-controlgroup" id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">' + 
+'							<a id="order-button" href="#order" data-role="button" data-inline="true" data-icon="info" class="ui-disabled">My Order</a>' + 
+'						</div>' + 
+'					</div>';
+
+				var footer = '' + 
+'						<div data-role="content">' + 
+'							<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">' + 
+'								<a href="#" onclick="goBack();" data-role="button" data-inline="true" data-icon="back">Go Back</a>' + 
+'								<a href="#" onclick="addItemToOrder(' + restaurantId + ',' + m + ',' + s + ',' + i + ',500);" data-role="button" data-inline="true" data-icon="plus">Add to My Order</a>' + 
+'							</div>' + 
+'						</div>';
+				if (isPhone) footer = '' + 
+'						<div data-role="footer" data-id="globalFooter" data-position="fixed">' + 
+'							<div class="footer-content">' + 
+'							<div id="options" data-role="controlgroup" data-type="horizontal" data-mini="true">' + 
+'								<a href="#" onclick="goBack();" data-role="button" data-inline="true" data-icon="back" >Go Back</a>' + 
+'								<a href="#" onclick="addItemToOrder(' + restaurantId + ',' + m + ',' + s + ',' + i + ',500);" data-role="button" data-inline="true" data-icon="plus">Add to My Order</a>' + 
+'							</div>' + 
+'							</div>' + 
+'						</div>';
+
+                var theItem = '' + 
+'					<div ' + popup + ' id="' + itemId + 'detail" class="itemDetail" data-overlay-theme="d">' + header + 
+'						<div class="itemDetailContent" data-role="content">' + 
+'							<img width="64px" src="' +fullsmallImageUrl + '"/>' + 
+'							<h3 class="itemDetailName">' + 
+'								' + vegetarian + name + ' ' + 
+'							</h3>' + 
+'							<div class="itemDetailDesc">' + 
+'								' + description + ' ' + 
+'							</div>' + 
+'							<div class="itemDetailPrice">' + 
+'								' + currency + price + ' ' + 
+'							</div>' + 
+'						</div>' + 
+footer + 
+'					</div>';
+
+				if (isPhone) {
+					$(theItem).appendTo($.mobile.pageContainer);
+				}
+				else {
+                	$(theItem).appendTo("div#allPages div#" + menuId);
+                }
+        }
+        debugLog("DEBUG > END addItemDetailPage"); 
+}
+/* 
+ * END addItemDetailPage
+ **********/
+
+/* **********
+ * BEGIN addItemToOrder
+ * Adds an item to the Order page
+    Parameters: 
+    m - menu index 
+    s - section index
+    i - item index
+ */
+ var removeItems= [];
+ var removeItemCount=0;
+function addItemToOrder(restaurantId, m,s,i, delay) {
+	debugLog("DEBUG > BEGIN addItemToOrder" );    
+	if (delay > 0) {
+		$.mobile.loading( "show", {
+			text: "Adding to Order…",
+			textVisible: true,
+			theme: $.mobile.loader.prototype.options.theme,
+			textonly: false,
+			html: ""
+		});
+	}
+	$("a#order-button").addClass("achtung");
+	var menuId = "menu" + globalData[restaurantId].menus[m].menuId;
+	var sectionId = "section" + globalData[restaurantId].menus[m].sections[s].sectionId;
+	var item = globalData[restaurantId].menus[m].sections[s].items[i];
+	var itemId = item.itemId;
+	var htmlItemId = "item" + item.itemId;
+	var name = item.name;
+	var description = item.description;
+	var shortDescription = item.shortDescription;
+	var price = item.price;
+	var itemType = item.itemType;
+	var vegetarian = item.vegetarian ? '<div class="vegetarian"></div>' : '';
+	var alcoholic = item.alcoholic;
+	var imageUrl = "";
+	var smallImageUrl = "";
+	
+	if (description.length == 0) {
+		description = shortDescription;
+	}
+	
+	if (typeof(item.smallImageUrl) != "undefined" && item.smallImageUrl != null) {
+		smallImageUrl = item.smallImageUrl;
+	}
+	else {
+		smallImageUrl = "/static/assets/shared/images/defaultDetail50Percent200x200.png"
+	}
+	var fullsmallImageUrl = comCookedSpeciallyImagePrefix + smallImageUrl;
+	var cacheImage = document.createElement('img');
+	cacheImage.src = fullsmallImageUrl;
+	preloadCache.push(cacheImage);
+
+	if ($("div#order-content div#restaurant" + restaurantId + " ul li#order-" + htmlItemId).length > 0) {
+		var count = $("div#order-content div#restaurant" + restaurantId + " ul li#order-" + htmlItemId).attr("data-count");
+		count++;
+		$("div#order-content div#restaurant" + restaurantId + " ul li#order-" + htmlItemId).attr("data-count",count);
+		var countContent = '<label class="countLabel" for="count">' + currency + '</label><input id="count" type="number" value="' + count + '" min="0" max="999" data-mini="true" />';
+		var priceContent = '<span id="count">' + countContent + '</span>&nbsp;@&nbsp;' + currency + '<span id="price">' + price + '</span>';
+		$("div#order-content div#restaurant" + restaurantId + " ul li#order-" + htmlItemId + " div.itemContent div.price").html(priceContent);
+	}
+	else {
+		removeItems[removeItemCount] ="order-"+htmlItemId;	
+		var theItem = '' + 
+	'		<li id="order-' + htmlItemId + '" data-count="1">' + 
+	'		<img src="' + smallImageUrl + '">' + 
+	'		<div class="itemContent ">' +
+	'		    <div id="title" class="title">' + vegetarian + name + ' </div>' +
+	'			<div class="price" style="float:right;><span id="count"><label class="countLabel" for="count">' + currency + '</label><input id="count" type="number" value="1" min="0" max="999" data-mini="true" /></span>&nbsp;@&nbsp;' + currency + '<span id="price">' + price + '</span></div>' + 
+	'		    <div id="description" class="description longDescription">' + description + '</div>' +
+	'		    <div id="description" class="description shortDescription">' + shortDescription + '</div>' +
+	'			<div class="itemType" style="display:none">' + itemType + '</div>' + 
+	'			<div id="restaurantId" style="display:none">' + restaurantId + '</div>' + 
+	'			<div id="menuId" style="display:none">' + m + '</div>' + 
+	'			<div id="sectionId" style="display:none">' + s + '</div>' + 
+	'			<div id="itemId" style="display:none">' + itemId + '</div>' + 
+	'			<div Id="instructions" class="instructions" style="float:left; width:80%; margin-top: 5px; style="left;">'+
+    '           <label style="display:none" for="special-instructions">Special instructions</label>'+
+    '			<textarea  id="test" maxlength="1000" class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset" style="" type="text" data-mini="true" name="instructions" id="instructions" val="" placeholder="Special instructions"></textarea></div>'+
+	'		</div>' +
+	'		</li>';
+		var theMenuOrderUl = $("div#order-content div#restaurant" + restaurantId + " ul");
+		var theCollapsible = $("div#order-content div#restaurant" + restaurantId);
+		$(theCollapsible).show();
+		$(theItem).prependTo(theMenuOrderUl);
+		removeItemCount++;
+		if (theMenuOrderUl.hasClass('ui-listview')) {
+			debugLog("Refreshing list.");
+			theMenuOrderUl.listview('refresh');
+		} else {
+			debugLog("Creating list.");
+			theMenuOrderUl.listview();
+		}
+
+		if (theCollapsible.hasClass('ui-collapsible')) {
+			debugLog("Refreshing collapsible.");
+			theCollapsible.collapsible('refresh');
+		} else {
+			debugLog("Creating collapsible.");
+			theCollapsible.collapsible();
+			theCollapsible.trigger('expand');
+		}
+	}
+	
+/*
+	if ( webkitContentEditing ) {
+		$("div.itemContent div.price span#count").attr("contenteditable","plaintext-only");
+		
+		$('body').on('focus', '[contenteditable]', function() {
+			var $this = $(this);
+			$this.data('before', $this.text());
+			return $this;
+		}).on('blur keyup paste input', '[contenteditable]', function() {
+			var $this = $(this);
+			var newHTML = $this.html();
+			debugLog(newHTML);
+			newHTML = newHTML.replace(/<br>/g,"");
+			debugLog(newHTML);
+			if (newHTML.match(/^\d+$/)) {
+				debugLog("Matches: " + newHTML);
+				if ($this.data('before') !== Number(newHTML)) {
+					$this.data('before', Number(newHTML));
+					$this.trigger('change');
+				}
+				if (Number(newHTML) > 0) {
+					$this.text(Number(newHTML));
+					$this.closest("li").attr("data-count",Number(newHTML));
+					updateOrderTotals();
+				}
+				else {
+					$this.closest("li").attr("data-count","1");
+					removeItemFromOrder($this.closest("li"));
+				}
+			}
+			else {
+				debugLog("Doesn't match: " + newHTML);
+				$this.text($this.data('before'));
+			}
+			return $this;
+		});
+	}
+*/
+
+	$( "input#count[type='number']" ).change(function() {
+		// Check input( $( this ).val() ) for validity here
+		var $this = $(this);
+		var newVal = $this.val();
+		debugLog(newVal);
+		if (Number(newVal) > 0) {
+			$this.val(Number(newVal));
+			$this.closest("li").attr("data-count",Number(newVal));
+			updateOrderTotals();
+		}
+		else {
+			$this.closest("li").attr("data-count","0");
+			removeItemFromOrder($this.closest("li"));
+		}
+	});
+
+	updateOrderTotals();
+	
+	$(theCollapsible).show();
+	$("a#order-button").removeClass("ui-disabled");
+	if (isPhone) {
+		//history.back();
+	}
+	else {
+		//$( "#" + itemId + "detail" ).popup( "close" );
+	}
+	var pinterestHref = "//www.pinterest.com/pin/create/button/?" + 
+		"url=" + encodeURIComponent("http://www.cookedspecially.com/static/clients/com/saladdays/index.html?restaurantId=" + restaurantId + "&itemId=" + itemId) + 
+		"&media=" + encodeURIComponent("http://www.cookedspecially.com" + fullsmallImageUrl) + 
+		"&description=" + encodeURIComponent("Salad Days | " + name + " | " + description.replace(/<.+?>/g, ""));
+	$("span.pin-it a").attr("href", pinterestHref);
+	$.each($(".pin-it"), function() {
+		if (typeof(doBuild) == "function") doBuild(this);
+	});
+
+	/*
+	$(".fb-like").attr("data-href", "http://www.cookedspecially.com/static/clients/com/saladdays/fb-menu-item.html");
+	$(".fb-like").attr("data-action", "recommend");
+    try{
+        FB.XFBML.parse(); 
+    }catch(ex){}
+	*/
+	if (delay > 0) {
+		//setTimeout(function(){$.mobile.loading( "hide" );$("a#order-button").removeClass("achtung");$.mobile.pageContainer.pagecontainer ("change", '#order', {changeHash: true});},1000);
+		setTimeout(function(){$.mobile.loading( "hide" );$(".ui-fixed-hidden").removeClass("ui-fixed-hidden");$("a#order-button").removeClass("achtung");},delay);
+	}
+	debugLog("DEBUG > END addItemToOrder"); 
+}
+
+$(document).ready(function() {
+    $('#test').live('cut copy paste', function(e) {
+        e.preventDefault();
+    });
+});
+/* 
+ * END addItemToOrder
+ **********/
+
+/* **********
+ * BEGIN removeItemFromOrder
+ * Adds an item to the Order page
+    Parameters: 
+    m - menu index 
+    s - section index
+    i - item index
+ */
+function removeItemFromOrder(listItem, restaurantId, m,s,i) {
+	debugLog("DEBUG > BEGIN removeItemFromOrder" );    
+
+	var count = $(listItem).attr("data-count");
+	count--;
+	orderItemCount--;
+	orderItemCountArray[restaurantId]--;
+	
+	if (count > 0) {
+		$(listItem).attr("data-count",count);
+		$(listItem).find("input#count").val(count);
+	}
+	else {
+		debugLog("******* DELETING *******");
+		listItem.empty();
+		listItem.remove();
+	}
+
+	if (count < 0 && count == "" && count != "NaN") {
+		listItem.empty();
+		listItem.remove();
+	}
+
+	updateOrderTotals();
+	if (orderItemCountArray[restaurantId] < 1) {
+		var theCollapsible = $("div#order-content div#restaurant" + restaurantId);
+		theCollapsible.hide();
+    }
+	if (orderItemCount < 1) {
+		$("a#order-button").addClass("ui-disabled");
+		history.back();
+    }
+
+	debugLog("DEBUG > END removeItemFromOrder"); 
+}
+/* 
+ * END removeItemFromOrder
+ **********/
+
+/* **********
+ * BEGIN updateOrderTotals
+ * 
+ */
+function updateOrderTotals() {
+	debugLog("DEBUG > BEGIN updateOrderTotals" );    
+	orderItemCount = 0;
+	
+	 try
+	 {
+	        $("#select-delivery-area").val(chooseLocationPrompt).selectmenu('refresh');
+	 }
+	 catch (e) 
+	    {}
+	     $("#popupContact div#insideDeliveryArea").css("display","block");
+	   /*  $("#popupContact input#customerPhone").addClass("ui-disabled"); */
+	    $("#popupContact #continueContact").addClass("ui-disabled");
+	    $("#select-delivery-area-button").removeClass("achtung");
+	    $("#popupContact input#customerPhone").removeClass("achtung"); 
+	
+	overallTotal = 0;
+	$.each(restaurants, function() {
+		var localRestaurantId = this;
+		orderItemCountArray[localRestaurantId] = 0;
+		var total = 0;
+		$.each($("#order #order-content #restaurant" + localRestaurantId + " li"), function() {
+			var count = Number($(this).find("input#count").val());
+			if (count > 0) {
+				orderItemCount = orderItemCount + count;
+				debugLog("orderItemCount: " + orderItemCount);
+				orderItemCountArray[localRestaurantId] = orderItemCountArray[localRestaurantId] + count;
+				debugLog("orderItemCountArray[this]: " + orderItemCountArray[localRestaurantId]);
+				var price = Number($(this).find("span#price").text());
+				total = total + (count * price);
+			}
+		});
+		overallTotal = overallTotal + total;
+		$("#order #order-content #restaurant" + this + " h3 a span.ui-li-count").html(orderItemCount + " item(s) for " + currency + total.toFixed(2) + " + Tax + Delivery Charge ");
+	});
+	debugLog("overallTotal: " + overallTotal);
+	debugLog("DEBUG > END updateOrderTotals"); 
+}
+/* 
+ * END updateOrderTotals
+ **********/
+
+/* **********
+ * BEGIN goBack
+ * 
+ */
+function goBack() {
+	debugLog("DEBUG > BEGIN goBack" );    
+	
+	document.location = myHistory[myHistory.length -1];
+	/*
+	history.go(-1);
+	navigator.app.backHistory();
+	$(window).on('hashchange', function() {});
+	*/
+	debugLog("DEBUG > END goBack"); 
+}
+/* 
+ * END goBack
+ **********/
+
+/* **********
+ * BEGIN validateContactInfo
+ * 
+ */
+
+var customerName = "";
+var address = "";
+var city = "";
+var email = "";
+ var deliveryAddressArray = [];
+function validateContactInfo(){
+	var localDeliveryArea =deliveryArea;
+	setAllTime();
+	debugLog("DEBUG > BEGIN validateContactInfo" );
+	custIdParam = "";
+	customerPhone = $("#popupContact input#customerPhone").val().trim().toLowerCase();
+	if (phoneMatch.test(customerPhone)) {
+		custIdParam = "&phone=" + customerPhone.replace(phoneClean,"");
+		$("input#customerPhone").val(customerPhone.replace(phoneClean,""));
+		$("#popupContact button#continue").removeClass("ui-disabled");
+	}
+	else{
+		$("input#customerPhone").parent().addClass("achtung");
+	}
+
+	debugLog(custIdParam);
+	if (custIdParam.length != "") {
+		$("input#customerPhone").parent().removeClass("achtung");
+		$("#contactContinue").removeClass("ui-disable");
+		// Create a delay to allow the spinner to display.
+		var $greetingOptions = $('#addressRadio');
+		    $greetingOptions.empty();
+		setTimeout(function(){
+			// /customer/getCustomerInfo.json?custId=<uniquedatabaseId>&email=<emailaddress>&phone=<phonenum>
+			// TODO: Need to pass restaurantid in customer apis
+			var custInfoUrl = _custInfo + custIdParam;
+			var CustInfoPromise= $.ajax({
+			  url: custInfoUrl,
+			  contentType: "application/json; charset=utf-8",
+			  dataType: 'json'
+			})
+			CustInfoPromise.then(function (data) {
+				if (data.customers[0].customerId > 0) {
+					customerInfo = data.customers[0];
+					customerId = data.customers[0].customerId;
+					populateFormsFromCustomerInfo().then(function() {
+						//setDeliveryText();
+					});
+				}
+				
+				 var defaultCustomerAddress;
+				 var defaultCustomerArea;
+					if(data.customers[0].address==null){
+					$.each(data.customerAddress, function( key, value ) {
+			     	defaultCustomerAddress=value.customerAddress;
+					 defaultCustomerArea = value.deliveryArea;
+					 $("#select-delivery-area option:contains(" +defaultCustomerArea+ ")").attr('selected', 'selected');
+					 $("#select-delivery-area-button > span").text(defaultCustomerArea)
+					 $("input#customerAddress1").val(defaultCustomerAddress);
+					
+					});
+					 flagForFirstData++;
+					}else{
+					defaultCustomerAddress =data.customers[0].address;
+					defaultCustomerArea = data.customers[0].address;
+					}
+				
+				 //$("#addressText").text("Add New Address");
+				if(data.customerAddress=='' && defaultCustomerAddress!=null){
+   				  if(flagForFirstData==0) {
+						$("#popupContact input#customerAddress1").hide();
+	   				    $("#cityState").hide();
+	   				    localDeliveryArea="";
+					}
+					else if(flagForFirstData!=0){
+					 $("#popupContact input#customerAddress1").hide();
+ 				     $("#select-delivery-area-button").hide();
+ 				     $("#cityState").hide();
+					}
+   				     $("#addressText").text("Choose a Delivery Address");
+					$greetingOptions.append($('<label style="text-align:left;font-size:small;overflow-y:scroll; line-height: initial; height: initial;" ><input type="radio"  id="fdata" checked="checked" onclick="myAddress()" name="address2" value="fdata">' +address + ', '+localDeliveryArea+', '+city+'</input></label>'));
+				    $greetingOptions.append($('<label style="text-align:left;font-size:small; line-height: initial; height: initial;" ><input type="radio"  id="addAddress" onclick="myAddress()" name="address2" value="addAddress" >Add New Address</input></label><br />'));
+				    setDeliveryText();
+					}
+				else if(data.customerAddress!=null && data.customerAddress!=""){
+					 $("#popupContact input#customerAddress1").hide();
+   				     $("#select-delivery-area-button").hide();
+   				     $("#cityState").hide();
+   				     $("#addressText").text("Choose a Delivery address");
+				$.each(data.customerAddress, function( key, value ) {
+					var customerAddress=value.customerAddress;
+					var deliveryArea=value.deliveryArea;
+					var currentArea = value;
+					currentArea.customerAddress=customerAddress;
+					currentArea.deliveryArea=deliveryArea;
+					deliveryAddressArray.push(currentArea);
+					if(deliveryArea==defaultCustomerArea && customerAddress==defaultCustomerAddress){
+						$greetingOptions.append($('<label style="text-align:left;font-size:small;overflow-y:auto;margin: 10px 0px; line-height: initial; height: initial;width: 320px;" ><input type="radio" checked="checked" id="'+value.id+'" onclick="myAddress()" name="address2" value="'+value.id+ '" >' + value.customerAddress + ', '+value.deliveryArea+', '+value.city+' '+value.state+'</input></label>'));
+						setDeliveryText();
+						}
+					else{
+					$greetingOptions.append($('<label style="text-align:left;font-size:small;overflow-y:auto;margin: 10px 0px; line-height: initial; height: initial;width: 320px;" ><input type="radio"  id="'+value.id+'" onclick="myAddress()" name="address2" value="'+value.id+ '" >' + value.customerAddress + ', '+value.deliveryArea+', '+value.city+' '+value.state+'</input></label>'));
+					}
+					});
+				    $greetingOptions.append($('<label style="text-align:left;font-size:small; line-height: initial;height: initial;margin-top: 10px; " ><input type="radio"  id="addAddress" onclick="myAddress()" name="address2" value="addAddress" >Add New Address</input></label>'));
+				}
+				else {
+					$("#addressText").text("Where should we deliver");
+					$("#popupContact input#customerAddress1").show();
+  				     $("#select-delivery-area-button").show();
+  				     $("#cityState").show();
+  				   setDeliveryText();
+					}
+			},
+			function(){
+				alert("We're sorry, but you're having problems with your network and your order cannot sent. Please try again");
+			});
+			CustInfoPromise.complete(function() {
+				debugLog("AJAX: get customer info COMPLETED");
+				debugLog("About to close contact info popup");
+				workflowValidated = true;
+
+			});
+		},0);
+
+	}
+
+	return false;
+	debugLog("DEBUG > END validateContactInfo");
+}
+
+
+function myAddress(){
+	
+	var deliveryAddressId= $("#popupContact input[name=address2]:checked").val();
+	 $("#popupContact input#customerAddress1").hide();
+	 $("#select-delivery-area-button").hide();
+	  $("#cityState").hide();
+	 if (deliveryAddressId != null && deliveryAddressId != "") {
+			if(deliveryAddressArray !="" && deliveryAddressArray !=null){
+			 $.each(deliveryAddressArray, function() {
+		     var currentArea = this;
+			if (currentArea.id==deliveryAddressId) {
+				$("input#customerAddress1").val(currentArea.customerAddress);
+				$("#select-delivery-area-button > span").text(currentArea.deliveryArea);
+				$("#select-delivery-area option:contains(" +currentArea.deliveryArea+ ")").attr('selected', 'selected');
+				setDeliveryText();
+     			}
+			else if(deliveryAddressId=="addAddress"){
+				$("input#customerAddress1").val("");
+				 $("#popupContact input#customerAddress1").show();
+				 $("#select-delivery-area-button").show();
+				 $("#select-delivery-area-button > span").text(chooseLocationPrompt);
+				 $("#select-delivery-area option:contains(" +chooseLocationPrompt+ ")").attr('selected', 'selected');
+				 $("#select-delivery-area-button").addClass("achtung");
+				 setDeliveryText();
+				}
+			else if(deliveryAddressId=="fdata"){
+				 $("#popupContact input#customerAddress1").hide();
+				 $("#select-delivery-area-button").hide();
+				 $("#select-delivery-area-button").hide();
+				 $("input#customerAddress1").val(address);
+				$("#select-delivery-area-button > span").text(deliveryArea);
+				$("#select-delivery-area option:contains(" +deliveryArea+ ")").attr('selected', 'selected');
+				setDeliveryText();
+				}		 
+	 });
+			}
+			else if(deliveryAddressId=="fdata"){
+				 $("#popupContact input#customerAddress1").hide();
+				 $("#select-delivery-area-button").hide();
+				 $("input#customerAddress1").val(address);
+				 $("#select-delivery-area-button > span").text(deliveryArea);
+				 $("#select-delivery-area option:contains(" +deliveryArea+ ")").attr('selected', 'selected');
+				 setDeliveryText();
+				}
+			else{
+				 $("input#customerAddress1").val("");
+				 $("#popupContact input#customerAddress1").show();
+				 $("#select-delivery-area-button").show();
+				 $("#select-delivery-area-button > span").text(chooseLocationPrompt);
+				 $("#select-delivery-area option:contains(" +chooseLocationPrompt+ ")").attr('selected', 'selected');
+				 $("#select-delivery-area-button").addClass("achtung");
+				 setDeliveryText();
+				}
+			}
+	 if(flagForFirstData==0){
+		 $("#select-delivery-area-button").show();
+		 $("#select-delivery-area-button > span").text(chooseLocationPrompt);
+		 $("#select-delivery-area option:contains(" +chooseLocationPrompt+ ")").attr('selected', 'selected');
+		 $("#select-delivery-area-button").addClass("achtung");
+		 setDeliveryText();
+		 }
+		}
+/* 
+ * END validateContactInfo
+ **********/
+
+
+/* **********
+ * BEGIN validateNameAddress
+ * 
+ */
+/*  var deliveryDate;
+ var ddd;
+ var deliveryTime;
+ var currentTime;
+ var date;
+ var deliveryDateTime=0;
+ 
+ var dateStringStart = 'Fri 21 Feb 2014, 09:45:00';
+ var dateStart = new Date(dateStringStart);
+ var hoursStart = dateStart.getHours();
+ var minutesStart = dateStart.getMinutes();
+ var startTimes = hoursStart + ':' + minutesStart;
+ var dateStringClosed = 'Fri 21 Feb 2014, 22:45:00';
+ var dateClosed = new Date(dateStringClosed);
+ var hoursClosed = dateClosed.getHours();
+ var minutesClosed = dateClosed.getMinutes();
+ var closedTime= hoursClosed + ':' + minutesClosed;
+  */
+  
+function validateNameAddress() {
+	
+	//setAllTime();
+	debugLog("DEBUG > BEGIN validateNameAddress" );    
+	customerName = $("input#customerName").val().trim();
+	customerAddress1 = $("input#customerAddress1").val().trim();
+	customerAddress2 = $("input#customerAddress2").val().trim();
+	deliveryArea = $("#select-delivery-area-button > span").text().trim();
+	debugLog("deliveryArea:" + deliveryArea);
+	if (deliveryArea ==" " || deliveryArea==null)
+		{
+		$("input#customerAddress1").parent().addClass("achtung");
+		return false;
+		}
+	if(deliveryArea.length < 1)
+		{
+		$("input#customerAddress1").parent().addClass("achtung");
+		return false;
+		}
+	if (customerName == "") {
+		$("input#customerName").parent().addClass("achtung");
+		return false;
+	}
+	if (customerAddress1 == "") {
+		$("input#customerAddress1").parent().addClass("achtung");
+		return false;
+	}
+	if (customerAddress2 == "" || customerAddress2.toLowerCase().indexOf("gurgaon") == -1) {
+		$("input#customerAddress2").parent().addClass("achtung");
+		return false;
+	}
+	// dunno what to validate here; probably display a confirmation popup before progressing
+	$("input#customerName").parent().removeClass("achtung");
+	$("input#customerAddress1").parent().removeClass("achtung");
+	$("input#customerAddress2").parent().removeClass("achtung");
+	//debugLog("About to close Name Address popup");
+	$.mobile.loading( "show" );
+	workflowValidated = true;
+//	$( "#popupNameAddress" ).popup( "close" );
+	/* Addition end here */
+	return false;
+	debugLog("DEBUG > END validateNameAddress"); 
+}
+/* 
+ * END validateNameAddress
+ **********/
+
+var univDate;
+function setAllTime(){
+		var val=document.getElementById("select-delivery-day").value;
+		if(val=="Tomorrow"){
+			displayDeliveryTime("IST","Tomorrow");
+			}
+		else{ 
+	  displayDeliveryTime("IST","Today");
+		}
+	 	}
+/***************************Playing with time Schedule*****************************************  */
+
+/*Starts ValidatingDeliveryTime   */
+/*    */
+function resetTime(){
+    if(document.getElementById("select-delivery-day").value=="Today"){
+   	 displayDeliveryTime("IST","today"); 
+		}
+    if(document.getElementById("select-delivery-day").value=="Tomorrow"){
+   	 displayDeliveryTime("IST","tomorrow");
+   	 $("#select-delivery-day-button > span").text("Tomorrow");
+		}
+	}
+
+function  setDeliveryTime(){
+	
+	deliveryArea = $("#select-delivery-area-button > span").text().trim();
+	var deliveryInstructions = $("#deliveryInstructions").val();
+	var customerAddress1 =  $("input#customerAddress1").val();
+	var customerEmail = $("#popupContact input#customerEmail").val().trim().toLowerCase();
+	if (deliveryArea == "" || deliveryArea == chooseLocationPrompt) {
+		$("#select-delivery-area-button").addClass("achtung");
+		return false;
+	}
+	if(deliveryArea.length <1){
+		$("#select-delivery-area-button").addClass("achtung");
+		return false;
+	} 
+
+	if(deliveryArea==null){
+		$("#select-delivery-area-button").addClass("achtung");
+		return false;
+	}
+	
+	var paymentStatusValue ="COD";
+    var	paymentThirdParty = "POS";
+	//paymentStatusValue = $("#popupContact input[name=payment]:checked").val();
+	paymentThirdParty = $("#popupContact input[name=paymentThirdParty]:checked").val();
+ 	
+
+	if(paymentThirdParty=="Subscription"){
+		paymentStatusValue="Subscription";
+		paymentThirdParty = "POS";
+	}
+	else if(paymentThirdParty==undefined){
+		paymentThirdParty = "POS";
+	}
+	else{
+		paymentStatusValue ="COD";	
+	}
+	
+	debugLog("DEBUG > BEGIN validateNameAddress" );    
+	customerName = $("input#customerName").val().trim();
+	customerAddress1 = $("input#customerAddress1").val().trim();
+	customerAddress2 = $("input#customerAddress2").val().trim();
+	deliveryArea = $("#select-delivery-area-button > span").text().trim();
+	debugLog("deliveryArea:" + deliveryArea);
+	if (deliveryArea ==" " || deliveryArea==null)
+		{
+		$("input#customerAddress1").parent().addClass("achtung");
+		return false;
+		}
+	if(deliveryArea.length < 1)
+		{
+		$("input#customerAddress1").parent().addClass("achtung");
+		return false;
+		}
+	if (customerName == "") {
+		$("input#customerName").parent().addClass("achtung");
+		return false;
+	}
+	if (customerAddress1 == "") {
+		$("input#customerAddress1").parent().addClass("achtung");
+		return false;
+	}
+	if (customerAddress2 == "" || customerAddress2.toLowerCase().indexOf("gurgaon") == -1) {
+		$("input#customerAddress2").parent().addClass("achtung");
+		return false;
+	}
+	// dunno what to validate here; probably display a confirmation popup before progressing
+	$("input#customerName").parent().removeClass("achtung");
+	$("input#customerAddress1").parent().removeClass("achtung");
+	$("input#customerAddress2").parent().removeClass("achtung");
+	//debugLog("About to close Name Address popup");
+	   $.mobile.loading( "show" );
+	   workflowValidated = true;
+	
+	    debugLog("DEBUG > BEGIN validateDeliveryTime" );
+		$.mobile.loading( "show" );
+		var customerDeliverTime = $("#select-delivery-time").val();
+		if(customerDeliverTime ==chooseDeliveryTime){
+		$.mobile.loading( "hide" );
+		return false;
+		}
+		var dateTimeDelivery=serverDate+" "+customerDeliverTime;
+	    if(customerDeliverTime!=chooseDeliveryTime &&customerDeliverTime!=null){
+		// Update customer info
+		customerInfo.firstName = customerName.split(' ').slice(0, -1).join(' ');
+		customerInfo.lastName = customerName.split(' ').slice(-1).join(' ');
+		customerInfo.address = customerAddress1;
+		customerInfo.city = customerAddress2;
+		customerInfo.deliveryArea=deliveryArea;
+		customerInfo.deliveryTime=dateTimeDelivery;
+		customerInfo.email = customerEmail;
+		customerInfo.phone = customerPhone;
+		delete customerInfo.userId;
+		delete customerInfo.numberOfOrders;
+		delete customerInfo.createdTime;
+		
+		//setCustInfo(); 
+		// Make sure we can't go back to the order page we're leaving now.
+		myHistory.pop();
+		history.replaceState({}, "CookedSpecially", initialHash);
+		// deprecated in 1.4
+		// $.mobile.changePage('#check', { changeHash: true });
+		$.mobile.pageContainer.pagecontainer ("change", '#check', {changeHash: true});
+		$.each(restaurants, function() {
+			
+			if(customerId!=""){
+				setCustInfo().then(function (){
+				    placeOrder(restaurantId, customerId, checkTypeFlag,paymentStatusValue,paymentThirdParty,deliveryInstructions)
+					console.log("ORDERING DONE");
+			});			
+			}
+			});
+		//validateEmailForCheck();
+		$.mobile.loading( "hide" );
+		$.mobile.pageContainer.pagecontainer ("change", '#check', {changeHash: true});
+	    }
+		}
+		
+/***************************Played enough  with time Schedule*****************************************  */
+
+ 
+ 
+ 
+function setMessage()
+{
+	$('#error_message').text('');
+}
+/*  
+ * END validateDeliveryTime
+ */
+/* **********
+ * BEGIN validateDeliveryArea
+ * 
+ */
+function validateDeliveryArea() {
+	debugLog("DEBUG > BEGIN validateDeliveryArea" );    
+	deliveryArea = $("#select-delivery-area-button > span").text().trim();
+	$("#deliveryArea").text(deliveryArea);
+	debugLog("deliveryArea:" + deliveryArea);
+	//$('#select-delivery-area #placeholder').remove();
+	debugLog("DEBUG > END validateDeliveryArea"); 
+	return true;
+}
+/* 
+ * END validateDeliveryArea
+ **********/
+
+/* **********
+ * BEGIN displayDeliveryAreas
+ * 
+ */
+ var areas = [];
+function displayDeliveryAreas(restaurantId) {
+	debugLog("DEBUG > BEGIN displayDeliveryAreas" );    
+	
+	if (restaurantId > 0) {
+	
+		var deliveryAreaInfoUrl = _deliveryAreaInfo + "restaurantId=" + restaurantId;
+		var displayDeliveryArea = $.ajax({
+		  url: deliveryAreaInfoUrl,
+		  dataType: 'json'
+		})
+		displayDeliveryArea.then(function (data) {
+			var theOptions = '<option id="placeholder" data-placeholder="true" value="' + chooseLocationPrompt + '">' + chooseLocationPrompt + '</option>';
+			var optionCount = 0;
+			$('#select-delivery-area').addClass("ui-disabled");
+			$('#select-delivery-area').html('');
+			$("#select-delivery-area-button > span").text(chooseLocationPrompt);
+			$.each(data, function() {
+				theOptions = theOptions + '<option value="' + this.name + '">' + this.name + '</option>';
+				var name=this.name;
+				var deliveryCharges=this.deliveryCharges;
+				var currentArea = this;
+				currentArea.name=name;
+				currentArea.deliveryCharges=deliveryCharges;
+				areas.push(currentArea);
+				optionCount ++;
+			});
+			if (optionCount > 1) {
+				$('#select-delivery-area').html(theOptions);
+				$('#select-delivery-area').removeClass("ui-disabled");
+				$('#select-delivery-area-button > span').removeClass("ui-disabled");
+				$( "#select-delivery-area" ).change(function() {
+					setTimeout(function(){ 
+						validateDeliveryArea();
+					},250);
+					/*
+					$('#select-delivery-area-button > span').bind('DOMSubtreeModified', function(e) {
+						if (e.target.innerHTML.length > 0) {
+						}
+					});
+					*/
+				});
+				$("#popupContact div#insideDeliveryArea").css("display","block");
+				/* $("#popupContact input#customerPhone").addClass("ui-disabled"); */
+				$("#popupContact #continueContact").addClass("ui-disabled");
+				$("#select-delivery-area-button").removeClass("achtung");
+				$("#popupContact input#customerPhone").removeClass("achtung");
+			}
+			else {
+				$('#select-delivery-area-button').css("display","none");
+				$("#select-delivery-area-button > span").text("");
+				$("#popupContact input#customerPhone").removeClass("ui-disabled");
+				$("#popupContact #continueContact").removeClass("ui-disabled");
+			}
+		},function() { 
+			alert("AJAX: get delivery zone info FAILED. " + deliveryAreaInfoUrl); 
+		});
+		displayDeliveryArea.complete(function() { 
+			debugLog("AJAX: get delivery zone info COMPLETED"); 
+			//setTimeout(function(){ $.mobile.loading( "hide" );$(".ui-fixed-hidden").removeClass("ui-fixed-hidden");$( "#popupContact"  ).popup( 'open' ); },1000);
+		});
+	
+	}
+	else {
+		debugLog("ERROR: restaurantId isn't defined: " + restaurantId);
+	}
+	
+	return false;
+	debugLog("DEBUG > END displayDeliveryAreas"); 
+}
+
+/* setting Charges on select  */
+function setDeliveryText()
+{
+	 $.each(areas, function() {
+		
+		 var currentArea = this;
+			if (currentArea.name==$("#select-delivery-area option:selected").text()) {
+            if(currentArea.deliveryCharges!=0){
+			$('#Charges_message').text('A delivery charge of Rs. '+currentArea.deliveryCharges+' is applicable on your address');
+			validateDeliveryArea();
+            }
+            }
+			else if($("#select-delivery-area option:selected").text()=="" || $("#select-delivery-area option:selected").text()=="Choose a delivery location")
+			{		
+				$('#Charges_message').text("");
+			}
+	 });
+}
+/* 
+ * END displayDeliveryAreas
+ **********/
+ var serverDate;
+ var theOptions=null;
+ function displayDeliveryTime(zone,days) {
+ 	var defaultTime;
+ 	  var setTimeZone =_getTime+"tz="+zone+"&day="+days;   
+	if(checkTypeFlag!="MorningExpress"){
+ 	var deliveryTime = $.ajax({
+ 		  crossDomain: true,
+ 		  type: 'GET',
+ 		  url : setTimeZone,
+ 		  dataType: 'json'
+ 	     })
+ 		deliveryTime.then(function (data) {
+ 			serverDate=data.date;
+             theOptions = '<option id="placeholder" data-theme="d" data-placeholder="true" value="' + chooseDeliveryTime + '">' + chooseDeliveryTime + '</option>';
+ 			var optionCount = 0;
+ 			$('#select-delivery-time').html('');
+ 			//$("#select-delivery-time-button > span").text(chooseDeliveryTime);
+ 				for ( var i = 0; i < data.dateList.length; i++) {
+ 					defaultTime=data.dateList[0];
+ 				$("#select-delivery-time-button > span").text(data.dateList[0]);
+ 				theOptions = theOptions + '<option data-theme="d" value="' + data.dateList[i] + '">' + data.dateList[i] + '</option>';	
+ 				optionCount ++;
+ 			}
+ 			if (optionCount >= 1) {
+ 				$("#popupDeliveryTime button#continue").removeClass("ui-disabled");
+				$('#select-delivery-time').html(theOptions);
+				$('#time_warning').text('');
+ 			}
+ 			else {
+ 				$("#select-delivery-time-button > span").text("Sorry");
+				$('#time_warning').text("For Today we are open at 9am to 10pm. You can order for Tomorrow");
+				$("#popupDeliveryTime button#continue").addClass("ui-disabled");
+ 			
+ 			}
+ 			$("#select-delivery-time option:contains(" +defaultTime+ ")").attr('selected', 'selected'); 
+ 		},function() { 
+ 			alert("AJAX: get delivery zone info FAILED. " + setTimeZone); 
+ 		});
+ 	   deliveryTime.complete(function() { 
+ 			debugLog("AJAX: get delivery zone info COMPLETED"); 
+ 			//setTimeout(function(){ $.mobile.loading( "hide" );$(".ui-fixed-hidden").removeClass("ui-fixed-hidden");$( "#popupContact"  ).popup( 'open' ); },1000);
+ 		});
+	}else {
+		morningExpressTime();
+	}
+ 	return false;
+ 	debugLog("DEBUG > END displayDeliveryAreas"); 
+ }
+ 
+ function checkTime(){
+		var val =$('#select-delivery-time').val();
+		
+		if(val==''|| val==chooseDeliveryTime){
+			$('#time_warning').text("please select time below");
+			 $("#popupDeliveryTime button#continue").addClass("ui-disabled");
+		}
+		else{
+			$('#time_warning').text('');
+			$("#popupDeliveryTime button#continue").removeClass("ui-disabled");
+		}
+	} 
+ 
+/* **********
+ * BEGIN setDeliveryArea
+ * 
+ */
+function setDeliveryArea(checkId, deliveryArea) {
+	debugLog("DEBUG > BEGIN setDeliveryArea" );    
+	
+	var deliveryAreaUrl = _setDeliveryArea + "checkId=" + checkId + "&deliveryArea=" + deliveryArea;
+	var deliveryArea = $.ajax({
+	  url: deliveryAreaUrl
+	})
+	deliveryArea.then(function (data) {
+		debugLog(data);
+	},function() { 
+		alert("AJAX: set delivery area FAILED. " + deliveryAreaUrl); 
+	})
+	deliveryArea.complete(function() { 
+		debugLog("AJAX: set delivery area COMPLETED"); 
+	});
+	
+	return false;
+	debugLog("DEBUG > END setDeliveryArea"); 
+}
+/* 
+ * END setDeliveryArea
+ **********/
+
+/* **********
+ * BEGIN setCustInfo
+ * 
+ */
+ function setCustInfo() {
+	    setAllTime();
+		debugLog("DEBUG > BEGIN setCustInfo" );
+		var deferred = $.Deferred();
+		customerInfo.restaurantId = restaurantId;
+		$.mobile.loading( "show" );
+		
+			var jsonString = JSON.stringify(customerInfo);
+			
+			$.ajax({
+				type: "POST",
+				contentType:"application/json; charset=utf-8",
+				url: _setCustInfo,
+				data: jsonString,
+				success : function(data) {
+		
+			    if(data.status=="success"){
+			    	deferred.resolve();	
+			    }
+			    else if(data.status=="fail"){
+			    	debugLog("AJAX: customerUpdate FAILED. " + _setCustInfo + " " + jsonString);
+					console.log("AJAX: customerUpdate FAILED. " + _setCustInfo + " " + jsonString);
+			    alert("Sorry please place order again !")
+			    }
+				},
+			    error : function() {
+			    	debugLog("AJAX: customerUpdate FAILED. " + _setCustInfo + " " + jsonString);
+					console.log("AJAX: customerUpdate FAILED. " + _setCustInfo + " " + jsonString);
+					
+			    }
+			});
+		
+		debugLog("DEBUG > END setCustInfo"); 
+		return deferred.promise();
+	}
+/* 
+ * END setCustInfo
+ **********/
+
+/* **********
+ * BEGIN validateEmailForCheck
+ * 
+ */
+function validateEmailForCheck() {
+	debugLog("DEBUG > BEGIN validateContactInfo" );    
+	var emailMatch = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+	var phoneMatch = /^[0-9.-]+$/;
+	var phoneClean = /[.-]/g;
+	var custIdParam = "";
+	
+	//customerEmail = $("#popupEmail input#customerEmail").val().trim().toLowerCase();
+	customerEmail = $("#customerEmail").val().trim().toLowerCase();
+ 
+	if (customerEmail == "") {
+		$("#customerEmail").parent().addClass("achtung");
+		return false;
+	}
+	
+	if (emailMatch.test(customerEmail)) {
+		custIdParam = customerEmail;
+	}
+
+	// Update customer info with email
+	customerInfo.email = customerEmail;
+	setCustInfo();
+		
+		if (custIdParam.length != 0) {
+		
+		
+		// Make sure we can't go back to the order page we're leaving now.
+		//myHistory.pop();
+		//history.replaceState({}, "CookedSpecially", initialHash);
+		$.each(restaurants, function() {
+			var checkId = $("#check #restaurant" + this + " #checkId").text();
+			debugLog("restaurantId: " + this + " checkId: " + checkId);
+			
+			if (checkId.length > 0) {
+				debugLog("Email validated - custIdParam: " + custIdParam + " checkId: " + checkId);
+				
+			//	emailCheck(custIdParam, checkId, this);
+			}
+    	});
+    	$( "#popupEmail" ).popup( "close" );
+		setTimeout(function(){$.mobile.loading( "hide" );$(".ui-fixed-hidden").removeClass("ui-fixed-hidden");$("#popupOrderConfirmation").popup( 'open' )},1000);
+	}
+	else {
+		$("#popupEmail input#customerId").parent().addClass("achtung");
+	}
+	return false;
+	debugLog("DEBUG > END validateEmailForCheck"); 
+}
+/* 
+ * END validateEmailForCheck
+ **********/
+ 
+/***********
+ * BEGIN populateFormsFromCustomerInfo
+ */
+function populateFormsFromCustomerInfo() {
+    debugLog('populateFormsFromCustomerInfo()');
+    var deferred = $.Deferred();
+	/*
+	"customerId":25,
+	"restaurantId":null,
+	"userId":null,
+	"firstName":null,
+	"lastName":null,
+	"address":null,
+	"city":null,
+	"phone":null,
+	"email":"ewchampion@yahoo.com",
+	"numberOfOrders":null,
+	"createdTime":1386895735000
+	*/
+	if ((customerInfo.firstName != null || customerInfo.lastName != null) && (customerInfo.firstName != "" || customerInfo.lastName != "")) {
+		
+		customerName = customerInfo.firstName + " " + customerInfo.lastName;
+		debugLog(customerName);
+		$("input#customerName").val(customerName);
+		deferred.resolve();
+	}
+	else{
+		$("input#customerName").val("");
+	}
+	if(customerInfo.deliveryArea!=null && customerInfo.deliveryArea != ""){
+		 $.each(areas, function() {
+			 var currentArea = this;
+			
+				if (currentArea.name==customerInfo.deliveryArea) {
+					flagForFirstData++;
+					$("#select-delivery-area-button > span").text(customerInfo.deliveryArea);
+					$("#select-delivery-area option:contains(" +customerInfo.deliveryArea+ ")").attr('selected', 'selected'); 
+				}
+		 });
+		deferred.resolve();
+		/* $("#select-delivery-area-button > span").text(customerInfo.deliveryArea);
+		$("#select-delivery-area option:contains(" +customerInfo.deliveryArea+ ")").attr('selected', 'selected');  */
+	}else{
+		 $("#select-delivery-area-button > span").text(chooseLocationPrompt);
+		 $("#select-delivery-area option:contains(" +chooseLocationPrompt+ ")").attr('selected', 'selected');
+		$("#select-delivery-area-button").addClass("achtung");
+	}
+	if (customerInfo.address != null && customerInfo.address != "") {
+		address = customerInfo.address;
+		deliveryArea = customerInfo.deliveryArea;
+		debugLog(address);
+		$("input#customerAddress1").val(address);
+	}
+	else{
+		$("input#customerAddress1").val("");
+	}
+	if (customerInfo.city != null && customerInfo.city != "") {
+		// Hardcoded to Gurgaon, Haryana
+		city = customerInfo.city;
+		//debugLog(city);
+		//$("input#customerAddress2").val(city);
+		
+	}
+	if (customerInfo.email != null && customerInfo.email != "") {
+		email = customerInfo.email;
+		debugLog(email);
+		$("input#customerEmail").val(email);
+	}
+	else{
+		$("input#customerEmail").val("");
+	}
+	return deferred.promise();
+}
+/* 
+ * END populateFormsFromCustomerInfo
+ **********/
+
+
+/***********
+ * BEGIN placeOrder
+ */
+var priceOnCheck;
+function placeOrder(restaurantId, customerId, destinationType,paymentStatusValue,paymentThirdParty,deliveryInstructions){
+debugLog("DEBUG > BEGIN placeOrder(" + restaurantId +")");	
+/*
+{"checkId":98,"table":1,"time":"","price":815,"items":[{"id":175,"name":"Shrimp with Citrus Sala","price":325,"smallImageUrl":"/static/1/175_Shrimp-Shrimp-Salad200x200.jpg"},{"id":178,"name":"Greek Village Salad","price":245,"smallImageUrl":"/static/1/178_178_Greek_Village_Salad200x200.JPG"},{"id":178,"name":"Greek Village Salad","price":245,"smallImageUrl":"/static/1/178_178_Greek_Village_Salad200x200.JPG"}]}
+*/
+    var getCheckUrl = _getCheck + "restaurantId=" + restaurantId + "&custId=" + customerId;
+    var placeOrderPro = $.ajax({
+	  url: getCheckUrl,
+	  dataType: 'json'
+	})
+	placeOrderPro.then(function (data){
+		debugLog("DEBUG > CheckID (" + data.checkId +"), Check Value (" + data.price +"), and customerID (" + customerId +")");
+		if (data.price > 0) {
+			debugLog("DEBUG > We did not close the older check properly. Something that we should check for this CheckID (" + data.checkId +") and customerID (" + customerId +")");
+			var statusApi = comCookedSpeciallyApiPrefix + "/order/setCheckStatus?checkId=" + checkId + "&status=Unpaid";
+			var statusPro = $.ajax(statusApi, {
+				isLocal: false,
+				async: false
+			})
+			statusPro.then(function (data){
+				debugLog("ajax success: " + statusApi);
+				debugLog(JSON.stringify(data));
+				placeOrder(restaurantId, customerId, destinationType);
+			},function() {
+				alert("ajax error: " + statusApi); 
+			});
+			statusPro.complete(function() { 
+				debugLog("ajax complete: " + statusApi); 
+			});
+			return;
+		}
+
+		var jsonOrder = JSON.parse('{"checkId":' + data.checkId + ',"cust":' + customerId + ',"time":"","price":0,"items":[]}'); // Need to set sourceType and destinationType
+
+		$.each($("#order #order-content #restaurant" + restaurantId + " div ul li"), function() {
+			var itemCount = $(this).attr("data-count");
+			var itemContent = $(this).children("div.itemContent").children();
+			var smallImageUrl = $(this).children("img").attr("src");
+			var id = itemContent.filter("div#itemId").text();
+			var name = itemContent.filter("div#title").text();
+			var price = itemContent.filter("div.price").children("span#price").text();
+			var instructions=itemContent.filter("div.instructions").children("#test").val();
+			var itemType = itemContent.filter("div.itemType").text();
+			var item = JSON.parse('{"id":' + id + ', "name":"' + name + '","price":' + price + ',"smallImageUrl":"' + smallImageUrl + '","dishType":"' + itemType + '","instructions":"'+instructions +'"}');
+			jsonOrder.price = jsonOrder.price + price;
+			
+			for (i = 0; i < itemCount; i++) {
+				jsonOrder.items.push(item);
+			}
+		});
+		var jsonString = JSON.stringify(jsonOrder);
+		
+		if (jsonOrder.items.length > 0) {
+		
+			var addToCheck=_addToCheck+"paymentStatus=" + paymentStatusValue+"&paymentThirdParty="+paymentThirdParty+"&deliveryInst="+deliveryInstructions;;
+		
+		var addToCheckPro = $.ajax({
+				type: "POST",
+				contentType:"application/json; charset=utf-8",
+				url: addToCheck,
+				data: jsonString
+			})
+			addToCheckPro.then(function (data) {
+				// expected return: 
+				//{"orderId":1,"checkId":1,"restaurantId":1,"tableId":1,"error":"Error message","status":"Failed|Success"}
+				if (data.status=="Online"){
+					// Empty out the order that we submitted to get here
+					$("a#order-button").addClass("ui-disabled");
+					$("div#order-content div#restaurant" + restaurantId + " ul").empty();
+					var theCollapsible = $("div#order-content div#restaurant" + restaurantId);
+					theCollapsible.hide();
+					setCheckType(data.checkId, destinationType).then(function(){
+					confirmOrderAndPayment(data.status);
+					});					
+				    globalCheckId=data.checkId;
+				}
+				else if (data.status=="COD"){
+					// Empty out the order that we submitted to get here
+					$("a#order-button").addClass("ui-disabled");
+					$("div#order-content div#restaurant" + restaurantId + " ul").empty();
+					var theCollapsible = $("div#order-content div#restaurant" + restaurantId);
+					theCollapsible.hide();
+					setCheckType(data.checkId, destinationType).then(function(){
+					displayCheckFromAPI(restaurantId, customerId,data.checkId, data);
+					setTimeout(function(){$.mobile.loading( "hide" );$(".ui-fixed-hidden").removeClass("ui-fixed-hidden");$("#popupMailSent").popup( 'open' )},1000);
+					//confirmOrderAndPayment(data.status);
+						});					
+				    globalCheckId=data.checkId;
+				}
+				else if ( data.status == "Failed"){
+					alert("We're sorry, but we've encountered an error: " + data.checkId + 
+						  "\n Check Id: " + data.checkId );
+				}else{
+					alert("We're sorry, but we've encountered an error.") 
+				}
+			},function() { 
+				alert("AJAX: Add to check FAILED. " + _addToCheck + " " + jsonString);
+			}); 
+			addToCheckPro.complete(function() { 
+				debugLog("AJAX: Add to check COMPLETED"); 
+			});
+		}
+    
+		debugLog("checkId " + data.checkId); 
+		debugLog("customerId " + customerId); 
+
+	},function() { 
+		alert("AJAX: getCheckPreview() FAILED. " + getCheckUrl); 
+	});
+	placeOrderPro.complete(function() { 
+		debugLog("AJAX: getCheckPreview() COMPLETED"); 
+	});
+debugLog("DEBUG > END placeOrder(" + restaurantId +")");	
+}
+/* 
+ * END placeOrder
+ **********/
+
+/***********
+ * BEGIN getCheck
+ */
+function getCheck(restaurantId, customerId, checkId,data){
+debugLog("DEBUG > BEGIN getCheck(" + restaurantId +")");
+debugLog("DEBUG > END getCheck(" + restaurantId +")");	
+}
+/* 
+ * END getCheck
+ **********/
+
+/***********
+ * BEGIN setCheckType
+ */
+function setCheckType(checkId, type) {
+	debugLog("DEBUG > BEGIN setCheckType");	
+	var deferred = $.Deferred();
+	///order/setCheckType?checkId=<checkId>&type=<TakeAway|Delivery>
+	var typeApi = comCookedSpeciallyApiPrefix + "/order/setCheckType?checkId=" + checkId + "&type=" + type;
+
+	var checkType = $.ajax(typeApi, {
+		isLocal: false
+	})
+	checkType.then(function (data) {
+		debugLog("ajax success: " + typeApi);
+		deferred.resolve();
+		debugLog(JSON.stringify(data));
+	},function() { 
+		alert("ajax error: " + typeApi);
+		deferred.reject();
+	})
+	checkType.complete(function() { 
+		debugLog("ajax complete: " + typeApi); 
+	});
+	return deferred.promise();
+}
+/* 
+ * END setCheckType
+ **********/
+
+/***********
+ * BEGIN setCheckStatus
+ */
+/* function setCheckStatus(checkId, status) {
+	debugLog("DEBUG > BEGIN setCheckStatus");	
+	///order/setCheckStatus?checkId=<checkId>&status=<Paid|Unpaid|READYTOPAY>
+	var statusApi = comCookedSpeciallyApiPrefix + "/order/setCheckStatus?checkId=" + checkId + "&status=" + status;
+
+	$.ajax(statusApi, {
+		isLocal: false
+	})
+	.done (function (data) {
+		debugLog("ajax success: " + statusApi);
+		debugLog(JSON.stringify(data));
+	})
+	.fail(function() { 
+		alert("ajax error: " + statusApi);
+		$.ajax(statusApi, {
+			isLocal: false
+		})
+		.done (function (data) {
+			debugLog("ajax success: " + statusApi);
+			debugLog(JSON.stringify(data));
+		})
+		.fail(function() { 
+			alert("ajax error: " + statusApi); 
+		})
+		.always(function() { 
+			debugLog("ajax complete: " + statusApi); 
+		});
+	})
+	.always(function() { 
+		debugLog("ajax complete: " + statusApi); 
+	});
+} */
+/* 
+ * END setCheckStatus
+ **********/
+
+// From Shashank
+function zeroFill( number, width )
+{
+  width -= number.toString().length;
+  if ( width > 0 )
+  {
+    return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+  }
+  return number + ""; // always return a string
+}
+
+/* **********
+ * BEGIN fbShare
+    Parameters: 
+ */
+ /*function fbShare() {
+
+	if (fbLogin) {
+		FB.api(
+			'/app/objects/restaurant.menu_item',
+			'post',
+			{
+			object: {
+				"app_id": "226697114202871",
+				"type": "restaurant.menu_item",
+				"url": "http://www.cookedspecially.com/static/clients/com/saladdays/index.html?restaurantId=21&sectionId=188&dishId=841",
+				"title": "Salad Days | Melony Bonanza",
+				"image": "http://www.cookedspecially.com/static/21/841_Melony_Bonanza_1.jpg",
+				"description": "Cantaloupe, muskmelon, watermelon, fresh mint leaves and feta cheese. Topped with lanzan seeds and lime based zippy house dressing.", 
+				"restaurant:section": "http://www.cookedspecially.com/static/clients/com/saladdays/index.html?restaurantId=21&sectionId=188",
+				"restaurant:variation:price:amount": "150",
+				"restaurant:variation:price:currency": "INR",
+				"og:see_also": "http://www.facebook.com/saladdays.co"
+				}
+			},
+			function(response) {
+				debugLog("Facebook share");
+				debugLog(response);
+				FB.ui({
+					method: 'share_open_graph',
+					action_type: 'og.recommends',
+					action_properties: JSON.stringify({
+						"restaurant.menu_item": response.id
+				})
+			}, function(r){});
+		});
+	}
+
+	 FB.ui({
+	  method: 'share',
+	  href: 'http://www.cookedspecially.com/static/clients/com/saladdays/fb-menu-item.html',
+	}, function(response){});
+		
+	debugLog("DEBUG > END fbShare");	
+} */
+/* 
+ * END fbShare
+ **********/
+ 
+/* **********
+ * BEGIN displayCheckFromAPI
+ * Creates the home page with all the checks
+    Parameters: 
+ */
+function displayCheckFromAPI(restaurantId, customerId, checkId, data) {
+	debugLog("DEBUG > BEGIN displayCheck: " + checkId); 
+
+	//http://www.cookedspecially.com:8080/CookedSpecially/order/generateCheckForPrint?templateName=saladdaysbill&checkId=193
+	var generateCheckApi = comCookedSpeciallyApiPrefix + "/order/generateCheckForPrint?templateName=saladdaysbill&checkId=" + checkId;
+
+	var displayCheckApi = $.ajax(generateCheckApi, {
+		isLocal: false
+	})
+	displayCheckApi.then(function (data) {
+		debugLog("ajax success: " + generateCheckApi);
+		debugLog(JSON.stringify(data));
+		var theCheckIdForEmail = '<div style="display:none" id="checkId">' + checkId + '</div>';
+		$(theCheckIdForEmail).appendTo("#check-content #restaurant" + restaurantId);
+		var theCheck = '' +
+			'<div id="check' + checkId + '" class="ui-li ui-li-static ui-btn-up-c">' +
+			'</div>';
+		$(theCheck).appendTo("#check-content #restaurant" + restaurantId);
+		$(data).appendTo("#check-content #restaurant" + restaurantId);
+		var now = new Date();
+		$('#date-time').text(zeroFill(now.getDate(), 2) + '/' + zeroFill((now.getMonth()+1),2) + '/' + now.getFullYear() + ' ' + zeroFill(now.getHours(),2) + ':' + zeroFill(now.getMinutes(),2));
+
+		$("#check-content #restaurant" + restaurantId).show();
+		customerEmail = $("#customerEmail").val().trim().toLowerCase();
+		debugLog(customerEmail);
+		if (customerEmail != "") {
+			//emailCheck(customerEmail, checkId, restaurantId) ;
+			setTimeout(function(){$.mobile.loading( "hide" );$(".ui-fixed-hidden").removeClass("ui-fixed-hidden");$("#popupOrderConfirmation").popup( 'open' )},1000);
+		}
+		else {
+			setTimeout(function(){$.mobile.loading( "hide" );$(".ui-fixed-hidden").removeClass("ui-fixed-hidden");$("#popupEmail").popup( 'open' )},1000);
+		}
+		
+		//parent.postMessage(document.body.scrollHeight, 'http://www.saladdays.co');
+
+	},function() { 
+		alert("ajax error: " + generateCheckApi); 
+	})
+	displayCheckApi.complete(function() { 
+		debugLog("ajax complete: " + generateCheckApi); 
+	});
+
+	debugLog("DEBUG > END displayCheckFromAPI");	
+}
+/* 
+ * END displayCheckFromAPI
+ **********/
+ 
+/* **********
+ * BEGIN displayCheck
+ * Creates the home page with all the checks
+    Parameters: 
+ */
+function displayCheck(restaurantId, customerId, checkId, data) {
+	debugLog("DEBUG > BEGIN displayCheck: " + checkId); 
+
+	var checkId = data.checkId;
+	var additionalChargesName1 = data.additionalChargesName1;
+	var additionalChargesName2 = data.additionalChargesName2;
+	var additionalChargesName3 = data.additionalChargesName3;
+	var total = data.bill + data.additionalChargesValue1 + data.additionalChargesValue2 + data.additionalChargesValue3;
+	var d=new Date();
+
+	var theCheck = '' +
+		'<div id="check' + checkId + '" class="ui-li ui-li-static ui-btn-up-c">' +
+			'<h4 id="status" class="ui-li-desc">' +
+			'	Check #<span id="checkId">' + checkId + '</span> Printed @ '+ d.toLocaleTimeString() + 
+
+			'</h4>' +
+		'</div>';
+	$(theCheck).appendTo("#check-content #restaurant" + restaurantId);
+	
+	$.each(data.orders, function() {
+		$.each(this.orderDishes, function() {
+			var name = this.name;
+			var quantity = this.quantity;
+			var price = this.price;
+			var theItem = '<strong>' + name + '</strong> ' + quantity + ' @ ' + currency + price + '<br/>';
+			$(theItem).appendTo("#check-content #restaurant" + restaurantId);
+		});
+	});
+
+	var theAdditions = '<br/>';
+	if (additionalChargesName1 && additionalChargesName1.length > 0) {
+		theAdditions = theAdditions + '<strong>' + additionalChargesName1 + ': </strong> ' + currency + data.additionalChargesValue1.toFixed(2) + '<br/>';
+	}
+	if (additionalChargesName2 && additionalChargesName2.length > 0) {
+		theAdditions = theAdditions + '<strong>' + additionalChargesName2 + ': </strong> ' + currency + data.additionalChargesValue2.toFixed(2) + '<br/>';
+	}
+	if (additionalChargesName3 && additionalChargesName3.length > 0) {
+		theAdditions = theAdditions + '<strong>' + additionalChargesName3 + ': </strong> ' + currency + data.additionalChargesValue3.toFixed(2) + '<br/>';
+	}
+	$(theAdditions).appendTo("#check-content #restaurant" + restaurantId);
+
+	var theSummary = '<br/><strong>Total: </strong> ' + currency + total.toFixed(2) + '<br/>';
+	$(theSummary).appendTo("#check-content #restaurant" + restaurantId);
+
+	$("#check-content #restaurant" + restaurantId).show();
+	setTimeout(function(){$.mobile.loading( "hide" );$(".ui-fixed-hidden").removeClass("ui-fixed-hidden");},1000);
+
+	debugLog("DEBUG > END displayCheck");	
+}
+/* 
+ * END displayCheck
+ **********/
+ 
+ 
+ /* 
+ *******************************************************
+                     DATA FUNCTIONS
+ ******************************************************* 
+ */
+ 
+/***********
+ * BEGIN updateAjaxDataRemote
+ */
+function updateAjaxDataRemote(restaurantId, restaurantName) {
+debugLog("DEBUG > BEGIN updateAjaxDataRemote");    
+var deferredObject = $.Deferred();
+		var comCookedSpeciallyMenuApi = comCookedSpeciallyApiPrefix + "/menu/getallposmenusjson/" + restaurantId;
+		debugLog( 'Using API: ' + comCookedSpeciallyMenuApi );
+
+        if (navigator.onLine) {
+         var UpdateAjaxData=   $.ajax(comCookedSpeciallyMenuApi, {
+                        isLocal: false
+                })
+                UpdateAjaxData.then(function (data) {
+					if( console && debugLog ) {
+							debugLog("ajax success: " + comCookedSpeciallyMenuApi);
+							globalDataString = JSON.stringify(data);
+							debugLog(globalDataString);
+					}
+
+					globalData[restaurantId] = JSON.parse(globalDataString);
+					deferredObject.resolve();
+                },function() { 
+                	alert("ajax error: " + comCookedSpeciallyMenuApi); 
+                });
+         UpdateAjaxData.complete(function() { 
+                    debugLog("ajax complete: " + comCookedSpeciallyMenuApi); 
+                });
+        }
+        else {
+			debugLog("ajax error: offline"); 
+			if (confirm(strOfflineAlert)) {
+					updateAjaxDataRemote();
+			}
+			 
+        }
+    return deferredObject.promise();           
+debugLog("DEBUG > END updateAjaxDataRemote");      
+}
+
+/* 
+ * END updateAjaxDataRemote
+ **********/
+
+/***********
+ * BEGIN updateRestaurantInfo
+ */
+ var restaurantCity;
+ var restaurantState;
+function updateRestaurantInfo(restaurantId) {
+debugLog("DEBUG > BEGIN updateRestaurantInfo");	
+
+	orderItemCountArray[restaurantId] = 0;
+	var comCookedSpeciallyRestaurantApi = comCookedSpeciallyApiPrefix + "/restaurant/getrestaurantinfo?restaurantId=" + restaurantId;
+	debugLog( 'Using API: ' + comCookedSpeciallyRestaurantApi );
+
+	var updateRestInfo = $.ajax(comCookedSpeciallyRestaurantApi,{isLocal: false})
+	updateRestInfo.then(function (data) {
+		if( console && debugLog ) {
+			debugLog("ajax success: " + comCookedSpeciallyRestaurantApi);
+			var restaurantDataString = JSON.stringify(data);
+			debugLog(restaurantDataString);
+		}
+		restaurantCity = data.city;
+		restaurantState = data.state;
+		
+		$("#cityState").text(restaurantCity +" "+data.state);
+		restaurantData[restaurantId] = JSON.parse(restaurantDataString);
+		
+		// TODO: Look for parent email id and use that in cutsomer info apis instead of restaurandId
+		if (restaurantData[restaurantId].currency == "INR") {
+			currency = '₹'; 
+		}
+		if (restaurantData[restaurantId].currency == "USD") {
+			currency = '$';
+		}
+		if (restaurantData[restaurantId].country == "GBP") {
+			currency = '£'; 
+		}
+		if (restaurantData[restaurantId].country == "EUR") {
+			currency = '€'; 
+		}
+		if (restaurantData[restaurantId].country == "JPY") {
+			restaurantData[restaurantId].country = "日本";
+			currency = '¥'; 
+		}
+		
+		var theHtml = '' + 
+			'<div class="restaurant-check-content" id="restaurant' + restaurantId + '" data-collapsed="false" style="display:none">' + 
+			'	<h3>' + 
+			'		' + restaurantData[restaurantId].businessName + 
+			'	</h3>' + 
+			'	<ul data-role="listview" data-inset="true"></ul>' + 
+			'</div>';
+		$(theHtml).appendTo("div#restaurants div#restaurants-content");
+		theHtml = '' + 
+			'<div class="restaurant-check-content" id="restaurant' + restaurantId + '" data-collapsed="false" style="display:none">' + 
+			'	<h3>' + 
+			'		<span class="ui-li-count">' + currency + '0.00' + '</span>' + 
+			'	</h3>' + 
+			'	<ul data-role="listview" data-inset="true"></ul>' + 
+			'</div>';
+		$(theHtml).appendTo("div#order div#order-content");
+
+		/*
+		if (restaurantData[restaurantId].appCacheIconUrl.length > 0) {
+			$("link#apple-touch-icon").attr('href', restaurantData[restaurantId].appCacheIconUrl);
+		}
+		if (restaurantData[restaurantId].buttonIconUrl.length > 0) {
+			$("img#homeBtn").attr('src', restaurantData[restaurantId].buttonIconUrl);
+		}
+		*/
+		if (restaurantData[restaurantId].businessLandscapeImageUrl != null && restaurantData[restaurantId].businessLandscapeImageUrl.length > 0) {
+			//$("div#restaurants div#restaurant" + restaurantId).css('background-image', 'url(' + restaurantData[restaurantId].businessLandscapeImageUrl + ')').css('background-size', 'cover');
+		}
+		if (restaurantData[restaurantId].businessName != null && restaurantData[restaurantId].businessName.length > 0) {
+			restaurantName = restaurantData[restaurantId].businessName;
+			$("div#restaurants div#restaurant" + restaurantId + " h3 span.ui-btn-text").text(restaurantName);
+			$(".restaurantName .restaurantLink").text(restaurantName);
+			document.title = restaurantName;
+		}
+		
+		var restaurantCheckHeader = '' + 
+			'<div id="restaurant' + restaurantId + '" style="display:none;">' + 
+			'</div>';
+		$(restaurantCheckHeader).appendTo("#check-content");
+		
+		$( "div#order" ).on( "pagebeforeshow", function( event ) { displayDeliveryAreas(restaurantId); } );
+		updateAjaxDataRemote(restaurantId, restaurantData[restaurantId].businessName).then(function (){
+			initHomePage(restaurantId, restaurantName);
+		});
+	},function() { 
+		alert("ajax error: " + comCookedSpeciallyRestaurantApi); 
+	});
+	updateRestInfo.complete(function() { 
+		debugLog("ajax complete: " + comCookedSpeciallyRestaurantApi); 
+	});
+	
+debugLog("DEBUG > END updateRestaurantInfo");	
+}
+/* 
+ * END updateRestaurantInfo
+ **********/
+
+/*
+ * http://stackoverflow.com/questions/11832914/round-up-to-2-decimal-places-in-javascript
+ * var n = 1.7777;    
+ * n.round(2); // 1.78
+ */
+Number.prototype.round = function(places) {
+	return +(Math.round(this + "e+" + places)  + "e-" + places);
+}
+
+function removeItemFromOrderList(listItem, restaurantId, m,s,i) {
+	var count = $(listItem).attr("data-count");
+	count--;
+	orderItemCount--;
+	orderItemCountArray[restaurantId]--;
+	
+	if (count > 0) {
+		$(listItem).attr("data-count",count);
+		$(listItem).find("input#count").val(count);
+	}
+	else {
+		debugLog("******* DELETING *******");
+		listItem.empty();
+		listItem.remove();
+	}
+
+	if (count < 0 && count == "" && count != "NaN") {
+		listItem.empty();
+		listItem.remove();
+	}
+
+	updateOrderTotals();
+
+	if (orderItemCountArray[restaurantId] < 1) {
+		var theCollapsible = $("div#order-content div#restaurant" + restaurantId);
+		theCollapsible.hide();
+    }
+	if (orderItemCount < 1) {
+		$("a#order-button").addClass("ui-disabled");
+    }
+
+}
+ 
+/***********
+ * BEGIN reset
+ */
+function reset(){
+	$("a#done-button").addClass("ui-disabled");
+	
+	myHistory.pop();
+	history.replaceState({}, "CookedSpecially", initialHash);
+	
+	if ( window.self === window.top ) { 
+		//not in a frame 
+		customerId = "";
+		customerEmail = "";
+		customerPhone = "";
+		$("input#customerEmail").val("");
+		$("input#customerPhone").val("");
+		$("input#customerName").val("");
+		$("input#customerAddress1").val("");
+		$("input#customerAddress2").val("");
+		try {
+			FB.logout(function(response) {
+				// Person is now logged out
+				//$(".fb-login-button").show();
+				debugLog("Facebook: Logging out.");
+				debugLog(response);
+				fbLogin = false;
+			});
+		} catch (error) {
+			debugLog("FB logout error: " + error);
+		}
+		//alert("Thank you. Your order is complete and you have been logged out.");
+		window.location.assign(initialURL);
+	} 
+	else {
+		//alert("Thank you. Your order is complete.");
+		window.location.assign(initialURL);
+	}
+	
+}
+/* 
+ * END reset
+ **********/
+ 
+/***********
+ * BEGIN debugLog
+ */
+function debugLog(msg){
+
+	if (debug) {
+		console.log(msg);
+	}
+}
+/* 
+ * END debugLog
+ **********/
+ 
+ /* 
+ *******************************************************
+                     MAIN PROGRAM
+ ******************************************************* 
+ */
+var startTime = new Date().getTime();
+
+$.ajaxSetup({ 
+	async: true, 
+	cache: false 
+});
+
+//http://stackoverflow.com/questions/13986182/how-can-i-improve-the-page-transitions-for-my-jquery-mobile-app/13986390#13986390
+$(document).one("mobileinit", function () {
+	$.mobile.ajaxEnabled = true;
+	$.mobile.allowCrossDomainPages = true;
+	$.mobile.autoInitializePage = false;
+	$.mobile.defaultPageTransition = "none";
+	$.mobile.loader.prototype.options.text = "loading";
+	$.mobile.loader.prototype.options.textVisible = true;
+	$.mobile.mobile.touchOverflowEnabled = true;
+	$.mobile.pageContainer = $("#allPages");
+	$.mobile.phonegapNavigationEnabled = true;
+});
+
+// Here we run a very simple test of the Graph API after login is successful. 
+function queryFB() {
+	debugLog('FaceBook: Welcome!  Fetching your information.... ');
+	$.mobile.loading( "show" );
+	FB.api('/me', function(response) {
+		debugLog('FaceBook: Good to see you, ' + response.name + '.');
+		debugLog('FaceBook: Good to see you, ' + response.username + '.');
+		debugLog(response);
+		$("#popupContact input#customerEmail").val(response.username + "@facebook.com");
+		$("#popupNameAddress input#customerName").val(response.name);
+		$("#popupEmail input#customerEmail").val(response.username + "@facebook.com");
+		//$(".fb-login-button").hide();
+		$.mobile.loading( "hide" );
+		$(".ui-fixed-hidden").removeClass("ui-fixed-hidden");
+		fbLogin = true;
+		/*
+		$( "#popupOrderConfirmation" ).bind({
+		   popupafterclose: function(event, ui) { fbShare(); }
+		});
+		*/
+	});
+}
+
+$(document).ready(function(){
+	// When the document is ready, Cordova isn't
+	$.mobile.loading( "show", {
+		text: "Loading…",
+		textVisible: true,
+		theme: $.mobile.loader.prototype.options.theme,
+		textonly: false,
+		html: ""
+	});
+	
+	$(window).on('hashchange', function() {myHistory.push(document.location.hash)});
+
+	$.each(restaurants, function() {
+		updateRestaurantInfo(this);
+	});
+	
+});
+// END: document.ready()
+
+$( document ).on( "pageinit", function() {
+	$( '#popupContact' ).on({
+		popupafterclose: function() {
+			$("input#customerId").parent().removeClass("achtung");
+		}
+	});
+	$("div#order").on( "pageshow", function(event, ui) {
+		updateOrderTotals();
+		//Refresh the FB button state if using the XHMTL version
+		//FB.XFBML.parse();
+	});
+	
+	// Set up the nested popups for the ordering workflow
+	/* $( "#popupContact" ).bind({
+		popupafterclose: function(event, ui) {
+			debugLog("Initial Contact Info popup closed");
+			if (workflowValidated) {
+				workflowValidated = false;
+				$( "#popupNameAddress" ).popup( "open" );
+			}
+			$.mobile.loading( "hide" );
+		}
+	}); */
+	/* $( "#popupNameAddress" ).bind({
+		popupafterclose: function(event, ui) {
+			debugLog("Name Address popup closed");
+			if (workflowValidated) {
+				workflowValidated = false;
+				$( "#popupDeliveryTime" ).popup( "open" );
+			}
+			$.mobile.loading( "hide" );
+		}
+	}); */
+	
+	$("div#check").on( "pageshow", function(event, ui) {
+		$.mobile.loading( "show" );
+	});
+	$("div#check").on( "pagebeforehide", function(event, ui) {
+		// clear check data and reset the app
+		reset();
+	});
+	$( window ).on( "navigate", function( event, data ) {
+				try {
+					ga('send', 'pageview');
+				}catch(ex){}
+			});
+});
+
+/* 
+ * http://css-tricks.com/forums/discussion/16123/reload-jquery-functions-on-ipad-orientation-change/p1
+ * http://www.ibm.com/developerworks/library/mo-jquery-mobile-api/
+ */
+$('body').bind('orientationchange', function(event) {
+	debugLog('orientationchange: '+ event.orientation);
+});
+
+//$('body').trigger('orientationchange');
+
+} catch (error) {
+        console.error("Your javascript has an error: " + error);
+}
+	
+</script>
+<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js" data-pin-build="doBuild"></script>
+</body>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-44124437-2', 'auto', {'allowAnchor': true});
+ga('send', 'pageview');
+
+</script>
+</html>

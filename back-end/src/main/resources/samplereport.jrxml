@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="samplereport" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e3787634-f78f-47ef-b391-6bdcb858d2b1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="checkId" class="java.lang.Integer"/>
+	<field name="restaurantId" class="java.lang.Integer"/>
+	<field name="tableId" class="java.lang.Integer"/>
+	<field name="customerId" class="java.lang.Integer"/>
+	<field name="guests" class="java.lang.Integer"/>
+	<field name="bill" class="java.lang.Float"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ec89e64b-6680-4751-b6e9-81c6ce27de64" x="0" y="0" width="133" height="20"/>
+				<textElement/>
+				<text><![CDATA[checkId]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="952bbe95-418e-422d-80c9-dd45b9d867ea" x="133" y="0" width="133" height="20"/>
+				<textElement/>
+				<text><![CDATA[restaurantId]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f3268503-4f67-4805-99d8-0b03e56cde11" x="266" y="0" width="133" height="20"/>
+				<textElement/>
+				<text><![CDATA[tableId]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d2b7853c-b2f1-469c-8f18-44352f741183" x="399" y="0" width="133" height="20"/>
+				<textElement/>
+				<text><![CDATA[customerId]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="165678f4-7f72-4c50-b1b9-09a874c4e942" x="532" y="0" width="133" height="20"/>
+				<textElement/>
+				<text><![CDATA[guests]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0e151754-411a-499d-b781-14716f577206" x="665" y="0" width="133" height="20"/>
+				<textElement/>
+				<text><![CDATA[bill]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement uuid="22502513-8222-466e-bc44-f9a92f47f4ba" x="0" y="0" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{checkId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e66a103d-1022-4a27-9aab-6850070f00fd" x="133" y="0" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{restaurantId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bbd4fafd-ce9c-4e46-8e8c-625e84401842" x="266" y="0" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tableId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3fb723a4-9c6a-4e5a-8c41-0ea051f4ad54" x="399" y="0" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{customerId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fb6348e5-e9ee-49fd-b9bc-57416b7e666f" x="532" y="0" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{guests}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bcb68831-3e43-4ae8-86b1-aa296db7b918" x="665" y="0" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{bill}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

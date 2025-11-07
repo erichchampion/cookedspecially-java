@@ -1,0 +1,50 @@
+BUSINESS PLAN
+
+1.	DESCRIPTION
+
+	A client/server framework to provide tablet based menu browsing and ordering system for restaurants
+	*** MORE STUFF NEDDED HERE ***
+
+2.	CLIENT APPLICATION
+
+	This section describes the client funcionality, workflow and user experience for both the customer 
+	and the restaurant's staff
+
+2.1 Application startup (STAFF)
+	
+	When the application launches it makes a call to the server to get the active restaurant's menus.
+	NOTE: For now, we have hard-coded Axis restaurant ID, but in the future we should ask for the 
+	restaurant's code and password in order to get the manus for a particular restaurant. 
+
+	The application should check the server periodically (TBD) to check for menu updates and changes.
+	
+	Once the application gets the menu information it displays the Welcome screen. At this point the 
+	manus can be browsed, but no orders can be created until a tableId/tabId has been selected by a 	
+	member of restaurant's stuff (hosts, waiter, manager)
+
+	Proposed API: getRestaurantMenus()
+	
+2.2	Table setup (STAFF)
+		
+	Each tablet device can handle mutiple tables' orders concurrently. The active tableId is set from
+	the application's "Control Panel". The "Control Panel" canb be accessed only from the application's
+	Welcome screen by clicking of the gear icon on the top right corner. 
+	
+	After entering a valid access code, the "Control Panel" becomes visible. The active table can 
+	be set by:
+	- Touching the active table name, or on "Select..." when there are no active tables
+	- A list of the restaurant's tables, table capacity and status will be displayed. 
+	- Select the desired table from the list
+	
+	When a table is set, the application makes a call to the server to get the current status of the
+	table. The server should return a blank tabId/checkId if the table has no active tabs/check
+	of the tabId with all the existing orders ad their status.
+	
+	Proposed API: getTableTab() or getTableCheck() or getTableStatus()
+
+
+2.2	Add Items to Order (CUSTOMER)	
+	
+	
+	
+	

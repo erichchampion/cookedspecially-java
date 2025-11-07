@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+
+# testing
+
+# IDEs
+/.classpath
+/.project
+/.idea
+/.settings
+/.vscode
+CookedSpecially.iml
+
+# production
+/target
+
+# misc
+.DS_Store
+
+# debug
+
+# local env files

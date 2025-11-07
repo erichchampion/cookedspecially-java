@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:fb="https://ogp.me/ns/fb#">
+<head prefix="og: https://ogp.me/ns# fb: http://ogp.me/ns/fb# business: http://ogp.me/ns/business#">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content=""/>
+  <meta name="author" content="Amit Chowdhary"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+  <meta charset="utf-8"/>
+  <meta id="og_title" property="og:title" content="Salad Days"/>
+  <meta id="og_description" property="og:description" content="Bringing real salads to India"/>
+  <meta name="Description" content="jQuery Timepicker Addon.  Add a timepicker to your jQuery UI Datepicker.  With options to show only time, format time, and much more."/>
+  <meta name="Keywords" content="jQuery, UI, datepicker, timepicker, datetime, time, format"/>
+  <meta id="og_image" property="og:image" content="https://static.squarespace.com/static/52dae045e4b050691872aeee/52dc34fce4b0845775fa4f80/53093ad3e4b0dd985a43dfc4/1393113819369/Veggie.jpg?format=1000w"/>
+  <meta property="fb:app_id"                            content="226697114202871"/>
+  <meta property="og:type"                              content="restaurant.restaurant"/>
+  <meta property="business:contact_data:street_address" content="U 60/37 Dlf city phase 3"/>
+  <meta property="business:contact_data:locality"       content="Gurgaon, Haryana"/>
+  <meta property="business:contact_data:postal_code"    content="122002"/>
+  <meta property="business:contact_data:country_name"   content="India"/>
+  <meta property="place:location:latitude"              content="28.4700"/>
+  <meta property="place:location:longitude"             content="77.0300"/>
+  <title>Menu | Saladdays</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="css/prettyPhoto.css" rel="stylesheet"/>
+  <link href="css/price-range.css" rel="stylesheet"/>
+  <link href="css/animate.css" rel="stylesheet"/>
+  <link href="css/main.css" rel="stylesheet"/>
+  <link href="css/responsive.css" rel="stylesheet"/>
+  <link href="css/jquery-ui.min.css" rel="stylesheet"/>
+  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+  <link rel="shortcut icon" href="images/ico/favicon.ico"/>
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png"/>
+  <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png"/>
+  <script src="js/menu.js"></script>
+</head><!--/head-->
+
+<body>
+<div class="logo">
+  <a href="index.html">
+  <img id="logo-image" src="images/home/logo.jpg" alt="SALAD DAYS"/>
+  </a>
+</div>
+<nav class="mobile-nav">
+  <ul class="menu">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="menu.html">OUR MENU</a></li>
+    <li><a href="wow.html">OUR WOW</a></li>
+    <li><a href="services.html">OUR SERVICES</a></li>
+    <li><a href="story.html">OUR STORY</a></li>
+    <li><a href="blog.html">BLOG</a></li>
+    <li><a href="contact-us.html">CONTACT US</a></li>
+  </ul>
+</nav>
+<nav id="navigation-bar" class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button id="mobile-nav" type="button" class="navbar-toggle collapsed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <img id="title-mobile" src="images/title.png"/>
+      <a id="cart-link-mobile" class="disabled" href="cart.html"><i style="display: inline;" class="fa fa-shopping-cart"></i><sup class="counter" id="cart-counter-mobile">13</sup></a>
+      <!--<a id="cart-link-mobile" class="disabled" href="cart.html"><i class="fa fa-shopping-cart"></i>&nbsp;CART&nbsp;<sup class="counter" id="cart-counter-mobile">13</sup></a>-->
+      <!-- <a href=""><i class="fa fa-phone"></i> +91 9643 800 901/02/03</a>
+      <a href=""><i class="fa fa-envelope"></i> hello@saladdays.co</a> -->
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul id="nav-bar" class="nav navbar-nav">
+          <li><a href="index.html">HOME</a></li>
+          <li><a class="selected-nav-bar-item" href="menu.html">MENU</a></li>
+          <li><a href="wow.html">OUR WOW</a></li>
+          <li><a href="services.html">SERVICES</a></li>
+          <li><a href="story.html">STORY</a></li>
+          <li><a href="blog.html">BLOG</a></li>
+          <li><a href="contact-us.html">CONTACT US</a></li>
+          <li><a id="cart-link" class="disabled" href="cart.html"><i class="fa fa-shopping-cart"></i>&nbsp;CART&nbsp;<sup class="counter" id="cart-counter">13</sup></a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="row" id="dish-menu-and-sidebar">
+      <div class="col-sm-3" id="left-sidebar-div">
+        <div class="left-sidebar" id="left-sidebar">
+        </div>
+      </div>
+      <div class="col-sm-9 padding-right" id="items-div">
+        <div class="features_items">
+          <!-- This is where menu items are inserted -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<footer id="footer"><!--Footer-->
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="col-sm-8 footer-div">
+        <p class="pull-left">Copyright © 2014 Salad Days. All rights reserved.</p>
+        <p><a id="privacy-policy-link" target="_blank" href="/resources/Salad+Days+Policy.pdf">Return and Cancellation Policy I &nbsp;Delivery policy I Terms &amp; Conditions </a></p>
+      </div>
+      <div id="social-media-icons" class="col-sm-4 footer-div">
+        <ul>
+          <li class="social-media"><a href="https://www.facebook.com/saladdays.co" target="_blank"><i class="fa fa-facebook"></i></a></li>
+          <li class="social-media"><a href="https://twitter.com/saladdaysco" target="_blank"><i class="fa fa-twitter"></i></a></li>
+          <li class="social-media"><a href="https://instagram.com/saladdaysco/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+          <li class="social-media"><a href="https://plus.google.com/+SaladdaysCo" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</footer><!--/Footer-->
+<div id="popup-background"></div>
+<script src="js/jquery.js"></script>
+<script src="js/price-range.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.prettyPhoto.js"></script>
+<!--<script src="js/centerNavBar.js.js"></script>-->
+<script src="js/animate-logo.js"></script>
+<script src="js/centerNavBar.js"></script>
+<script type="text/javascript">
+  var saladDaysRestaurantID = 21;
+  var pannelHTML;
+  var numberOfItems = 0;
+
+  function initializeNumberOfItems() {
+    for(var i = 0; i < sessionStorage.length; i++) {
+      numberOfItems += Number(sessionStorage.getItem(sessionStorage.key(i)));
+    }
+    setCounterCSS();
+  }
+
+  function updateCartCount() {
+    if (numberOfItems > 0) {
+      $('#cart-counter').text(numberOfItems);
+      $('#cart-link').removeClass('disabled');
+      $('#cart-counter').show();
+
+      $('#cart-counter-mobile').text(numberOfItems);
+      $('#cart-link-mobile').removeClass('disabled');
+      $('#cart-counter-mobile').show();
+    } else {
+      $('#cart-link').addClass('disabled');
+      $('#cart-counter').hide();
+
+      $('#cart-link-mobile').addClass('disabled');
+      $('#cart-counter-mobile').hide();
+    };
+  }
+
+  function addLeftSideBar() {
+    var sideBarHTML = '<h2 id="left-sidebar-title">Categories</h2><div class="panel-group category-products" id="accordian"></div>'
+    $(".left-sidebar").append(sideBarHTML);
+  }
+
+  function incrementMenuItemCount(itemId) {
+    console.log(itemId);
+    var item = sessionStorage.getItem(String(itemId));
+    if (item == undefined || item == null || item== 'null') {
+      sessionStorage.setItem(String(itemId), '1');
+    } else {
+      sessionStorage.setItem(String(itemId), Number(sessionStorage.getItem(String(itemId))) + 1);
+    };
+    numberOfItems++;
+    setCounterCSS();
+  }
+
+  function setCounterCSS() {
+    if (numberOfItems >= 10) {
+      $('#cart-counter').css({'padding' : '2% 3%'});
+      $('#cart-counter-mobile').css({'padding' : '5% 7%'});
+    } else {
+      $('#cart-counter').css({'padding' : '0% 5%'});
+      $('#cart-counter-mobile').css({'padding' : '5% 20%'});
+    }
+  }
+
+  function getSectionScrollOffset() {
+    if ($('#logo-image').height() != 0 && $('.logo').is(':visible')) {
+      return 240;
+    } else {
+      return 80;
+    }
+  }
+
+  function initializeItemsAndCart() {
+    initializeNumberOfItems();
+    updateCartCount();
+    setCounterCSS();
+  }
+
+  addLeftSideBar();
+
+  initializeItemsAndCart();
+
+  var imageURLPrefix = 'http://www.cookedspecially.com';
+  sections.forEach(function(section) {
+    var sectionName = section.name;
+    var trimmedSectionName = sectionName.replace(/\s/g,'');
+    var sectionTitleHTML = '<div class="col-sm-12"><a class="section-title" name="' + trimmedSectionName + '"></a><h2 id="title_' + trimmedSectionName +  '" class="title text-center">' + sectionName + '</h2></div>';
+    $(".features_items").append(sectionTitleHTML);
+    var colValue = 3;
+    section.items.forEach(function(item) {
+      var itemName = item.name;
+      var itemID = item.itemId;
+      var itemPrice = item.price;
+      var itemImageURL = imageURLPrefix + item.smallImageUrl;
+      var innerHTML =
+                  '<div id="div_' + itemID + '" class="item-container col-sm-' + colValue + '">' +
+                  '<a name="' + itemName + '"/>' +
+                  '<div class="product-image-wrapper">' +
+                  '<div class="single-products">' +
+                  '<div class="productinfo text-center">' +
+                  '<img id="img_' + itemID + '"class="item-image" src="' + itemImageURL + '" alt="" />' +
+                  '<p class="item-name">' + itemName + '</p>' +
+                  '<p class="mobile-description">' + $(item.shortDescription).text().trim() + '</p>' +
+                  '<p>₹' + itemPrice + '</p>' +
+                  '<a id="add-to-cart_' + itemID + '" class="btn btn-default add-to-cart" data-role="button"><i class="fa fa-shopping-cart"/>Add to cart</a>' +
+                  '</div>' +
+                  '</div>' +
+                  '</div>' +
+                  '</div>';
+      $(".features_items").append(innerHTML);
+      //CREATE PANEL ELEMENTS LIST
+    });
+    //CREATE LEFT PANEL
+    pannelHTML =
+            '<div class="panel panel-default">' +
+            '<div class="panel-heading">' +
+            '<h4 class="panel-title">' +
+            '<a id="' + trimmedSectionName + '" class="leftSideBarLink">' +
+            '<span class="badge pull-right"></span>' +
+            sectionName +
+            '</a>' +
+            '</h4>' +
+            '</div>';
+    // console.log(pannelHTML);
+    $("#accordian").append(pannelHTML);
+
+
+    section.items.forEach(function(item) {
+      $('#img_' + item.itemId).click(function() {
+        //SHOW POPUP
+        if ($('body').width() >= 750) {
+          var popupBackground = $('#popup-background');
+          var two_br_tags = '<br/><br/>';
+          popupBackground.empty();
+          var clone = $('#div_' + item.itemId).clone(true);
+          var descriptionText = two_br_tags + $(item.description).text().trim();
+          if (descriptionText != two_br_tags) {
+            clone.find('a#add-to-cart_' + item.itemId).after(descriptionText);
+          }
+          console.log(imageURLPrefix + item.smallImageUrl);
+          clone.find('img').attr('src', imageURLPrefix + item.smallImageUrl);
+          clone.addClass('popup');
+          clone.append('<i class="fa fa-times-circle-o close-button"></i>');
+          popupBackground.append(clone);
+          popupBackground.show(0);
+          var yOffset = ($(window).height() - clone.height()) / 2;
+          yOffset = yOffset > 10 ? yOffset : 10;
+          clone.css({'margin-top' : yOffset});
+        }
+      });
+
+
+      if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/iPad/i)) {
+        document.getElementById('add-to-cart_' + item.itemId).addEventListener('touchstart', function () {
+          this.className = "hoverOn btn btn-default";
+        });
+        document.getElementById('add-to-cart_' + item.itemId).addEventListener('touchend', function () {
+          this.className = "hoverOff btn";
+        });
+      }
+      $('#add-to-cart_' + item.itemId).click(function() {
+        incrementMenuItemCount(item.itemId);
+        updateCartCount();
+        $('#cart-link').addClass('animated tada').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          $(this).removeClass('animated tada');
+        });
+        $('#cart-link-mobile').addClass('animated tada').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          $(this).removeClass('animated tada');
+        });
+      });
+    });
+  });
+
+  sections.forEach(function(section) {
+    var sectionName = section.name;
+    var trimmedSectionName = sectionName.replace(/\s/g,'');
+    $('#' + trimmedSectionName).click(function() {
+      $('html, body').animate({
+        scrollTop: $("#title_" + trimmedSectionName).offset().top - getSectionScrollOffset()
+      }, 200);
+    });
+  });
+  $('#popup-background').click(function() {
+    $('#popup-background').hide(0);
+  });
+
+  // console.log($(window).height());
+</script>
+<script src="js/main.js"></script>
+<script src="js/jquery.scrollUp.min.js"></script>
+</body>
+</html>
