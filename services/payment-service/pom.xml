@@ -130,6 +130,7 @@
                 <version>3.13.0</version>
                 <configuration>
                     <release>${java.version}</release>
+                    <fork>true</fork>
                     <annotationProcessorPaths>
                         <!-- Lombok Annotation Processor - CRITICAL for build to work -->
                         <path>
