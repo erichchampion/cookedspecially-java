@@ -1,1 +1,5 @@
 opt.tar
+services/restaurant-service/target
+services/payment-service/target
+services/order-service/target
+services/notification-service/target
