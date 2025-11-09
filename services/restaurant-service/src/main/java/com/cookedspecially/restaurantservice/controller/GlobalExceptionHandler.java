@@ -1,9 +1,11 @@
 package com.cookedspecially.restaurantservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.restaurantservice.dto.ErrorResponse;
 import com.cookedspecially.restaurantservice.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -21,8 +23,9 @@ import java.util.List;
  * Global Exception Handler
  */
 @RestControllerAdvice
-@Slf4j
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * Handle restaurant not found
@@ -34,13 +37,14 @@ public class GlobalExceptionHandler {
     ) {
         log.error("Restaurant not found: {}", ex.getMessage());
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .status(HttpStatus.NOT_FOUND.value())
-            .error("Restaurant Not Found")
-            .message(ex.getMessage())
-            .path(request.getRequestURI())
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.NOT_FOUND.value(),
+            "Restaurant Not Found",
+            ex.getMessage(),
+            request.getRequestURI(),
+            null
+        );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
@@ -55,13 +59,14 @@ public class GlobalExceptionHandler {
     ) {
         log.error("Menu item not found: {}", ex.getMessage());
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .status(HttpStatus.NOT_FOUND.value())
-            .error("Menu Item Not Found")
-            .message(ex.getMessage())
-            .path(request.getRequestURI())
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.NOT_FOUND.value(),
+            "Menu Item Not Found",
+            ex.getMessage(),
+            request.getRequestURI(),
+            null
+        );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
@@ -76,13 +81,14 @@ public class GlobalExceptionHandler {
     ) {
         log.error("Invalid restaurant state: {}", ex.getMessage());
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .status(HttpStatus.BAD_REQUEST.value())
-            .error("Invalid Restaurant State")
-            .message(ex.getMessage())
-            .path(request.getRequestURI())
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Invalid Restaurant State",
+            ex.getMessage(),
+            request.getRequestURI(),
+            null
+        );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
@@ -97,13 +103,14 @@ public class GlobalExceptionHandler {
     ) {
         log.error("Unauthorized access: {}", ex.getMessage());
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .status(HttpStatus.FORBIDDEN.value())
-            .error("Unauthorized Access")
-            .message(ex.getMessage())
-            .path(request.getRequestURI())
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.FORBIDDEN.value(),
+            "Unauthorized Access",
+            ex.getMessage(),
+            request.getRequestURI(),
+            null
+        );
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
@@ -118,13 +125,14 @@ public class GlobalExceptionHandler {
     ) {
         log.error("Image upload failed: {}", ex.getMessage());
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .status(HttpStatus.BAD_REQUEST.value())
-            .error("Image Upload Failed")
-            .message(ex.getMessage())
-            .path(request.getRequestURI())
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Image Upload Failed",
+            ex.getMessage(),
+            request.getRequestURI(),
+            null
+        );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
@@ -139,13 +147,14 @@ public class GlobalExceptionHandler {
     ) {
         log.error("Max upload size exceeded: {}", ex.getMessage());
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .status(HttpStatus.BAD_REQUEST.value())
-            .error("File Too Large")
-            .message("Upload file size exceeds maximum allowed size")
-            .path(request.getRequestURI())
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "File Too Large",
+            "Upload file size exceeds maximum allowed size",
+            request.getRequestURI(),
+            null
+        );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
@@ -168,14 +177,14 @@ public class GlobalExceptionHandler {
             ));
         }
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .status(HttpStatus.BAD_REQUEST.value())
-            .error("Validation Failed")
-            .message("Request validation failed")
-            .path(request.getRequestURI())
-            .fieldErrors(fieldErrors)
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Validation Failed",
+            "Request validation failed",
+            request.getRequestURI(),
+            fieldErrors
+        );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
@@ -190,13 +199,14 @@ public class GlobalExceptionHandler {
     ) {
         log.error("Access denied: {}", ex.getMessage());
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .status(HttpStatus.FORBIDDEN.value())
-            .error("Access Denied")
-            .message("You do not have permission to access this resource")
-            .path(request.getRequestURI())
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.FORBIDDEN.value(),
+            "Access Denied",
+            "You do not have permission to access this resource",
+            request.getRequestURI(),
+            null
+        );
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
@@ -211,13 +221,14 @@ public class GlobalExceptionHandler {
     ) {
         log.error("Illegal argument: {}", ex.getMessage());
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .status(HttpStatus.BAD_REQUEST.value())
-            .error("Invalid Request")
-            .message(ex.getMessage())
-            .path(request.getRequestURI())
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Invalid Request",
+            ex.getMessage(),
+            request.getRequestURI(),
+            null
+        );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
@@ -232,13 +243,14 @@ public class GlobalExceptionHandler {
     ) {
         log.error("Unexpected error occurred", ex);
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(LocalDateTime.now())
-            .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-            .error("Internal Server Error")
-            .message("An unexpected error occurred. Please try again later.")
-            .path(request.getRequestURI())
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            "Internal Server Error",
+            "An unexpected error occurred. Please try again later.",
+            request.getRequestURI(),
+            null
+        );
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }

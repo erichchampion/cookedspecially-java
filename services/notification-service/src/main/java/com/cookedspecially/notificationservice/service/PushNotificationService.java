@@ -1,9 +1,10 @@
 package com.cookedspecially.notificationservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.notificationservice.exception.NotificationSendException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.sns.SnsClient;
@@ -16,11 +17,17 @@ import java.util.Map;
  * Push Notification Service using AWS SNS
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class PushNotificationService {
 
+    private static final Logger log = LoggerFactory.getLogger(PushNotificationService.class);
+
     private final SnsClient snsClient;
+
+    // Constructor
+    public PushNotificationService(SnsClient snsClient, ObjectMapper objectMapper) {
+        this.snsClient = snsClient;
+        this.objectMapper = objectMapper;
+    }
     private final ObjectMapper objectMapper;
 
     @Value("${aws.sns.push-platform-application-arn-android:}")

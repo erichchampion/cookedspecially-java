@@ -4,8 +4,8 @@ import com.cookedspecially.paymentservice.domain.Payment;
 import com.cookedspecially.paymentservice.domain.Refund;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -22,12 +22,17 @@ import java.util.UUID;
  * Publishes payment lifecycle events to AWS SNS topics
  */
 @Component
-@Slf4j
-@RequiredArgsConstructor
 public class PaymentEventPublisher {
+
+    private static final Logger log = LoggerFactory.getLogger(PaymentEventPublisher.class);
 
     private final SnsClient snsClient;
     private final ObjectMapper objectMapper;
+
+    public PaymentEventPublisher(SnsClient snsClient, ObjectMapper objectMapper) {
+        this.snsClient = snsClient;
+        this.objectMapper = objectMapper;
+    }
 
     @Value("${aws.sns.payment-events-topic-arn}")
     private String paymentEventsTopicArn;
@@ -39,19 +44,18 @@ public class PaymentEventPublisher {
     public void publishPaymentCompleted(Payment payment) {
         log.info("Publishing PAYMENT_COMPLETED event for payment: {}", payment.getPaymentNumber());
 
-        PaymentEvent event = PaymentEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(PaymentEvent.PaymentEventType.PAYMENT_COMPLETED)
-            .timestamp(LocalDateTime.now())
-            .paymentId(payment.getId())
-            .paymentNumber(payment.getPaymentNumber())
-            .orderId(payment.getOrderId())
-            .customerId(payment.getCustomerId())
-            .status(payment.getStatus())
-            .provider(payment.getProvider())
-            .amount(payment.getAmount())
-            .currency(payment.getCurrency())
-            .build();
+                PaymentEvent event = new PaymentEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(PaymentEvent.PaymentEventType.PAYMENT_COMPLETED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setPaymentId(payment.getId());
+        event.setPaymentNumber(payment.getPaymentNumber());
+        event.setOrderId(payment.getOrderId());
+        event.setCustomerId(payment.getCustomerId());
+        event.setStatus(payment.getStatus());
+        event.setProvider(payment.getProvider());
+        event.setAmount(payment.getAmount());
+        event.setCurrency(payment.getCurrency());
 
         publishEvent(event, "PaymentCompleted");
     }
@@ -63,20 +67,19 @@ public class PaymentEventPublisher {
     public void publishPaymentFailed(Payment payment) {
         log.info("Publishing PAYMENT_FAILED event for payment: {}", payment.getPaymentNumber());
 
-        PaymentEvent event = PaymentEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(PaymentEvent.PaymentEventType.PAYMENT_FAILED)
-            .timestamp(LocalDateTime.now())
-            .paymentId(payment.getId())
-            .paymentNumber(payment.getPaymentNumber())
-            .orderId(payment.getOrderId())
-            .customerId(payment.getCustomerId())
-            .status(payment.getStatus())
-            .provider(payment.getProvider())
-            .amount(payment.getAmount())
-            .currency(payment.getCurrency())
-            .failureReason(payment.getFailureReason())
-            .build();
+                PaymentEvent event = new PaymentEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(PaymentEvent.PaymentEventType.PAYMENT_FAILED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setPaymentId(payment.getId());
+        event.setPaymentNumber(payment.getPaymentNumber());
+        event.setOrderId(payment.getOrderId());
+        event.setCustomerId(payment.getCustomerId());
+        event.setStatus(payment.getStatus());
+        event.setProvider(payment.getProvider());
+        event.setAmount(payment.getAmount());
+        event.setCurrency(payment.getCurrency());
+        event.setFailureReason(payment.getFailureReason());
 
         publishEvent(event, "PaymentFailed");
     }
@@ -88,19 +91,18 @@ public class PaymentEventPublisher {
     public void publishPaymentCancelled(Payment payment) {
         log.info("Publishing PAYMENT_CANCELLED event for payment: {}", payment.getPaymentNumber());
 
-        PaymentEvent event = PaymentEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(PaymentEvent.PaymentEventType.PAYMENT_CANCELLED)
-            .timestamp(LocalDateTime.now())
-            .paymentId(payment.getId())
-            .paymentNumber(payment.getPaymentNumber())
-            .orderId(payment.getOrderId())
-            .customerId(payment.getCustomerId())
-            .status(payment.getStatus())
-            .provider(payment.getProvider())
-            .amount(payment.getAmount())
-            .currency(payment.getCurrency())
-            .build();
+                PaymentEvent event = new PaymentEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(PaymentEvent.PaymentEventType.PAYMENT_CANCELLED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setPaymentId(payment.getId());
+        event.setPaymentNumber(payment.getPaymentNumber());
+        event.setOrderId(payment.getOrderId());
+        event.setCustomerId(payment.getCustomerId());
+        event.setStatus(payment.getStatus());
+        event.setProvider(payment.getProvider());
+        event.setAmount(payment.getAmount());
+        event.setCurrency(payment.getCurrency());
 
         publishEvent(event, "PaymentCancelled");
     }
@@ -112,20 +114,19 @@ public class PaymentEventPublisher {
     public void publishRefundCompleted(Refund refund, Payment payment) {
         log.info("Publishing REFUND_COMPLETED event for refund: {}", refund.getRefundNumber());
 
-        PaymentEvent event = PaymentEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(PaymentEvent.PaymentEventType.REFUND_COMPLETED)
-            .timestamp(LocalDateTime.now())
-            .paymentId(payment.getId())
-            .paymentNumber(payment.getPaymentNumber())
-            .orderId(payment.getOrderId())
-            .customerId(payment.getCustomerId())
-            .status(payment.getStatus())
-            .provider(payment.getProvider())
-            .amount(payment.getAmount())
-            .currency(payment.getCurrency())
-            .refundAmount(refund.getAmount())
-            .build();
+                PaymentEvent event = new PaymentEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(PaymentEvent.PaymentEventType.REFUND_COMPLETED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setPaymentId(payment.getId());
+        event.setPaymentNumber(payment.getPaymentNumber());
+        event.setOrderId(payment.getOrderId());
+        event.setCustomerId(payment.getCustomerId());
+        event.setStatus(payment.getStatus());
+        event.setProvider(payment.getProvider());
+        event.setAmount(payment.getAmount());
+        event.setCurrency(payment.getCurrency());
+        event.setRefundAmount(refund.getAmount());
 
         publishEvent(event, "RefundCompleted");
     }
@@ -137,21 +138,20 @@ public class PaymentEventPublisher {
     public void publishRefundFailed(Refund refund, Payment payment) {
         log.info("Publishing REFUND_FAILED event for refund: {}", refund.getRefundNumber());
 
-        PaymentEvent event = PaymentEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(PaymentEvent.PaymentEventType.REFUND_FAILED)
-            .timestamp(LocalDateTime.now())
-            .paymentId(payment.getId())
-            .paymentNumber(payment.getPaymentNumber())
-            .orderId(payment.getOrderId())
-            .customerId(payment.getCustomerId())
-            .status(payment.getStatus())
-            .provider(payment.getProvider())
-            .amount(payment.getAmount())
-            .currency(payment.getCurrency())
-            .refundAmount(refund.getAmount())
-            .failureReason(refund.getFailureReason())
-            .build();
+                PaymentEvent event = new PaymentEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(PaymentEvent.PaymentEventType.REFUND_FAILED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setPaymentId(payment.getId());
+        event.setPaymentNumber(payment.getPaymentNumber());
+        event.setOrderId(payment.getOrderId());
+        event.setCustomerId(payment.getCustomerId());
+        event.setStatus(payment.getStatus());
+        event.setProvider(payment.getProvider());
+        event.setAmount(payment.getAmount());
+        event.setCurrency(payment.getCurrency());
+        event.setRefundAmount(refund.getAmount());
+        event.setFailureReason(refund.getFailureReason());
 
         publishEvent(event, "RefundFailed");
     }

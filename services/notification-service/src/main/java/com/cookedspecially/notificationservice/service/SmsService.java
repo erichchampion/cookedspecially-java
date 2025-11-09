@@ -1,8 +1,9 @@
 package com.cookedspecially.notificationservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.notificationservice.exception.NotificationSendException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.sns.SnsClient;
@@ -15,11 +16,16 @@ import java.util.Map;
  * SMS Service using AWS SNS
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class SmsService {
 
+    private static final Logger log = LoggerFactory.getLogger(SmsService.class);
+
     private final SnsClient snsClient;
+
+    // Constructor
+    public SmsService(SnsClient snsClient) {
+        this.snsClient = snsClient;
+    }
 
     @Value("${aws.sns.sms-sender-id:CookedSpec}")
     private String smsSenderId;
@@ -152,8 +158,8 @@ public class SmsService {
      */
     public Map<String, String> getSmsAttributes() {
         try {
-            GetSMSAttributesResponse response = snsClient.getSMSAttributes(
-                GetSMSAttributesRequest.builder().build()
+            GetSmsAttributesResponse response = snsClient.getSMSAttributes(
+                GetSmsAttributesRequest.builder().build()
             );
 
             return response.attributes();
@@ -169,7 +175,7 @@ public class SmsService {
      */
     public void setSmsAttributes(Map<String, String> attributes) {
         try {
-            SetSMSAttributesRequest request = SetSMSAttributesRequest.builder()
+            SetSmsAttributesRequest request = SetSmsAttributesRequest.builder()
                 .attributes(attributes)
                 .build();
 

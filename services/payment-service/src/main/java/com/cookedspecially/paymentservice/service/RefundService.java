@@ -1,5 +1,8 @@
 package com.cookedspecially.paymentservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.paymentservice.domain.Payment;
 import com.cookedspecially.paymentservice.domain.PaymentProvider;
 import com.cookedspecially.paymentservice.domain.Refund;
@@ -13,8 +16,6 @@ import com.cookedspecially.paymentservice.util.RefundNumberGenerator;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.RefundCreateParams;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,15 +27,25 @@ import java.util.stream.Collectors;
  * Refund Service - Handles payment refunds
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class RefundService {
+
+    private static final Logger log = LoggerFactory.getLogger(RefundService.class);
 
     private final RefundRepository refundRepository;
     private final PaymentRepository paymentRepository;
     private final RefundNumberGenerator refundNumberGenerator;
-    // Event publisher will be injected later
-    // private final PaymentEventPublisher eventPublisher;
+    private final com.cookedspecially.paymentservice.event.PaymentEventPublisher eventPublisher;
+
+    // Constructor
+    public RefundService(RefundRepository refundRepository,
+                 PaymentRepository paymentRepository,
+                 RefundNumberGenerator refundNumberGenerator,
+                 com.cookedspecially.paymentservice.event.PaymentEventPublisher eventPublisher) {
+        this.refundRepository = refundRepository;
+        this.paymentRepository = paymentRepository;
+        this.refundNumberGenerator = refundNumberGenerator;
+        this.eventPublisher = eventPublisher;
+    }
 
     /**
      * Process a refund
@@ -42,7 +53,7 @@ public class RefundService {
     @Transactional
     public RefundResponse processRefund(Long paymentId, CreateRefundRequest request) {
         log.info("Processing refund for payment: {}, amount: {}",
-            paymentId, request.getAmount());
+            paymentId, request.amount());
 
         // Validate payment
         Payment payment = paymentRepository.findById(paymentId)
@@ -54,24 +65,23 @@ public class RefundService {
         }
 
         BigDecimal refundableAmount = payment.getRefundableAmount();
-        if (request.getAmount().compareTo(refundableAmount) > 0) {
+        if (request.amount().compareTo(refundableAmount) > 0) {
             throw new RefundException(paymentId,
                 String.format("Refund amount %.2f exceeds refundable amount %.2f",
-                    request.getAmount(), refundableAmount));
+                    request.amount(), refundableAmount));
         }
 
         // Generate unique refund number
         String refundNumber = generateUniqueRefundNumber();
 
         // Create refund entity
-        Refund refund = Refund.builder()
-            .refundNumber(refundNumber)
-            .paymentId(paymentId)
-            .orderId(payment.getOrderId())
-            .amount(request.getAmount())
-            .reason(request.getReason())
-            .status(Refund.RefundStatus.PENDING)
-            .build();
+        Refund refund = new Refund();
+        refund.setRefundNumber(refundNumber);
+        refund.setPaymentId(paymentId);
+        refund.setOrderId(payment.getOrderId());
+        refund.setAmount(request.amount());
+        refund.setReason(request.reason());
+        refund.setStatus(Refund.RefundStatus.PENDING);
 
         refund = refundRepository.save(refund);
         log.info("Refund created: {}", refundNumber);
@@ -88,7 +98,7 @@ public class RefundService {
             }
 
             // Update payment refunded amount
-            payment.addRefundAmount(request.getAmount());
+            payment.addRefundAmount(request.amount());
             paymentRepository.save(payment);
 
             refund = refundRepository.save(refund);

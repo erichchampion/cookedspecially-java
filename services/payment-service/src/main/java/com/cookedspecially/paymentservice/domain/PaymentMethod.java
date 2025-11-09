@@ -1,10 +1,6 @@
 package com.cookedspecially.paymentservice.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -20,10 +16,6 @@ import java.time.LocalDateTime;
     @Index(name = "idx_customer_id", columnList = "customerId"),
     @Index(name = "idx_external_id", columnList = "externalPaymentMethodId")
 })
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class PaymentMethod {
 
     @Id
@@ -63,11 +55,9 @@ public class PaymentMethod {
     private String billingAddress;
 
     @Column(nullable = false)
-    @Builder.Default
     private Boolean isDefault = false;
 
     @Column(nullable = false)
-    @Builder.Default
     private Boolean isActive = true;
 
     @CreationTimestamp
@@ -77,6 +67,131 @@ public class PaymentMethod {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    // Constructors
+    public PaymentMethod() {
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public PaymentMethodType getType() {
+        return type;
+    }
+
+    public void setType(PaymentMethodType type) {
+        this.type = type;
+    }
+
+    public PaymentProvider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(PaymentProvider provider) {
+        this.provider = provider;
+    }
+
+    public String getExternalPaymentMethodId() {
+        return externalPaymentMethodId;
+    }
+
+    public void setExternalPaymentMethodId(String externalPaymentMethodId) {
+        this.externalPaymentMethodId = externalPaymentMethodId;
+    }
+
+    public String getCardBrand() {
+        return cardBrand;
+    }
+
+    public void setCardBrand(String cardBrand) {
+        this.cardBrand = cardBrand;
+    }
+
+    public String getCardLast4() {
+        return cardLast4;
+    }
+
+    public void setCardLast4(String cardLast4) {
+        this.cardLast4 = cardLast4;
+    }
+
+    public String getCardExpMonth() {
+        return cardExpMonth;
+    }
+
+    public void setCardExpMonth(String cardExpMonth) {
+        this.cardExpMonth = cardExpMonth;
+    }
+
+    public String getCardExpYear() {
+        return cardExpYear;
+    }
+
+    public void setCardExpYear(String cardExpYear) {
+        this.cardExpYear = cardExpYear;
+    }
+
+    public String getBillingName() {
+        return billingName;
+    }
+
+    public void setBillingName(String billingName) {
+        this.billingName = billingName;
+    }
+
+    public String getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public Boolean getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(Boolean isDefault) {
+        this.isDefault = isDefault;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     /**
      * Get masked card number for display

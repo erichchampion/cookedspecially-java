@@ -2,21 +2,12 @@ package com.cookedspecially.orderservice.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Cancel Order Request DTO
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class CancelOrderRequest {
-
+public record CancelOrderRequest(
     @NotBlank(message = "Cancellation reason is required")
     @Size(max = 500, message = "Reason must not exceed 500 characters")
-    private String reason;
-}
+    String reason
+) {}

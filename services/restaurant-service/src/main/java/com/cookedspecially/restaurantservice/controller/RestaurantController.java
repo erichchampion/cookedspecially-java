@@ -1,5 +1,8 @@
 package com.cookedspecially.restaurantservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.restaurantservice.domain.CuisineType;
 import com.cookedspecially.restaurantservice.domain.RestaurantStatus;
 import com.cookedspecially.restaurantservice.dto.CreateRestaurantRequest;
@@ -10,8 +13,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -29,13 +30,18 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/v1/restaurants")
-@RequiredArgsConstructor
-@Slf4j
 @Tag(name = "Restaurant", description = "Restaurant management APIs")
 @SecurityRequirement(name = "bearer-jwt")
 public class RestaurantController {
 
+    private static final Logger log = LoggerFactory.getLogger(RestaurantController.class);
+
     private final RestaurantService restaurantService;
+
+    // Constructor
+    public RestaurantController(RestaurantService restaurantService) {
+        this.restaurantService = restaurantService;
+    }
 
     /**
      * Create restaurant

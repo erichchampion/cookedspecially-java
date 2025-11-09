@@ -3,10 +3,6 @@ package com.cookedspecially.paymentservice.event;
 import com.cookedspecially.paymentservice.domain.PaymentProvider;
 import com.cookedspecially.paymentservice.domain.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,10 +12,6 @@ import java.time.LocalDateTime;
  *
  * Published to SNS/SQS when payment lifecycle events occur
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class PaymentEvent {
 
     @JsonProperty("event_id")
@@ -60,6 +52,111 @@ public class PaymentEvent {
 
     @JsonProperty("failure_reason")
     private String failureReason;
+
+    // Getters and Setters
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
+    public PaymentEventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(PaymentEventType eventType) {
+        this.eventType = eventType;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Long getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(Long paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public String getPaymentNumber() {
+        return paymentNumber;
+    }
+
+    public void setPaymentNumber(String paymentNumber) {
+        this.paymentNumber = paymentNumber;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public PaymentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
+    }
+
+    public PaymentProvider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(PaymentProvider provider) {
+        this.provider = provider;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public BigDecimal getRefundAmount() {
+        return refundAmount;
+    }
+
+    public void setRefundAmount(BigDecimal refundAmount) {
+        this.refundAmount = refundAmount;
+    }
+
+    public String getFailureReason() {
+        return failureReason;
+    }
+
+    public void setFailureReason(String failureReason) {
+        this.failureReason = failureReason;
+    }
 
     public enum PaymentEventType {
         PAYMENT_INITIATED,

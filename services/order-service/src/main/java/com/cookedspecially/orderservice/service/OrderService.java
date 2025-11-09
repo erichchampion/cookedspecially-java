@@ -1,5 +1,8 @@
 package com.cookedspecially.orderservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.orderservice.domain.Order;
 import com.cookedspecially.orderservice.domain.OrderItem;
 import com.cookedspecially.orderservice.domain.OrderStatus;
@@ -12,8 +15,6 @@ import com.cookedspecially.orderservice.exception.OrderNotFoundException;
 import com.cookedspecially.orderservice.exception.OrderValidationException;
 import com.cookedspecially.orderservice.repository.OrderRepository;
 import com.cookedspecially.orderservice.util.OrderNumberGenerator;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -30,13 +31,22 @@ import java.util.stream.Collectors;
  * Order Service - Core business logic for order management
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class OrderService {
+
+    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderRepository orderRepository;
     private final OrderNumberGenerator orderNumberGenerator;
     private final OrderEventPublisher eventPublisher;
+
+    // Constructor
+    public OrderService(OrderRepository orderRepository,
+                        OrderNumberGenerator orderNumberGenerator,
+                        OrderEventPublisher eventPublisher) {
+        this.orderRepository = orderRepository;
+        this.orderNumberGenerator = orderNumberGenerator;
+        this.eventPublisher = eventPublisher;
+    }
 
     /**
      * Create a new order
@@ -44,7 +54,7 @@ public class OrderService {
     @Transactional
     public OrderResponse createOrder(CreateOrderRequest request) {
         log.info("Creating order for customer: {}, restaurant: {}",
-            request.getCustomerId(), request.getRestaurantId());
+            request.customerId(), request.restaurantId());
 
         // Validate order request
         validateOrderRequest(request);
@@ -54,33 +64,32 @@ public class OrderService {
 
         // Calculate total amount
         BigDecimal totalAmount = calculateTotalAmount(
-            request.getSubtotal(),
-            request.getTaxAmount(),
-            request.getDeliveryCharge(),
-            request.getDiscountAmount()
+            request.subtotal(),
+            request.taxAmount(),
+            request.deliveryCharge(),
+            request.discountAmount()
         );
 
         // Create order entity
-        Order order = Order.builder()
-            .orderNumber(orderNumber)
-            .customerId(request.getCustomerId())
-            .restaurantId(request.getRestaurantId())
-            .status(OrderStatus.PENDING)
-            .orderType(request.getOrderType())
-            .subtotal(request.getSubtotal())
-            .taxAmount(request.getTaxAmount())
-            .deliveryCharge(request.getDeliveryCharge())
-            .discountAmount(request.getDiscountAmount())
-            .totalAmount(totalAmount)
-            .paymentMethod(request.getPaymentMethod())
-            .paymentStatus("PENDING")
-            .deliveryAddress(request.getDeliveryAddress())
-            .specialInstructions(request.getSpecialInstructions())
-            .estimatedDeliveryTime(calculateEstimatedDeliveryTime())
-            .build();
+        Order order = new Order();
+        order.setOrderNumber(orderNumber);
+        order.setCustomerId(request.customerId());
+        order.setRestaurantId(request.restaurantId());
+        order.setStatus(OrderStatus.PENDING);
+        order.setOrderType(request.orderType());
+        order.setSubtotal(request.subtotal());
+        order.setTaxAmount(request.taxAmount());
+        order.setDeliveryCharge(request.deliveryCharge());
+        order.setDiscountAmount(request.discountAmount());
+        order.setTotalAmount(totalAmount);
+        order.setPaymentMethod(request.paymentMethod());
+        order.setPaymentStatus("PENDING");
+        order.setDeliveryAddress(request.deliveryAddress());
+        order.setSpecialInstructions(request.specialInstructions());
+        order.setEstimatedDeliveryTime(calculateEstimatedDeliveryTime());
 
         // Add order items
-        for (OrderItemRequest itemRequest : request.getItems()) {
+        for (OrderItemRequest itemRequest : request.items()) {
             OrderItem item = createOrderItem(itemRequest);
             order.addItem(item);
         }
@@ -301,16 +310,16 @@ public class OrderService {
 
     private void validateOrderRequest(CreateOrderRequest request) {
         // Validate items
-        if (request.getItems() == null || request.getItems().isEmpty()) {
+        if (request.items() == null || request.items().isEmpty()) {
             throw new OrderValidationException("items", "Order must contain at least one item");
         }
 
         // Validate subtotal calculation
-        BigDecimal calculatedSubtotal = request.getItems().stream()
-            .map(item -> item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+        BigDecimal calculatedSubtotal = request.items().stream()
+            .map(item -> item.unitPrice().multiply(BigDecimal.valueOf(item.quantity())))
             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        if (calculatedSubtotal.compareTo(request.getSubtotal()) != 0) {
+        if (calculatedSubtotal.compareTo(request.subtotal()) != 0) {
             throw new OrderValidationException("subtotal",
                 "Subtotal does not match sum of item prices");
         }
@@ -363,16 +372,16 @@ public class OrderService {
     }
 
     private OrderItem createOrderItem(OrderItemRequest request) {
-        BigDecimal totalPrice = request.getUnitPrice()
-            .multiply(BigDecimal.valueOf(request.getQuantity()));
+        BigDecimal totalPrice = request.unitPrice()
+            .multiply(BigDecimal.valueOf(request.quantity()));
 
-        return OrderItem.builder()
-            .menuItemId(request.getMenuItemId())
-            .menuItemName(request.getMenuItemName())
-            .quantity(request.getQuantity())
-            .unitPrice(request.getUnitPrice())
-            .totalPrice(totalPrice)
-            .specialInstructions(request.getSpecialInstructions())
-            .build();
+        OrderItem item = new OrderItem();
+        item.setMenuItemId(request.menuItemId());
+        item.setMenuItemName(request.menuItemName());
+        item.setQuantity(request.quantity());
+        item.setUnitPrice(request.unitPrice());
+        item.setTotalPrice(totalPrice);
+        item.setSpecialInstructions(request.specialInstructions());
+        return item;
     }
 }

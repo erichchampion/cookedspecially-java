@@ -1,5 +1,8 @@
 package com.cookedspecially.paymentservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.paymentservice.dto.CreatePaymentRequest;
 import com.cookedspecially.paymentservice.dto.CreateRefundRequest;
 import com.cookedspecially.paymentservice.dto.PaymentResponse;
@@ -12,8 +15,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -30,12 +31,18 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/payments")
-@RequiredArgsConstructor
-@Slf4j
 @Tag(name = "Payments", description = "Payment processing and management APIs")
 public class PaymentController {
 
+    private static final Logger log = LoggerFactory.getLogger(PaymentController.class);
+
     private final PaymentService paymentService;
+
+    // Constructor
+    public PaymentController(PaymentService paymentService, RefundService refundService) {
+        this.paymentService = paymentService;
+        this.refundService = refundService;
+    }
     private final RefundService refundService;
 
     /**
@@ -50,7 +57,7 @@ public class PaymentController {
     })
     public ResponseEntity<PaymentResponse> processPayment(
             @Valid @RequestBody CreatePaymentRequest request) {
-        log.info("POST /api/payments - Processing payment for order: {}", request.getOrderId());
+        log.info("POST /api/payments - Processing payment for order: {}", request.orderId());
         PaymentResponse response = paymentService.processPayment(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

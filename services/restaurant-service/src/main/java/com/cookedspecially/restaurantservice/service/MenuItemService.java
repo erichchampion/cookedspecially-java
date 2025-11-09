@@ -1,5 +1,8 @@
 package com.cookedspecially.restaurantservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.restaurantservice.domain.MenuItem;
 import com.cookedspecially.restaurantservice.domain.Restaurant;
 import com.cookedspecially.restaurantservice.dto.CreateMenuItemRequest;
@@ -11,8 +14,6 @@ import com.cookedspecially.restaurantservice.exception.RestaurantNotFoundExcepti
 import com.cookedspecially.restaurantservice.exception.UnauthorizedAccessException;
 import com.cookedspecially.restaurantservice.repository.MenuItemRepository;
 import com.cookedspecially.restaurantservice.repository.RestaurantRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -27,13 +28,22 @@ import java.util.stream.Collectors;
  * Menu Item Service
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class MenuItemService {
+
+    private static final Logger log = LoggerFactory.getLogger(MenuItemService.class);
 
     private final MenuItemRepository menuItemRepository;
     private final RestaurantRepository restaurantRepository;
     private final RestaurantEventPublisher eventPublisher;
+
+    // Constructor
+    public MenuItemService(MenuItemRepository menuItemRepository,
+                 RestaurantRepository restaurantRepository,
+                 RestaurantEventPublisher eventPublisher) {
+        this.menuItemRepository = menuItemRepository;
+        this.restaurantRepository = restaurantRepository;
+        this.eventPublisher = eventPublisher;
+    }
 
     /**
      * Create menu item
@@ -41,31 +51,29 @@ public class MenuItemService {
     @Transactional
     @CacheEvict(value = {"menuItems", "restaurants"}, allEntries = true)
     public MenuItemResponse createMenuItem(CreateMenuItemRequest request, Long userId) {
-        log.info("Creating menu item for restaurant: {}", request.getRestaurantId());
+        log.info("Creating menu item for restaurant: {}", request.restaurantId());
 
-        Restaurant restaurant = restaurantRepository.findById(request.getRestaurantId())
-            .orElseThrow(() -> new RestaurantNotFoundException(request.getRestaurantId()));
+        Restaurant restaurant = restaurantRepository.findById(request.restaurantId())
+            .orElseThrow(() -> new RestaurantNotFoundException(request.restaurantId()));
 
         // Verify ownership
         if (!restaurant.getOwnerId().equals(userId)) {
-            throw new UnauthorizedAccessException(userId, request.getRestaurantId());
+            throw new UnauthorizedAccessException(userId, request.restaurantId());
         }
 
-        MenuItem menuItem = MenuItem.builder()
-            .restaurant(restaurant)
-            .name(request.getName())
-            .description(request.getDescription())
-            .price(request.getPrice())
-            .category(request.getCategory())
-            .imageUrl(request.getImageUrl())
-            .isAvailable(request.getIsAvailable())
-            .isVegetarian(request.getIsVegetarian())
-            .isVegan(request.getIsVegan())
-            .isGlutenFree(request.getIsGlutenFree())
-            .calories(request.getCalories())
-            .preparationTimeMinutes(request.getPreparationTimeMinutes())
-            .spiceLevel(request.getSpiceLevel())
-            .build();
+        MenuItem menuItem = new MenuItem();
+        menuItem.setRestaurant(restaurant);
+        menuItem.setName(request.name());
+        menuItem.setDescription(request.description());
+        menuItem.setPrice(request.price());
+        menuItem.setCategory(request.category());
+        menuItem.setImageUrl(request.imageUrl());
+        menuItem.setIsAvailable(request.isAvailable());
+        menuItem.setIsVegetarian(request.isVegetarian());
+        menuItem.setIsVegan(request.isVegan());
+        menuItem.setIsGlutenFree(request.isGlutenFree());
+        menuItem.setCalories(request.calories());
+        menuItem.setPreparationTimeMinutes(request.preparationTimeMinutes());
 
         MenuItem saved = menuItemRepository.save(menuItem);
         log.info("Created menu item with ID: {}", saved.getId());
@@ -107,41 +115,41 @@ public class MenuItemService {
         }
 
         // Update fields if provided
-        if (request.getName() != null) {
-            menuItem.setName(request.getName());
+        if (request.name() != null) {
+            menuItem.setName(request.name());
         }
-        if (request.getDescription() != null) {
-            menuItem.setDescription(request.getDescription());
+        if (request.description() != null) {
+            menuItem.setDescription(request.description());
         }
-        if (request.getPrice() != null) {
-            menuItem.setPrice(request.getPrice());
+        if (request.price() != null) {
+            menuItem.setPrice(request.price());
         }
-        if (request.getCategory() != null) {
-            menuItem.setCategory(request.getCategory());
+        if (request.category() != null) {
+            menuItem.setCategory(request.category());
         }
-        if (request.getImageUrl() != null) {
-            menuItem.setImageUrl(request.getImageUrl());
+        if (request.imageUrl() != null) {
+            menuItem.setImageUrl(request.imageUrl());
         }
-        if (request.getIsAvailable() != null) {
-            menuItem.setIsAvailable(request.getIsAvailable());
+        if (request.isAvailable() != null) {
+            menuItem.setIsAvailable(request.isAvailable());
         }
-        if (request.getIsVegetarian() != null) {
-            menuItem.setIsVegetarian(request.getIsVegetarian());
+        if (request.isVegetarian() != null) {
+            menuItem.setIsVegetarian(request.isVegetarian());
         }
-        if (request.getIsVegan() != null) {
-            menuItem.setIsVegan(request.getIsVegan());
+        if (request.isVegan() != null) {
+            menuItem.setIsVegan(request.isVegan());
         }
-        if (request.getIsGlutenFree() != null) {
-            menuItem.setIsGlutenFree(request.getIsGlutenFree());
+        if (request.isGlutenFree() != null) {
+            menuItem.setIsGlutenFree(request.isGlutenFree());
         }
-        if (request.getCalories() != null) {
-            menuItem.setCalories(request.getCalories());
+        if (request.calories() != null) {
+            menuItem.setCalories(request.calories());
         }
-        if (request.getPreparationTimeMinutes() != null) {
-            menuItem.setPreparationTimeMinutes(request.getPreparationTimeMinutes());
+        if (request.preparationTimeMinutes() != null) {
+            menuItem.setPreparationTimeMinutes(request.preparationTimeMinutes());
         }
-        if (request.getSpiceLevel() != null) {
-            menuItem.setSpiceLevel(request.getSpiceLevel());
+        if (request.spiceLevel() != null) {
+            menuItem.setSpiceLevel(request.spiceLevel());
         }
 
         MenuItem updated = menuItemRepository.save(menuItem);
@@ -347,7 +355,7 @@ public class MenuItemService {
         restaurantRepository.findById(restaurantId)
             .orElseThrow(() -> new RestaurantNotFoundException(restaurantId));
 
-        List<MenuItem> allItems = menuItemRepository.findByRestaurantId(restaurantId);
+        List<MenuItem> allItems = menuItemRepository.findByRestaurantIdOrderByDisplayOrderAsc(restaurantId);
 
         return allItems.stream()
             .map(MenuItem::getCategory)

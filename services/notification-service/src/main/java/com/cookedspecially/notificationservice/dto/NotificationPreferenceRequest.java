@@ -2,52 +2,44 @@ package com.cookedspecially.notificationservice.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Notification Preference Request DTO
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class NotificationPreferenceRequest {
+public record NotificationPreferenceRequest(
+    Boolean emailEnabled,
 
-    // Channel preferences
-    private Boolean emailEnabled;
-    private Boolean smsEnabled;
-    private Boolean pushEnabled;
-    private Boolean inAppEnabled;
+    Boolean smsEnabled,
 
-    // Type preferences
-    private Boolean orderNotifications;
-    private Boolean paymentNotifications;
-    private Boolean restaurantNotifications;
-    private Boolean promotionalNotifications;
+    Boolean pushEnabled,
 
-    // Quiet hours
-    private Boolean quietHoursEnabled;
+    Boolean inAppEnabled,
+
+    Boolean orderNotifications,
+
+    Boolean paymentNotifications,
+
+    Boolean restaurantNotifications,
+
+    Boolean promotionalNotifications,
+
+    Boolean quietHoursEnabled,
 
     @Pattern(regexp = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Invalid time format. Use HH:mm")
-    private String quietHoursStart;
+    String quietHoursStart,
 
     @Pattern(regexp = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$", message = "Invalid time format. Use HH:mm")
-    private String quietHoursEnd;
+    String quietHoursEnd,
 
-    // Contact information
     @Email(message = "Invalid email format")
-    private String emailAddress;
+    String emailAddress,
 
     @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "Invalid phone number format")
-    private String phoneNumber;
+    String phoneNumber,
 
-    // Device tokens
-    private String androidDeviceToken;
-    private String iosDeviceToken;
+    String androidDeviceToken,
 
-    // Locale
-    private String locale;
-}
+    String iosDeviceToken,
+
+    String locale
+) {}

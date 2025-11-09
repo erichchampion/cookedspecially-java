@@ -1,10 +1,6 @@
 package com.cookedspecially.notificationservice.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -20,10 +16,6 @@ import java.time.LocalDateTime;
     @Index(name = "idx_type", columnList = "type"),
     @Index(name = "idx_created_at", columnList = "createdAt")
 })
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Notification {
 
     @Id
@@ -47,7 +39,6 @@ public class Notification {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    @Builder.Default
     private NotificationPriority priority = NotificationPriority.MEDIUM;
 
     @Column(nullable = false, length = 500)
@@ -82,7 +73,6 @@ public class Notification {
 
     private Integer retryCount;
 
-    @Builder.Default
     private Integer maxRetries = 3;
 
     // External provider tracking
@@ -100,6 +90,233 @@ public class Notification {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    // Constructors
+    public Notification() {
+    }
+
+    public Notification(Long id,
+                 Long userId,
+                 NotificationType type,
+                 NotificationChannel channel,
+                 NotificationStatus status,
+                 NotificationPriority priority,
+                 String subject,
+                 String content,
+                 String recipient,
+                 String templateId,
+                 String templateVariables,
+                 String relatedEntityType,
+                 Long relatedEntityId,
+                 LocalDateTime sentAt,
+                 LocalDateTime deliveredAt,
+                 String errorMessage,
+                 Integer retryCount,
+                 Integer maxRetries,
+                 String externalMessageId,
+                 String provider,
+                 LocalDateTime createdAt,
+                 LocalDateTime updatedAt) {
+        this.id = id;
+        this.userId = userId;
+        this.type = type;
+        this.channel = channel;
+        this.status = status;
+        this.priority = priority != null ? priority : NotificationPriority.MEDIUM;
+        this.subject = subject;
+        this.content = content;
+        this.recipient = recipient;
+        this.templateId = templateId;
+        this.templateVariables = templateVariables;
+        this.relatedEntityType = relatedEntityType;
+        this.relatedEntityId = relatedEntityId;
+        this.sentAt = sentAt;
+        this.deliveredAt = deliveredAt;
+        this.errorMessage = errorMessage;
+        this.retryCount = retryCount;
+        this.maxRetries = maxRetries != null ? maxRetries : 3;
+        this.externalMessageId = externalMessageId;
+        this.provider = provider;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public NotificationType getType() {
+        return type;
+    }
+
+    public void setType(NotificationType type) {
+        this.type = type;
+    }
+
+    public NotificationChannel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(NotificationChannel channel) {
+        this.channel = channel;
+    }
+
+    public NotificationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(NotificationStatus status) {
+        this.status = status;
+    }
+
+    public NotificationPriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(NotificationPriority priority) {
+        this.priority = priority;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
+    public String getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
+    }
+
+    public String getTemplateVariables() {
+        return templateVariables;
+    }
+
+    public void setTemplateVariables(String templateVariables) {
+        this.templateVariables = templateVariables;
+    }
+
+    public String getRelatedEntityType() {
+        return relatedEntityType;
+    }
+
+    public void setRelatedEntityType(String relatedEntityType) {
+        this.relatedEntityType = relatedEntityType;
+    }
+
+    public Long getRelatedEntityId() {
+        return relatedEntityId;
+    }
+
+    public void setRelatedEntityId(Long relatedEntityId) {
+        this.relatedEntityId = relatedEntityId;
+    }
+
+    public LocalDateTime getSentAt() {
+        return sentAt;
+    }
+
+    public void setSentAt(LocalDateTime sentAt) {
+        this.sentAt = sentAt;
+    }
+
+    public LocalDateTime getDeliveredAt() {
+        return deliveredAt;
+    }
+
+    public void setDeliveredAt(LocalDateTime deliveredAt) {
+        this.deliveredAt = deliveredAt;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public Integer getRetryCount() {
+        return retryCount;
+    }
+
+    public void setRetryCount(Integer retryCount) {
+        this.retryCount = retryCount;
+    }
+
+    public Integer getMaxRetries() {
+        return maxRetries;
+    }
+
+    public void setMaxRetries(Integer maxRetries) {
+        this.maxRetries = maxRetries;
+    }
+
+    public String getExternalMessageId() {
+        return externalMessageId;
+    }
+
+    public void setExternalMessageId(String externalMessageId) {
+        this.externalMessageId = externalMessageId;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     /**
      * Mark notification as sent

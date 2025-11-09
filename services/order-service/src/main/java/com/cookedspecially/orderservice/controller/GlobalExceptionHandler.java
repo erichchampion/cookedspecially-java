@@ -1,11 +1,13 @@
 package com.cookedspecially.orderservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.orderservice.dto.ErrorResponse;
 import com.cookedspecially.orderservice.exception.InvalidOrderStateException;
 import com.cookedspecially.orderservice.exception.OrderNotFoundException;
 import com.cookedspecially.orderservice.exception.OrderValidationException;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -22,8 +24,9 @@ import java.util.List;
  * Handles exceptions thrown by controllers and converts them to appropriate HTTP responses
  */
 @RestControllerAdvice
-@Slf4j
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * Handle OrderNotFoundException
@@ -81,10 +84,7 @@ public class GlobalExceptionHandler {
 
         if (ex.getField() != null) {
             List<ErrorResponse.ValidationError> validationErrors = new ArrayList<>();
-            validationErrors.add(ErrorResponse.ValidationError.builder()
-                .field(ex.getField())
-                .message(ex.getMessage())
-                .build());
+            validationErrors.add(new ErrorResponse.ValidationError(ex.getField(), ex.getMessage()));
             error.setValidationErrors(validationErrors);
         }
 
@@ -108,20 +108,17 @@ public class GlobalExceptionHandler {
                 : error.getObjectName();
             String errorMessage = error.getDefaultMessage();
 
-            validationErrors.add(ErrorResponse.ValidationError.builder()
-                .field(fieldName)
-                .message(errorMessage)
-                .build());
+            validationErrors.add(new ErrorResponse.ValidationError(fieldName, errorMessage));
         });
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(java.time.LocalDateTime.now())
-            .status(HttpStatus.BAD_REQUEST.value())
-            .error("Validation Error")
-            .message("Invalid request parameters")
-            .path(request.getRequestURI())
-            .validationErrors(validationErrors)
-            .build();
+        ErrorResponse error = new ErrorResponse(
+            java.time.LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Validation Error",
+            "Invalid request parameters",
+            request.getRequestURI(),
+            validationErrors
+        );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }

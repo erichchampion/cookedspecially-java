@@ -1,20 +1,12 @@
 package com.cookedspecially.notificationservice.dto;
 
 import com.cookedspecially.notificationservice.domain.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 /**
  * Notification Response DTO
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class NotificationResponse {
 
     private Long id;
@@ -38,25 +30,135 @@ public class NotificationResponse {
     /**
      * Convert entity to DTO
      */
+
+    // Constructors
+    public NotificationResponse() {
+    }
+
+    public NotificationResponse(Long id,
+                 Long userId,
+                 NotificationType type,
+                 NotificationChannel channel,
+                 NotificationStatus status,
+                 NotificationPriority priority,
+                 String subject,
+                 String content,
+                 String recipient,
+                 String relatedEntityType,
+                 Long relatedEntityId,
+                 LocalDateTime sentAt,
+                 LocalDateTime deliveredAt,
+                 String errorMessage,
+                 Integer retryCount,
+                 LocalDateTime createdAt,
+                 LocalDateTime updatedAt) {
+        this.id = id;
+        this.userId = userId;
+        this.type = type;
+        this.channel = channel;
+        this.status = status;
+        this.priority = priority;
+        this.subject = subject;
+        this.content = content;
+        this.recipient = recipient;
+        this.relatedEntityType = relatedEntityType;
+        this.relatedEntityId = relatedEntityId;
+        this.sentAt = sentAt;
+        this.deliveredAt = deliveredAt;
+        this.errorMessage = errorMessage;
+        this.retryCount = retryCount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    // Getters
+    public Long getId() {
+        return id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public NotificationType getType() {
+        return type;
+    }
+
+    public NotificationChannel getChannel() {
+        return channel;
+    }
+
+    public NotificationStatus getStatus() {
+        return status;
+    }
+
+    public NotificationPriority getPriority() {
+        return priority;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public String getRelatedEntityType() {
+        return relatedEntityType;
+    }
+
+    public Long getRelatedEntityId() {
+        return relatedEntityId;
+    }
+
+    public LocalDateTime getSentAt() {
+        return sentAt;
+    }
+
+    public LocalDateTime getDeliveredAt() {
+        return deliveredAt;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public Integer getRetryCount() {
+        return retryCount;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     public static NotificationResponse fromEntity(Notification notification) {
-        return NotificationResponse.builder()
-            .id(notification.getId())
-            .userId(notification.getUserId())
-            .type(notification.getType())
-            .channel(notification.getChannel())
-            .status(notification.getStatus())
-            .priority(notification.getPriority())
-            .subject(notification.getSubject())
-            .content(notification.getContent())
-            .recipient(notification.getRecipient())
-            .relatedEntityType(notification.getRelatedEntityType())
-            .relatedEntityId(notification.getRelatedEntityId())
-            .sentAt(notification.getSentAt())
-            .deliveredAt(notification.getDeliveredAt())
-            .errorMessage(notification.getErrorMessage())
-            .retryCount(notification.getRetryCount())
-            .createdAt(notification.getCreatedAt())
-            .updatedAt(notification.getUpdatedAt())
-            .build();
+        return new NotificationResponse(
+            notification.getId(),
+            notification.getUserId(),
+            notification.getType(),
+            notification.getChannel(),
+            notification.getStatus(),
+            notification.getPriority(),
+            notification.getSubject(),
+            notification.getContent(),
+            notification.getRecipient(),
+            notification.getRelatedEntityType(),
+            notification.getRelatedEntityId(),
+            notification.getSentAt(),
+            notification.getDeliveredAt(),
+            notification.getErrorMessage(),
+            notification.getRetryCount(),
+            notification.getCreatedAt(),
+            notification.getUpdatedAt()
+        );
     }
 }

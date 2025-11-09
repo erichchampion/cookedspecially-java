@@ -1,8 +1,9 @@
 package com.cookedspecially.restaurantservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.restaurantservice.exception.ImageUploadException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,11 +22,17 @@ import java.util.UUID;
  * Image Service for S3 integration
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class ImageService {
 
+    private static final Logger log = LoggerFactory.getLogger(ImageService.class);
+
     private final S3Client s3Client;
+
+    // Constructor
+    public ImageService(S3Client s3Client, S3Presigner s3Presigner) {
+        this.s3Client = s3Client;
+        this.s3Presigner = s3Presigner;
+    }
     private final S3Presigner s3Presigner;
 
     @Value("${aws.s3.bucket-name}")

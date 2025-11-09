@@ -1,5 +1,8 @@
 package com.cookedspecially.notificationservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.notificationservice.domain.*;
 import com.cookedspecially.notificationservice.dto.NotificationResponse;
 import com.cookedspecially.notificationservice.dto.SendNotificationRequest;
@@ -10,8 +13,6 @@ import com.cookedspecially.notificationservice.repository.NotificationPreference
 import com.cookedspecially.notificationservice.repository.NotificationRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,9 +28,9 @@ import java.util.Map;
  * Notification Service - Orchestrates notification sending across all channels
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class NotificationService {
+
+    private static final Logger log = LoggerFactory.getLogger(NotificationService.class);
 
     private final NotificationRepository notificationRepository;
     private final NotificationPreferenceRepository preferenceRepository;
@@ -38,6 +39,23 @@ public class NotificationService {
     private final PushNotificationService pushNotificationService;
     private final TemplateService templateService;
     private final ObjectMapper objectMapper;
+
+    // Constructor
+    public NotificationService(NotificationRepository notificationRepository,
+                 NotificationPreferenceRepository preferenceRepository,
+                 EmailService emailService,
+                 SmsService smsService,
+                 PushNotificationService pushNotificationService,
+                 TemplateService templateService,
+                 ObjectMapper objectMapper) {
+        this.notificationRepository = notificationRepository;
+        this.preferenceRepository = preferenceRepository;
+        this.emailService = emailService;
+        this.smsService = smsService;
+        this.pushNotificationService = pushNotificationService;
+        this.templateService = templateService;
+        this.objectMapper = objectMapper;
+    }
 
     @Value("${notification.rate-limit.email-per-user-per-hour:10}")
     private int emailRateLimit;
@@ -54,41 +72,41 @@ public class NotificationService {
     @Transactional
     public NotificationResponse sendNotification(SendNotificationRequest request) {
         log.info("Sending {} notification to user {} via {}",
-            request.getType(), request.getUserId(), request.getChannel());
+            request.type(), request.userId(), request.channel());
 
         // Get user preferences
-        NotificationPreference preferences = getOrCreatePreferences(request.getUserId());
+        NotificationPreference preferences = getOrCreatePreferences(request.userId());
 
         // Check if user wants this type of notification
-        if (!preferences.wantsNotificationType(request.getType())) {
+        if (!preferences.wantsNotificationType(request.type())) {
             log.info("User {} has disabled {} notifications",
-                request.getUserId(), request.getType());
+                request.userId(), request.type());
             return null;
         }
 
         // Check if user can receive on this channel
-        if (!preferences.canReceiveOnChannel(request.getChannel())) {
+        if (!preferences.canReceiveOnChannel(request.channel())) {
             log.info("User {} cannot receive notifications on {}",
-                request.getUserId(), request.getChannel());
+                request.userId(), request.channel());
             return null;
         }
 
         // Check quiet hours
         if (isInQuietHours(preferences)) {
             log.info("User {} is in quiet hours, deferring notification",
-                request.getUserId());
+                request.userId());
             // Could queue for later delivery
             return null;
         }
 
         // Check rate limits
-        checkRateLimit(request.getUserId(), request.getChannel());
+        checkRateLimit(request.userId(), request.channel());
 
         // Determine recipient
         String recipient = determineRecipient(request, preferences);
         if (recipient == null) {
             log.warn("No recipient available for user {} on channel {}",
-                request.getUserId(), request.getChannel());
+                request.userId(), request.channel());
             return null;
         }
 
@@ -200,22 +218,26 @@ public class NotificationService {
         String body = notification.getContent();
 
         // Process template if specified
-        Map<String, Object> data = null;
+        Map<String, String> data = null;
         if (notification.getTemplateId() != null) {
             Map<String, Object> variables = parseTemplateVariables(notification.getTemplateVariables());
             title = templateService.processSubject(notification.getTemplateId(), variables);
             body = templateService.processTemplate(notification.getTemplateId(), variables);
-            data = variables;
+            // Convert Map<String, Object> to Map<String, String>
+            data = new java.util.HashMap<>();
+            for (Map.Entry<String, Object> entry : variables.entrySet()) {
+                data.put(entry.getKey(), entry.getValue() != null ? entry.getValue().toString() : null);
+            }
         }
 
         // Determine platform based on device token format
         String deviceToken = notification.getRecipient();
         if (deviceToken.length() == 64) {
             // iOS device token (hex string)
-            return pushNotificationService.sendIosPush(deviceToken, title, body, (Map<String, String>) data);
+            return pushNotificationService.sendIosPush(deviceToken, title, body, data);
         } else {
             // Android device token (FCM token)
-            return pushNotificationService.sendAndroidPush(deviceToken, title, body, (Map<String, String>) data);
+            return pushNotificationService.sendAndroidPush(deviceToken, title, body, data);
         }
     }
 
@@ -341,16 +363,16 @@ public class NotificationService {
      * Determine recipient based on channel and preferences
      */
     private String determineRecipient(SendNotificationRequest request, NotificationPreference preferences) {
-        if (request.getRecipient() != null) {
-            return request.getRecipient();
+        if (request.recipient() != null) {
+            return request.recipient();
         }
 
-        return switch (request.getChannel()) {
+        return switch (request.channel()) {
             case EMAIL -> preferences.getEmailAddress();
             case SMS -> preferences.getPhoneNumber();
             case PUSH -> preferences.getAndroidDeviceToken() != null ?
                 preferences.getAndroidDeviceToken() : preferences.getIosDeviceToken();
-            case IN_APP -> String.valueOf(request.getUserId());
+            case IN_APP -> String.valueOf(request.userId());
         };
     }
 
@@ -361,29 +383,38 @@ public class NotificationService {
         SendNotificationRequest request, String recipient, NotificationPreference preferences) {
 
         String templateVars = null;
-        if (request.getTemplateVariables() != null) {
+        if (request.templateVariables() != null) {
             try {
-                templateVars = objectMapper.writeValueAsString(request.getTemplateVariables());
+                templateVars = objectMapper.writeValueAsString(request.templateVariables());
             } catch (JsonProcessingException e) {
                 log.error("Failed to serialize template variables", e);
             }
         }
 
-        Notification notification = Notification.builder()
-            .userId(request.getUserId())
-            .type(request.getType())
-            .channel(request.getChannel())
-            .status(NotificationStatus.PENDING)
-            .priority(request.getPriority())
-            .subject(request.getSubject())
-            .content(request.getContent())
-            .recipient(recipient)
-            .templateId(request.getTemplateId())
-            .templateVariables(templateVars)
-            .relatedEntityType(request.getRelatedEntityType())
-            .relatedEntityId(request.getRelatedEntityId())
-            .retryCount(0)
-            .build();
+        Notification notification = new Notification(
+            null, // id
+            request.userId(),
+            request.type(),
+            request.channel(),
+            NotificationStatus.PENDING,
+            request.priority(),
+            request.subject(),
+            request.content(),
+            recipient,
+            request.templateId(),
+            templateVars,
+            request.relatedEntityType(),
+            request.relatedEntityId(),
+            null, // sentAt
+            null, // deliveredAt
+            null, // errorMessage
+            0, // retryCount
+            3, // maxRetries
+            null, // externalMessageId
+            null, // provider
+            null, // createdAt
+            null  // updatedAt
+        );
 
         return notificationRepository.save(notification);
     }
@@ -394,9 +425,28 @@ public class NotificationService {
     private NotificationPreference getOrCreatePreferences(Long userId) {
         return preferenceRepository.findByUserId(userId)
             .orElseGet(() -> {
-                NotificationPreference pref = NotificationPreference.builder()
-                    .userId(userId)
-                    .build();
+                NotificationPreference pref = new NotificationPreference(
+                    null, // id
+                    userId,
+                    true, // emailEnabled
+                    true, // smsEnabled
+                    true, // pushEnabled
+                    true, // inAppEnabled
+                    true, // orderNotifications
+                    true, // paymentNotifications
+                    true, // restaurantNotifications
+                    false, // promotionalNotifications
+                    false, // quietHoursEnabled
+                    null, // quietHoursStart
+                    null, // quietHoursEnd
+                    null, // emailAddress
+                    null, // phoneNumber
+                    null, // androidDeviceToken
+                    null, // iosDeviceToken
+                    "en", // locale
+                    null, // createdAt
+                    null  // updatedAt
+                );
                 return preferenceRepository.save(pref);
             });
     }

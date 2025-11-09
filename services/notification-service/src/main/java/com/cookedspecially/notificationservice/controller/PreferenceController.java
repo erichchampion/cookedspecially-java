@@ -1,5 +1,8 @@
 package com.cookedspecially.notificationservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.notificationservice.dto.NotificationPreferenceRequest;
 import com.cookedspecially.notificationservice.dto.NotificationPreferenceResponse;
 import com.cookedspecially.notificationservice.service.NotificationPreferenceService;
@@ -7,8 +10,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -21,13 +22,18 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/v1/preferences")
-@RequiredArgsConstructor
-@Slf4j
 @Tag(name = "Preference", description = "Notification preference management APIs")
 @SecurityRequirement(name = "bearer-jwt")
 public class PreferenceController {
 
+    private static final Logger log = LoggerFactory.getLogger(PreferenceController.class);
+
     private final NotificationPreferenceService preferenceService;
+
+    // Constructor
+    public PreferenceController(NotificationPreferenceService preferenceService) {
+        this.preferenceService = preferenceService;
+    }
 
     /**
      * Get my preferences
@@ -127,16 +133,20 @@ public class PreferenceController {
         Long userId = Long.valueOf(jwt.getSubject());
         log.info("Setting {} channel to {} for user: {}", channel, enabled, userId);
 
-        NotificationPreferenceRequest request = NotificationPreferenceRequest.builder().build();
+        NotificationPreferenceRequest request = switch (channel.toUpperCase()) {
+            case "EMAIL" -> new NotificationPreferenceRequest(
+                enabled, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            case "SMS" -> new NotificationPreferenceRequest(
+                null, enabled, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            case "PUSH" -> new NotificationPreferenceRequest(
+                null, null, enabled, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            case "IN_APP" -> new NotificationPreferenceRequest(
+                null, null, null, enabled, null, null, null, null, null, null, null, null, null, null, null, null);
+            default -> null;
+        };
 
-        switch (channel.toUpperCase()) {
-            case "EMAIL" -> request.setEmailEnabled(enabled);
-            case "SMS" -> request.setSmsEnabled(enabled);
-            case "PUSH" -> request.setPushEnabled(enabled);
-            case "IN_APP" -> request.setInAppEnabled(enabled);
-            default -> {
-                return ResponseEntity.badRequest().build();
-            }
+        if (request == null) {
+            return ResponseEntity.badRequest().build();
         }
 
         NotificationPreferenceResponse response = preferenceService.updatePreferences(userId, request);
@@ -158,11 +168,24 @@ public class PreferenceController {
         log.info("Setting quiet hours for user {}: enabled={}, start={}, end={}",
             userId, enabled, start, end);
 
-        NotificationPreferenceRequest request = NotificationPreferenceRequest.builder()
-            .quietHoursEnabled(enabled)
-            .quietHoursStart(start)
-            .quietHoursEnd(end)
-            .build();
+        NotificationPreferenceRequest request = new NotificationPreferenceRequest(
+            null, // emailEnabled
+            null, // smsEnabled
+            null, // pushEnabled
+            null, // inAppEnabled
+            null, // orderNotifications
+            null, // paymentNotifications
+            null, // restaurantNotifications
+            null, // promotionalNotifications
+            enabled, // quietHoursEnabled
+            start, // quietHoursStart
+            end, // quietHoursEnd
+            null, // emailAddress
+            null, // phoneNumber
+            null, // androidDeviceToken
+            null, // iosDeviceToken
+            null  // locale
+        );
 
         NotificationPreferenceResponse response = preferenceService.updatePreferences(userId, request);
         return ResponseEntity.ok(response);

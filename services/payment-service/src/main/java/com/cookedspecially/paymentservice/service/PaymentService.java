@@ -1,5 +1,8 @@
 package com.cookedspecially.paymentservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.paymentservice.domain.Payment;
 import com.cookedspecially.paymentservice.domain.PaymentProvider;
 import com.cookedspecially.paymentservice.domain.PaymentStatus;
@@ -15,8 +18,6 @@ import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -34,14 +35,22 @@ import java.util.Map;
  * Payment Service - Core business logic for payment processing
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class PaymentService {
+
+    private static final Logger log = LoggerFactory.getLogger(PaymentService.class);
 
     private final PaymentRepository paymentRepository;
     private final PaymentNumberGenerator paymentNumberGenerator;
-    // Event publisher will be injected later
-    // private final PaymentEventPublisher eventPublisher;
+    private final com.cookedspecially.paymentservice.event.PaymentEventPublisher eventPublisher;
+
+    // Constructor
+    public PaymentService(PaymentRepository paymentRepository,
+                 PaymentNumberGenerator paymentNumberGenerator,
+                 com.cookedspecially.paymentservice.event.PaymentEventPublisher eventPublisher) {
+        this.paymentRepository = paymentRepository;
+        this.paymentNumberGenerator = paymentNumberGenerator;
+        this.eventPublisher = eventPublisher;
+    }
 
     @Value("${payment-service.stripe.api-key}")
     private String stripeApiKey;
@@ -60,24 +69,23 @@ public class PaymentService {
     @Retry(name = "payment-processing")
     public PaymentResponse processPayment(CreatePaymentRequest request) {
         log.info("Processing payment for order: {}, amount: {} {}",
-            request.getOrderId(), request.getAmount(), request.getCurrency());
+            request.orderId(), request.amount(), request.currency());
 
         // Generate unique payment number
         String paymentNumber = generateUniquePaymentNumber();
 
         // Create payment entity
-        Payment payment = Payment.builder()
-            .paymentNumber(paymentNumber)
-            .orderId(request.getOrderId())
-            .customerId(request.getCustomerId())
-            .status(PaymentStatus.PENDING)
-            .provider(request.getProvider())
-            .amount(request.getAmount())
-            .refundedAmount(BigDecimal.ZERO)
-            .currency(request.getCurrency().toUpperCase())
-            .description(request.getDescription())
-            .metadata(request.getMetadata())
-            .build();
+        Payment payment = new Payment();
+        payment.setPaymentNumber(paymentNumber);
+        payment.setOrderId(request.orderId());
+        payment.setCustomerId(request.customerId());
+        payment.setStatus(PaymentStatus.PENDING);
+        payment.setProvider(request.provider());
+        payment.setAmount(request.amount());
+        payment.setRefundedAmount(BigDecimal.ZERO);
+        payment.setCurrency(request.currency().toUpperCase());
+        payment.setDescription(request.description());
+        payment.setMetadata(request.metadata());
 
         // Save initial payment
         payment = paymentRepository.save(payment);
@@ -85,13 +93,13 @@ public class PaymentService {
 
         // Process payment based on provider
         try {
-            switch (request.getProvider()) {
+            switch (request.provider()) {
                 case STRIPE -> processStripePayment(payment);
                 case PAYPAL -> processPayPalPayment(payment);
                 case CASH -> processCashPayment(payment);
                 case GIFT_CARD -> processGiftCardPayment(payment);
                 default -> throw new PaymentProcessingException(
-                    paymentNumber, "Unsupported payment provider: " + request.getProvider());
+                    paymentNumber, "Unsupported payment provider: " + request.provider());
             }
 
             payment = paymentRepository.save(payment);

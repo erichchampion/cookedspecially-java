@@ -1,12 +1,13 @@
 package com.cookedspecially.paymentservice.event;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.paymentservice.domain.PaymentProvider;
 import com.cookedspecially.paymentservice.dto.CreatePaymentRequest;
 import com.cookedspecially.paymentservice.service.PaymentService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -25,11 +26,18 @@ import java.util.List;
  * Consumes ORDER_CONFIRMED events from SQS queue to trigger payment processing
  */
 @Component
-@Slf4j
-@RequiredArgsConstructor
 public class OrderEventConsumer {
 
+    private static final Logger log = LoggerFactory.getLogger(OrderEventConsumer.class);
+
     private final SqsClient sqsClient;
+
+    // Constructor
+    public OrderEventConsumer(SqsClient sqsClient, ObjectMapper objectMapper, PaymentService paymentService) {
+        this.sqsClient = sqsClient;
+        this.objectMapper = objectMapper;
+        this.paymentService = paymentService;
+    }
     private final ObjectMapper objectMapper;
     private final PaymentService paymentService;
 
@@ -108,14 +116,16 @@ public class OrderEventConsumer {
             log.info("Processing ORDER_CONFIRMED event for order: {}", orderId);
 
             // Create payment request
-            CreatePaymentRequest paymentRequest = CreatePaymentRequest.builder()
-                .orderId(orderId)
-                .customerId(customerId)
-                .amount(totalAmount)
-                .currency("USD")
-                .provider(PaymentProvider.STRIPE) // Default to Stripe, could be configurable
-                .description("Payment for order " + orderId)
-                .build();
+            CreatePaymentRequest paymentRequest = new CreatePaymentRequest(
+                orderId,
+                customerId,
+                totalAmount,
+                "USD",
+                PaymentProvider.STRIPE, // Default to Stripe, could be configurable
+                null, // paymentMethodId
+                "Payment for order " + orderId,
+                null // metadata
+            );
 
             // Process payment
             paymentService.processPayment(paymentRequest);

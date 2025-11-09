@@ -5,47 +5,37 @@ import com.cookedspecially.notificationservice.domain.NotificationPriority;
 import com.cookedspecially.notificationservice.domain.NotificationType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
 /**
  * Send Notification Request DTO
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class SendNotificationRequest {
-
+public record SendNotificationRequest(
     @NotNull(message = "User ID is required")
-    private Long userId;
+    Long userId,
 
     @NotNull(message = "Notification type is required")
-    private NotificationType type;
+    NotificationType type,
 
     @NotNull(message = "Channel is required")
-    private NotificationChannel channel;
+    NotificationChannel channel,
 
-    @Builder.Default
-    private NotificationPriority priority = NotificationPriority.MEDIUM;
+    NotificationPriority priority,
 
     @NotBlank(message = "Subject is required")
-    private String subject;
+    String subject,
 
     @NotBlank(message = "Content is required")
-    private String content;
+    String content,
 
-    private String recipient;  // Optional override for email/phone/device token
+    String recipient,
 
-    // Template-based notification
-    private String templateId;
-    private Map<String, Object> templateVariables;
+    String templateId,
 
-    // Related entity tracking
-    private String relatedEntityType;
-    private Long relatedEntityId;
-}
+    Map<String, Object> templateVariables,
+
+    String relatedEntityType,
+
+    Long relatedEntityId
+) {}

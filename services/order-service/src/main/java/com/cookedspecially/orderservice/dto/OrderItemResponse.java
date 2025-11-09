@@ -1,20 +1,12 @@
 package com.cookedspecially.orderservice.dto;
 
 import com.cookedspecially.orderservice.domain.OrderItem;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 /**
  * Order Item Response DTO
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class OrderItemResponse {
 
     private Long id;
@@ -25,15 +17,59 @@ public class OrderItemResponse {
     private BigDecimal totalPrice;
     private String specialInstructions;
 
+    // Constructors
+    public OrderItemResponse() {
+    }
+
+    public OrderItemResponse(Long id, Long menuItemId, String menuItemName, Integer quantity,
+                             BigDecimal unitPrice, BigDecimal totalPrice, String specialInstructions) {
+        this.id = id;
+        this.menuItemId = menuItemId;
+        this.menuItemName = menuItemName;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.totalPrice = totalPrice;
+        this.specialInstructions = specialInstructions;
+    }
+
+    // Getters
+    public Long getId() {
+        return id;
+    }
+
+    public Long getMenuItemId() {
+        return menuItemId;
+    }
+
+    public String getMenuItemName() {
+        return menuItemName;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public String getSpecialInstructions() {
+        return specialInstructions;
+    }
+
     public static OrderItemResponse fromEntity(OrderItem item) {
-        return OrderItemResponse.builder()
-            .id(item.getId())
-            .menuItemId(item.getMenuItemId())
-            .menuItemName(item.getMenuItemName())
-            .quantity(item.getQuantity())
-            .unitPrice(item.getUnitPrice())
-            .totalPrice(item.getTotalPrice())
-            .specialInstructions(item.getSpecialInstructions())
-            .build();
+        return new OrderItemResponse(
+            item.getId(),
+            item.getMenuItemId(),
+            item.getMenuItemName(),
+            item.getQuantity(),
+            item.getUnitPrice(),
+            item.getTotalPrice(),
+            item.getSpecialInstructions()
+        );
     }
 }

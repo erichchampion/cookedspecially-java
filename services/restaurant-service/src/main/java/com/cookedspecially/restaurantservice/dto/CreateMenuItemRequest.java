@@ -1,60 +1,47 @@
 package com.cookedspecially.restaurantservice.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 /**
  * Create Menu Item Request DTO
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class CreateMenuItemRequest {
-
+public record CreateMenuItemRequest(
     @NotNull(message = "Restaurant ID is required")
-    private Long restaurantId;
+    Long restaurantId,
 
     @NotBlank(message = "Name is required")
     @Size(max = 200, message = "Name must not exceed 200 characters")
-    private String name;
+    String name,
 
     @Size(max = 1000, message = "Description must not exceed 1000 characters")
-    private String description;
+    String description,
 
     @NotNull(message = "Price is required")
     @DecimalMin(value = "0.00", message = "Price must be non-negative")
-    private BigDecimal price;
+    BigDecimal price,
 
     @NotBlank(message = "Category is required")
     @Size(max = 50)
-    private String category;
+    String category,
 
     @Size(max = 500)
-    private String imageUrl;
+    String imageUrl,
 
-    @Builder.Default
-    private Boolean isAvailable = true;
+    Boolean isAvailable,
 
-    @Builder.Default
-    private Boolean isVegetarian = false;
+    Boolean isVegetarian,
 
-    @Builder.Default
-    private Boolean isVegan = false;
+    Boolean isVegan,
 
-    @Builder.Default
-    private Boolean isGlutenFree = false;
+    Boolean isGlutenFree,
 
     @Min(value = 0, message = "Calories must be non-negative")
-    private Integer calories;
+    Integer calories,
 
     @Min(value = 0, message = "Preparation time must be non-negative")
-    private Integer preparationTimeMinutes;
+    Integer preparationTimeMinutes,
 
-    private Integer spiceLevel;
-}
+    Integer spiceLevel
+) {}

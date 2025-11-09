@@ -1,11 +1,12 @@
 package com.cookedspecially.notificationservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.notificationservice.domain.NotificationPreference;
 import com.cookedspecially.notificationservice.dto.NotificationPreferenceRequest;
 import com.cookedspecially.notificationservice.dto.NotificationPreferenceResponse;
 import com.cookedspecially.notificationservice.repository.NotificationPreferenceRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
  * Notification Preference Service
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class NotificationPreferenceService {
 
+    private static final Logger log = LoggerFactory.getLogger(NotificationPreferenceService.class);
+
     private final NotificationPreferenceRepository preferenceRepository;
+
+    // Constructor
+    public NotificationPreferenceService(NotificationPreferenceRepository preferenceRepository) {
+        this.preferenceRepository = preferenceRepository;
+    }
 
     /**
      * Get user preferences
@@ -47,53 +53,53 @@ public class NotificationPreferenceService {
             .orElseGet(() -> createDefaultPreferences(userId));
 
         // Update fields if provided
-        if (request.getEmailEnabled() != null) {
-            preference.setEmailEnabled(request.getEmailEnabled());
+        if (request.emailEnabled() != null) {
+            preference.setEmailEnabled(request.emailEnabled());
         }
-        if (request.getSmsEnabled() != null) {
-            preference.setSmsEnabled(request.getSmsEnabled());
+        if (request.smsEnabled() != null) {
+            preference.setSmsEnabled(request.smsEnabled());
         }
-        if (request.getPushEnabled() != null) {
-            preference.setPushEnabled(request.getPushEnabled());
+        if (request.pushEnabled() != null) {
+            preference.setPushEnabled(request.pushEnabled());
         }
-        if (request.getInAppEnabled() != null) {
-            preference.setInAppEnabled(request.getInAppEnabled());
+        if (request.inAppEnabled() != null) {
+            preference.setInAppEnabled(request.inAppEnabled());
         }
-        if (request.getOrderNotifications() != null) {
-            preference.setOrderNotifications(request.getOrderNotifications());
+        if (request.orderNotifications() != null) {
+            preference.setOrderNotifications(request.orderNotifications());
         }
-        if (request.getPaymentNotifications() != null) {
-            preference.setPaymentNotifications(request.getPaymentNotifications());
+        if (request.paymentNotifications() != null) {
+            preference.setPaymentNotifications(request.paymentNotifications());
         }
-        if (request.getRestaurantNotifications() != null) {
-            preference.setRestaurantNotifications(request.getRestaurantNotifications());
+        if (request.restaurantNotifications() != null) {
+            preference.setRestaurantNotifications(request.restaurantNotifications());
         }
-        if (request.getPromotionalNotifications() != null) {
-            preference.setPromotionalNotifications(request.getPromotionalNotifications());
+        if (request.promotionalNotifications() != null) {
+            preference.setPromotionalNotifications(request.promotionalNotifications());
         }
-        if (request.getQuietHoursEnabled() != null) {
-            preference.setQuietHoursEnabled(request.getQuietHoursEnabled());
+        if (request.quietHoursEnabled() != null) {
+            preference.setQuietHoursEnabled(request.quietHoursEnabled());
         }
-        if (request.getQuietHoursStart() != null) {
-            preference.setQuietHoursStart(request.getQuietHoursStart());
+        if (request.quietHoursStart() != null) {
+            preference.setQuietHoursStart(request.quietHoursStart());
         }
-        if (request.getQuietHoursEnd() != null) {
-            preference.setQuietHoursEnd(request.getQuietHoursEnd());
+        if (request.quietHoursEnd() != null) {
+            preference.setQuietHoursEnd(request.quietHoursEnd());
         }
-        if (request.getEmailAddress() != null) {
-            preference.setEmailAddress(request.getEmailAddress());
+        if (request.emailAddress() != null) {
+            preference.setEmailAddress(request.emailAddress());
         }
-        if (request.getPhoneNumber() != null) {
-            preference.setPhoneNumber(request.getPhoneNumber());
+        if (request.phoneNumber() != null) {
+            preference.setPhoneNumber(request.phoneNumber());
         }
-        if (request.getAndroidDeviceToken() != null) {
-            preference.setAndroidDeviceToken(request.getAndroidDeviceToken());
+        if (request.androidDeviceToken() != null) {
+            preference.setAndroidDeviceToken(request.androidDeviceToken());
         }
-        if (request.getIosDeviceToken() != null) {
-            preference.setIosDeviceToken(request.getIosDeviceToken());
+        if (request.iosDeviceToken() != null) {
+            preference.setIosDeviceToken(request.iosDeviceToken());
         }
-        if (request.getLocale() != null) {
-            preference.setLocale(request.getLocale());
+        if (request.locale() != null) {
+            preference.setLocale(request.locale());
         }
 
         NotificationPreference updated = preferenceRepository.save(preference);
@@ -166,9 +172,28 @@ public class NotificationPreferenceService {
     private NotificationPreference createDefaultPreferences(Long userId) {
         log.info("Creating default preferences for user: {}", userId);
 
-        NotificationPreference preference = NotificationPreference.builder()
-            .userId(userId)
-            .build();
+        NotificationPreference preference = new NotificationPreference(
+            null, // id
+            userId,
+            true, // emailEnabled
+            true, // smsEnabled
+            true, // pushEnabled
+            true, // inAppEnabled
+            true, // orderNotifications
+            true, // paymentNotifications
+            true, // restaurantNotifications
+            false, // promotionalNotifications
+            false, // quietHoursEnabled
+            null, // quietHoursStart
+            null, // quietHoursEnd
+            null, // emailAddress
+            null, // phoneNumber
+            null, // androidDeviceToken
+            null, // iosDeviceToken
+            "en", // locale
+            null, // createdAt
+            null  // updatedAt
+        );
 
         return preferenceRepository.save(preference);
     }

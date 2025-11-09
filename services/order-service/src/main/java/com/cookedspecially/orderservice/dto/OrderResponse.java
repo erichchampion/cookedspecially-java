@@ -3,10 +3,6 @@ package com.cookedspecially.orderservice.dto;
 import com.cookedspecially.orderservice.domain.Order;
 import com.cookedspecially.orderservice.domain.OrderStatus;
 import com.cookedspecially.orderservice.domain.OrderType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,10 +12,6 @@ import java.util.stream.Collectors;
 /**
  * Order Response DTO
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class OrderResponse {
 
     private Long id;
@@ -43,30 +35,145 @@ public class OrderResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    // Constructors
+    public OrderResponse() {
+    }
+
+    public OrderResponse(Long id, String orderNumber, Long customerId, Long restaurantId,
+                         OrderStatus status, OrderType orderType, BigDecimal subtotal, BigDecimal taxAmount,
+                         BigDecimal deliveryCharge, BigDecimal discountAmount, BigDecimal totalAmount,
+                         String paymentMethod, String paymentStatus, String deliveryAddress,
+                         String specialInstructions, LocalDateTime estimatedDeliveryTime,
+                         LocalDateTime deliveredAt, List<OrderItemResponse> items,
+                         LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.orderNumber = orderNumber;
+        this.customerId = customerId;
+        this.restaurantId = restaurantId;
+        this.status = status;
+        this.orderType = orderType;
+        this.subtotal = subtotal;
+        this.taxAmount = taxAmount;
+        this.deliveryCharge = deliveryCharge;
+        this.discountAmount = discountAmount;
+        this.totalAmount = totalAmount;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
+        this.deliveryAddress = deliveryAddress;
+        this.specialInstructions = specialInstructions;
+        this.estimatedDeliveryTime = estimatedDeliveryTime;
+        this.deliveredAt = deliveredAt;
+        this.items = items;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    // Getters
+    public Long getId() {
+        return id;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public OrderType getOrderType() {
+        return orderType;
+    }
+
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public BigDecimal getTaxAmount() {
+        return taxAmount;
+    }
+
+    public BigDecimal getDeliveryCharge() {
+        return deliveryCharge;
+    }
+
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public String getSpecialInstructions() {
+        return specialInstructions;
+    }
+
+    public LocalDateTime getEstimatedDeliveryTime() {
+        return estimatedDeliveryTime;
+    }
+
+    public LocalDateTime getDeliveredAt() {
+        return deliveredAt;
+    }
+
+    public List<OrderItemResponse> getItems() {
+        return items;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+
     public static OrderResponse fromEntity(Order order) {
-        return OrderResponse.builder()
-            .id(order.getId())
-            .orderNumber(order.getOrderNumber())
-            .customerId(order.getCustomerId())
-            .restaurantId(order.getRestaurantId())
-            .status(order.getStatus())
-            .orderType(order.getOrderType())
-            .subtotal(order.getSubtotal())
-            .taxAmount(order.getTaxAmount())
-            .deliveryCharge(order.getDeliveryCharge())
-            .discountAmount(order.getDiscountAmount())
-            .totalAmount(order.getTotalAmount())
-            .paymentMethod(order.getPaymentMethod())
-            .paymentStatus(order.getPaymentStatus())
-            .deliveryAddress(order.getDeliveryAddress())
-            .specialInstructions(order.getSpecialInstructions())
-            .estimatedDeliveryTime(order.getEstimatedDeliveryTime())
-            .deliveredAt(order.getDeliveredAt())
-            .items(order.getItems().stream()
+        return new OrderResponse(
+            order.getId(),
+            order.getOrderNumber(),
+            order.getCustomerId(),
+            order.getRestaurantId(),
+            order.getStatus(),
+            order.getOrderType(),
+            order.getSubtotal(),
+            order.getTaxAmount(),
+            order.getDeliveryCharge(),
+            order.getDiscountAmount(),
+            order.getTotalAmount(),
+            order.getPaymentMethod(),
+            order.getPaymentStatus(),
+            order.getDeliveryAddress(),
+            order.getSpecialInstructions(),
+            order.getEstimatedDeliveryTime(),
+            order.getDeliveredAt(),
+            order.getItems().stream()
                 .map(OrderItemResponse::fromEntity)
-                .collect(Collectors.toList()))
-            .createdAt(order.getCreatedAt())
-            .updatedAt(order.getUpdatedAt())
-            .build();
+                .collect(Collectors.toList()),
+            order.getCreatedAt(),
+            order.getUpdatedAt()
+        );
     }
 }

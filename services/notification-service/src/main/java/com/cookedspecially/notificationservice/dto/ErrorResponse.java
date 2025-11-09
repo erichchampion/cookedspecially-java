@@ -1,9 +1,5 @@
 package com.cookedspecially.notificationservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,32 +7,24 @@ import java.util.List;
 /**
  * Error Response DTO
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class ErrorResponse {
+public record ErrorResponse(
+    LocalDateTime timestamp,
 
-    @Builder.Default
-    private LocalDateTime timestamp = LocalDateTime.now();
+    int status,
 
-    private int status;
+    String error,
 
-    private String error;
+    String message,
 
-    private String message;
+    String path,
 
-    private String path;
-
-    private List<FieldError> fieldErrors;
-
+    List<FieldError> fieldErrors
+) {
     /**
-     * Field error details
+     * Field Error DTO
      */
-    @Data
-    @AllArgsConstructor
-    public static class FieldError {
-        private String field;
-        private String message;
-    }
+    public record FieldError(
+        String field,
+        String message
+    ) {}
 }

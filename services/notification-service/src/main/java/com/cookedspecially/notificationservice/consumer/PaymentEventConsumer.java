@@ -1,5 +1,8 @@
 package com.cookedspecially.notificationservice.consumer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.notificationservice.domain.NotificationChannel;
 import com.cookedspecially.notificationservice.domain.NotificationPriority;
 import com.cookedspecially.notificationservice.domain.NotificationType;
@@ -7,8 +10,6 @@ import com.cookedspecially.notificationservice.dto.SendNotificationRequest;
 import com.cookedspecially.notificationservice.service.NotificationService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,13 +25,22 @@ import java.util.Map;
  * Consumes payment events from SQS and sends notifications
  */
 @Component
-@Slf4j
-@RequiredArgsConstructor
 public class PaymentEventConsumer {
+
+    private static final Logger log = LoggerFactory.getLogger(PaymentEventConsumer.class);
 
     private final SqsClient sqsClient;
     private final NotificationService notificationService;
     private final ObjectMapper objectMapper;
+
+    // Constructor
+    public PaymentEventConsumer(SqsClient sqsClient,
+                 NotificationService notificationService,
+                 ObjectMapper objectMapper) {
+        this.sqsClient = sqsClient;
+        this.notificationService = notificationService;
+        this.objectMapper = objectMapper;
+    }
 
     @Value("${aws.sqs.payment-events-queue-url:}")
     private String queueUrl;
@@ -155,17 +165,19 @@ public class PaymentEventConsumer {
     private void sendNotification(Long userId, NotificationType type, NotificationChannel channel,
                                    String subject, String content, Map<String, Object> variables, Long paymentId) {
         try {
-            SendNotificationRequest request = SendNotificationRequest.builder()
-                .userId(userId)
-                .type(type)
-                .channel(channel)
-                .priority(NotificationPriority.HIGH)
-                .subject(subject)
-                .content(content)
-                .templateVariables(variables)
-                .relatedEntityType("PAYMENT")
-                .relatedEntityId(paymentId)
-                .build();
+            SendNotificationRequest request = new SendNotificationRequest(
+                userId,
+                type,
+                channel,
+                NotificationPriority.HIGH,
+                subject,
+                content,
+                null, // recipient
+                null, // templateId
+                variables,
+                "PAYMENT",
+                paymentId
+            );
 
             notificationService.sendNotification(request);
 

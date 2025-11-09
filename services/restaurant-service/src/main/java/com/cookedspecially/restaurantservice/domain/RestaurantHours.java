@@ -1,10 +1,6 @@
 package com.cookedspecially.restaurantservice.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -16,10 +12,6 @@ import java.time.LocalTime;
 @Table(name = "restaurant_hours", indexes = {
     @Index(name = "idx_restaurant_day", columnList = "restaurant_id,dayOfWeek")
 })
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class RestaurantHours {
 
     @Id
@@ -41,8 +33,74 @@ public class RestaurantHours {
     private LocalTime closeTime;
 
     @Column(nullable = false)
-    @Builder.Default
     private Boolean isClosed = false;
+
+    // Constructors
+    public RestaurantHours() {
+    }
+
+    public RestaurantHours(Long id,
+                 Restaurant restaurant,
+                 DayOfWeek dayOfWeek,
+                 LocalTime openTime,
+                 LocalTime closeTime,
+                 Boolean isClosed) {
+        this.id = id;
+        this.restaurant = restaurant;
+        this.dayOfWeek = dayOfWeek;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
+        this.isClosed = isClosed != null ? isClosed : false;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    public LocalTime getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(LocalTime openTime) {
+        this.openTime = openTime;
+    }
+
+    public LocalTime getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(LocalTime closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    public Boolean getIsClosed() {
+        return isClosed;
+    }
+
+    public void setIsClosed(Boolean isClosed) {
+        this.isClosed = isClosed;
+    }
 
     /**
      * Check if restaurant is open at given time

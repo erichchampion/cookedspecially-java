@@ -1,5 +1,8 @@
 package com.cookedspecially.restaurantservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.restaurantservice.dto.CreateMenuItemRequest;
 import com.cookedspecially.restaurantservice.dto.MenuItemResponse;
 import com.cookedspecially.restaurantservice.dto.UpdateMenuItemRequest;
@@ -8,8 +11,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -26,13 +27,18 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/v1/menu-items")
-@RequiredArgsConstructor
-@Slf4j
 @Tag(name = "Menu Item", description = "Menu item management APIs")
 @SecurityRequirement(name = "bearer-jwt")
 public class MenuItemController {
 
+    private static final Logger log = LoggerFactory.getLogger(MenuItemController.class);
+
     private final MenuItemService menuItemService;
+
+    // Constructor
+    public MenuItemController(MenuItemService menuItemService) {
+        this.menuItemService = menuItemService;
+    }
 
     /**
      * Create menu item
@@ -45,7 +51,7 @@ public class MenuItemController {
         @AuthenticationPrincipal Jwt jwt
     ) {
         Long userId = Long.valueOf(jwt.getSubject());
-        log.info("Creating menu item for restaurant {} by user: {}", request.getRestaurantId(), userId);
+        log.info("Creating menu item for restaurant {} by user: {}", request.restaurantId(), userId);
 
         MenuItemResponse response = menuItemService.createMenuItem(request, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

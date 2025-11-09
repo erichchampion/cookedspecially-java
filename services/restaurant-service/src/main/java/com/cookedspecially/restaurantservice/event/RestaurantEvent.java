@@ -2,10 +2,6 @@ package com.cookedspecially.restaurantservice.event;
 
 import com.cookedspecially.restaurantservice.domain.Restaurant;
 import com.cookedspecially.restaurantservice.domain.RestaurantStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,10 +9,6 @@ import java.time.LocalDateTime;
 /**
  * Restaurant Event
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class RestaurantEvent {
 
     private String eventType;
@@ -46,22 +38,111 @@ public class RestaurantEvent {
         public static final String RATING_UPDATED = "RATING_UPDATED";
     }
 
+    // Getters and Setters
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public RestaurantStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(RestaurantStatus status) {
+        this.status = status;
+    }
+
+    public String getCuisineType() {
+        return cuisineType;
+    }
+
+    public void setCuisineType(String cuisineType) {
+        this.cuisineType = cuisineType;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
+
+    public BigDecimal getRating() {
+        return rating;
+    }
+
+    public void setRating(BigDecimal rating) {
+        this.rating = rating;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
     /**
      * Create event from restaurant entity
      */
     public static RestaurantEvent fromRestaurant(Restaurant restaurant, String eventType) {
-        return RestaurantEvent.builder()
-            .eventType(eventType)
-            .restaurantId(restaurant.getId())
-            .restaurantName(restaurant.getName())
-            .ownerId(restaurant.getOwnerId())
-            .status(restaurant.getStatus())
-            .cuisineType(restaurant.getCuisineType() != null ? restaurant.getCuisineType().name() : null)
-            .city(restaurant.getCity())
-            .latitude(restaurant.getLatitude())
-            .longitude(restaurant.getLongitude())
-            .rating(restaurant.getRating())
-            .timestamp(LocalDateTime.now())
-            .build();
+        RestaurantEvent event = new RestaurantEvent();
+        event.setEventType(eventType);
+        event.setRestaurantId(restaurant.getId());
+        event.setRestaurantName(restaurant.getName());
+        event.setOwnerId(restaurant.getOwnerId());
+        event.setStatus(restaurant.getStatus());
+        event.setCuisineType(restaurant.getCuisineType() != null ? restaurant.getCuisineType().name() : null);
+        event.setCity(restaurant.getCity());
+        event.setLatitude(restaurant.getLatitude());
+        event.setLongitude(restaurant.getLongitude());
+        event.setRating(restaurant.getRating());
+        event.setTimestamp(LocalDateTime.now());
+        return event;
     }
 }

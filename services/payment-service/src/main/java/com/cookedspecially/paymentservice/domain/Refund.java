@@ -1,10 +1,6 @@
 package com.cookedspecially.paymentservice.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -22,10 +18,6 @@ import java.time.LocalDateTime;
     @Index(name = "idx_payment_id", columnList = "paymentId"),
     @Index(name = "idx_status", columnList = "status")
 })
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Refund {
 
     @Id
@@ -66,6 +58,107 @@ public class Refund {
     private LocalDateTime updatedAt;
 
     private LocalDateTime completedAt;
+
+    // Constructors
+    public Refund() {
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getRefundNumber() {
+        return refundNumber;
+    }
+
+    public void setRefundNumber(String refundNumber) {
+        this.refundNumber = refundNumber;
+    }
+
+    public Long getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(Long paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public RefundStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(RefundStatus status) {
+        this.status = status;
+    }
+
+    public String getExternalRefundId() {
+        return externalRefundId;
+    }
+
+    public void setExternalRefundId(String externalRefundId) {
+        this.externalRefundId = externalRefundId;
+    }
+
+    public String getFailureReason() {
+        return failureReason;
+    }
+
+    public void setFailureReason(String failureReason) {
+        this.failureReason = failureReason;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
 
     public enum RefundStatus {
         PENDING,

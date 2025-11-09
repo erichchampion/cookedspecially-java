@@ -1,11 +1,13 @@
 package com.cookedspecially.paymentservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.paymentservice.dto.ErrorResponse;
 import com.cookedspecially.paymentservice.exception.PaymentNotFoundException;
 import com.cookedspecially.paymentservice.exception.PaymentProcessingException;
 import com.cookedspecially.paymentservice.exception.RefundException;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -20,8 +22,9 @@ import java.util.List;
  * Global Exception Handler for Payment Service
  */
 @RestControllerAdvice
-@Slf4j
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * Handle PaymentNotFoundException
@@ -97,20 +100,19 @@ public class GlobalExceptionHandler {
                 : error.getObjectName();
             String errorMessage = error.getDefaultMessage();
 
-            validationErrors.add(ErrorResponse.ValidationError.builder()
-                .field(fieldName)
-                .message(errorMessage)
-                .build());
+            ErrorResponse.ValidationError validationError = new ErrorResponse.ValidationError();
+            validationError.setField(fieldName);
+            validationError.setMessage(errorMessage);
+            validationErrors.add(validationError);
         });
 
-        ErrorResponse error = ErrorResponse.builder()
-            .timestamp(java.time.LocalDateTime.now())
-            .status(HttpStatus.BAD_REQUEST.value())
-            .error("Validation Error")
-            .message("Invalid request parameters")
-            .path(request.getRequestURI())
-            .validationErrors(validationErrors)
-            .build();
+        ErrorResponse error = new ErrorResponse();
+        error.setTimestamp(java.time.LocalDateTime.now());
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setError("Validation Error");
+        error.setMessage("Invalid request parameters");
+        error.setPath(request.getRequestURI());
+        error.setValidationErrors(validationErrors);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }

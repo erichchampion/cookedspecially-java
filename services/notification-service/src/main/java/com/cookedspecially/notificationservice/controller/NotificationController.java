@@ -1,5 +1,8 @@
 package com.cookedspecially.notificationservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.notificationservice.domain.NotificationStatus;
 import com.cookedspecially.notificationservice.dto.NotificationResponse;
 import com.cookedspecially.notificationservice.dto.SendNotificationRequest;
@@ -8,8 +11,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,18 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/v1/notifications")
-@RequiredArgsConstructor
-@Slf4j
 @Tag(name = "Notification", description = "Notification management APIs")
 @SecurityRequirement(name = "bearer-jwt")
 public class NotificationController {
 
+    private static final Logger log = LoggerFactory.getLogger(NotificationController.class);
+
     private final NotificationService notificationService;
+
+    // Constructor
+    public NotificationController(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
 
     /**
      * Send notification (admin only for manual sending)
@@ -42,7 +48,7 @@ public class NotificationController {
         @Valid @RequestBody SendNotificationRequest request
     ) {
         log.info("Sending {} notification to user {} via {}",
-            request.getType(), request.getUserId(), request.getChannel());
+            request.type(), request.userId(), request.channel());
 
         NotificationResponse response = notificationService.sendNotification(request);
 

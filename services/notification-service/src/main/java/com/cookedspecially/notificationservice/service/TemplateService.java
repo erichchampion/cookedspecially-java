@@ -1,12 +1,13 @@
 package com.cookedspecially.notificationservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.notificationservice.domain.NotificationChannel;
 import com.cookedspecially.notificationservice.domain.NotificationTemplate;
 import com.cookedspecially.notificationservice.domain.NotificationType;
 import com.cookedspecially.notificationservice.exception.TemplateNotFoundException;
 import com.cookedspecially.notificationservice.repository.NotificationTemplateRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringSubstitutor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,17 @@ import java.util.Map;
  * Template Service for processing notification templates
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class TemplateService {
 
+    private static final Logger log = LoggerFactory.getLogger(TemplateService.class);
+
     private final NotificationTemplateRepository templateRepository;
+
+    // Constructor
+    public TemplateService(NotificationTemplateRepository templateRepository, TemplateEngine templateEngine) {
+        this.templateRepository = templateRepository;
+        this.templateEngine = templateEngine;
+    }
     private final TemplateEngine templateEngine;
 
     /**
@@ -36,7 +43,7 @@ public class TemplateService {
         NotificationTemplate template = templateRepository.findByTemplateKey(templateKey)
             .orElseThrow(() -> new TemplateNotFoundException(templateKey));
 
-        if (!template.getIsActive()) {
+        if (!template.isIsActive()) {
             throw new TemplateNotFoundException(templateKey + " (inactive)");
         }
 

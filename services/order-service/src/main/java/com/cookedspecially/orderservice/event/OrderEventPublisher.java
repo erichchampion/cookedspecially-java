@@ -1,11 +1,12 @@
 package com.cookedspecially.orderservice.event;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.orderservice.domain.Order;
 import com.cookedspecially.orderservice.domain.OrderStatus;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -22,11 +23,17 @@ import java.util.UUID;
  * Publishes order lifecycle events to AWS SNS topics
  */
 @Component
-@Slf4j
-@RequiredArgsConstructor
 public class OrderEventPublisher {
 
+    private static final Logger log = LoggerFactory.getLogger(OrderEventPublisher.class);
+
     private final SnsClient snsClient;
+
+    // Constructor
+    public OrderEventPublisher(SnsClient snsClient, ObjectMapper objectMapper) {
+        this.snsClient = snsClient;
+        this.objectMapper = objectMapper;
+    }
     private final ObjectMapper objectMapper;
 
     @Value("${aws.sns.order-events-topic-arn}")
@@ -39,17 +46,16 @@ public class OrderEventPublisher {
     public void publishOrderCreated(Order order) {
         log.info("Publishing ORDER_CREATED event for order: {}", order.getOrderNumber());
 
-        OrderEvent event = OrderEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(OrderEvent.OrderEventType.ORDER_CREATED)
-            .timestamp(LocalDateTime.now())
-            .orderId(order.getId())
-            .orderNumber(order.getOrderNumber())
-            .customerId(order.getCustomerId())
-            .restaurantId(order.getRestaurantId())
-            .status(order.getStatus())
-            .totalAmount(order.getTotalAmount())
-            .build();
+        OrderEvent event = new OrderEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(OrderEvent.OrderEventType.ORDER_CREATED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setOrderId(order.getId());
+        event.setOrderNumber(order.getOrderNumber());
+        event.setCustomerId(order.getCustomerId());
+        event.setRestaurantId(order.getRestaurantId());
+        event.setStatus(order.getStatus());
+        event.setTotalAmount(order.getTotalAmount());
 
         publishEvent(event, "OrderCreated");
     }
@@ -62,18 +68,17 @@ public class OrderEventPublisher {
         log.info("Publishing ORDER_STATUS_CHANGED event for order: {} ({} -> {})",
             order.getOrderNumber(), oldStatus, newStatus);
 
-        OrderEvent event = OrderEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(OrderEvent.OrderEventType.ORDER_STATUS_CHANGED)
-            .timestamp(LocalDateTime.now())
-            .orderId(order.getId())
-            .orderNumber(order.getOrderNumber())
-            .customerId(order.getCustomerId())
-            .restaurantId(order.getRestaurantId())
-            .status(newStatus)
-            .previousStatus(oldStatus)
-            .totalAmount(order.getTotalAmount())
-            .build();
+        OrderEvent event = new OrderEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(OrderEvent.OrderEventType.ORDER_STATUS_CHANGED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setOrderId(order.getId());
+        event.setOrderNumber(order.getOrderNumber());
+        event.setCustomerId(order.getCustomerId());
+        event.setRestaurantId(order.getRestaurantId());
+        event.setStatus(newStatus);
+        event.setPreviousStatus(oldStatus);
+        event.setTotalAmount(order.getTotalAmount());
 
         publishEvent(event, "OrderStatusChanged");
 
@@ -92,17 +97,16 @@ public class OrderEventPublisher {
     public void publishOrderConfirmed(Order order) {
         log.info("Publishing ORDER_CONFIRMED event for order: {}", order.getOrderNumber());
 
-        OrderEvent event = OrderEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(OrderEvent.OrderEventType.ORDER_CONFIRMED)
-            .timestamp(LocalDateTime.now())
-            .orderId(order.getId())
-            .orderNumber(order.getOrderNumber())
-            .customerId(order.getCustomerId())
-            .restaurantId(order.getRestaurantId())
-            .status(order.getStatus())
-            .totalAmount(order.getTotalAmount())
-            .build();
+        OrderEvent event = new OrderEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(OrderEvent.OrderEventType.ORDER_CONFIRMED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setOrderId(order.getId());
+        event.setOrderNumber(order.getOrderNumber());
+        event.setCustomerId(order.getCustomerId());
+        event.setRestaurantId(order.getRestaurantId());
+        event.setStatus(order.getStatus());
+        event.setTotalAmount(order.getTotalAmount());
 
         publishEvent(event, "OrderConfirmed");
     }
@@ -114,18 +118,17 @@ public class OrderEventPublisher {
     public void publishOrderCancelled(Order order, String reason) {
         log.info("Publishing ORDER_CANCELLED event for order: {}", order.getOrderNumber());
 
-        OrderEvent event = OrderEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(OrderEvent.OrderEventType.ORDER_CANCELLED)
-            .timestamp(LocalDateTime.now())
-            .orderId(order.getId())
-            .orderNumber(order.getOrderNumber())
-            .customerId(order.getCustomerId())
-            .restaurantId(order.getRestaurantId())
-            .status(order.getStatus())
-            .totalAmount(order.getTotalAmount())
-            .cancellationReason(reason)
-            .build();
+        OrderEvent event = new OrderEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(OrderEvent.OrderEventType.ORDER_CANCELLED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setOrderId(order.getId());
+        event.setOrderNumber(order.getOrderNumber());
+        event.setCustomerId(order.getCustomerId());
+        event.setRestaurantId(order.getRestaurantId());
+        event.setStatus(order.getStatus());
+        event.setTotalAmount(order.getTotalAmount());
+        event.setCancellationReason(reason);
 
         publishEvent(event, "OrderCancelled");
     }
@@ -137,17 +140,16 @@ public class OrderEventPublisher {
     public void publishOrderDelivered(Order order) {
         log.info("Publishing ORDER_DELIVERED event for order: {}", order.getOrderNumber());
 
-        OrderEvent event = OrderEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(OrderEvent.OrderEventType.ORDER_DELIVERED)
-            .timestamp(LocalDateTime.now())
-            .orderId(order.getId())
-            .orderNumber(order.getOrderNumber())
-            .customerId(order.getCustomerId())
-            .restaurantId(order.getRestaurantId())
-            .status(order.getStatus())
-            .totalAmount(order.getTotalAmount())
-            .build();
+        OrderEvent event = new OrderEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(OrderEvent.OrderEventType.ORDER_DELIVERED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setOrderId(order.getId());
+        event.setOrderNumber(order.getOrderNumber());
+        event.setCustomerId(order.getCustomerId());
+        event.setRestaurantId(order.getRestaurantId());
+        event.setStatus(order.getStatus());
+        event.setTotalAmount(order.getTotalAmount());
 
         publishEvent(event, "OrderDelivered");
     }
@@ -159,18 +161,17 @@ public class OrderEventPublisher {
     public void publishPaymentStatusChanged(Order order, String paymentStatus) {
         log.info("Publishing PAYMENT_STATUS_CHANGED event for order: {}", order.getOrderNumber());
 
-        OrderEvent event = OrderEvent.builder()
-            .eventId(UUID.randomUUID().toString())
-            .eventType(OrderEvent.OrderEventType.PAYMENT_STATUS_CHANGED)
-            .timestamp(LocalDateTime.now())
-            .orderId(order.getId())
-            .orderNumber(order.getOrderNumber())
-            .customerId(order.getCustomerId())
-            .restaurantId(order.getRestaurantId())
-            .status(order.getStatus())
-            .paymentStatus(paymentStatus)
-            .totalAmount(order.getTotalAmount())
-            .build();
+        OrderEvent event = new OrderEvent();
+        event.setEventId(UUID.randomUUID().toString());
+        event.setEventType(OrderEvent.OrderEventType.PAYMENT_STATUS_CHANGED);
+        event.setTimestamp(LocalDateTime.now());
+        event.setOrderId(order.getId());
+        event.setOrderNumber(order.getOrderNumber());
+        event.setCustomerId(order.getCustomerId());
+        event.setRestaurantId(order.getRestaurantId());
+        event.setStatus(order.getStatus());
+        event.setPaymentStatus(paymentStatus);
+        event.setTotalAmount(order.getTotalAmount());
 
         publishEvent(event, "PaymentStatusChanged");
     }

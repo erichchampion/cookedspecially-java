@@ -1,10 +1,6 @@
 package com.cookedspecially.notificationservice.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,10 +14,6 @@ import java.time.LocalDateTime;
 @Table(name = "notification_preferences", indexes = {
     @Index(name = "idx_user_id", columnList = "userId", unique = true)
 })
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class NotificationPreference {
 
     @Id
@@ -33,41 +25,32 @@ public class NotificationPreference {
 
     // Channel preferences
     @Column(nullable = false)
-    @Builder.Default
     private Boolean emailEnabled = true;
 
     @Column(nullable = false)
-    @Builder.Default
     private Boolean smsEnabled = true;
 
     @Column(nullable = false)
-    @Builder.Default
     private Boolean pushEnabled = true;
 
     @Column(nullable = false)
-    @Builder.Default
     private Boolean inAppEnabled = true;
 
     // Type preferences
     @Column(nullable = false)
-    @Builder.Default
     private Boolean orderNotifications = true;
 
     @Column(nullable = false)
-    @Builder.Default
     private Boolean paymentNotifications = true;
 
     @Column(nullable = false)
-    @Builder.Default
     private Boolean restaurantNotifications = true;
 
     @Column(nullable = false)
-    @Builder.Default
     private Boolean promotionalNotifications = false;  // Opt-in for marketing
 
     // Quiet hours
     @Column(nullable = false)
-    @Builder.Default
     private Boolean quietHoursEnabled = false;
 
     @Column(length = 5)
@@ -92,7 +75,6 @@ public class NotificationPreference {
 
     // Locale preference
     @Column(length = 10)
-    @Builder.Default
     private String locale = "en";
 
     @CreationTimestamp
@@ -102,6 +84,249 @@ public class NotificationPreference {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    // Constructors
+    public NotificationPreference() {
+    }
+
+    public NotificationPreference(Long id,
+                 Long userId,
+                 Boolean emailEnabled,
+                 Boolean smsEnabled,
+                 Boolean pushEnabled,
+                 Boolean inAppEnabled,
+                 Boolean orderNotifications,
+                 Boolean paymentNotifications,
+                 Boolean restaurantNotifications,
+                 Boolean promotionalNotifications,
+                 Boolean quietHoursEnabled,
+                 String quietHoursStart,
+                 String quietHoursEnd,
+                 String emailAddress,
+                 String phoneNumber,
+                 String androidDeviceToken,
+                 String iosDeviceToken,
+                 String locale,
+                 LocalDateTime createdAt,
+                 LocalDateTime updatedAt) {
+        this.id = id;
+        this.userId = userId;
+        this.emailEnabled = emailEnabled != null ? emailEnabled : true;
+        this.smsEnabled = smsEnabled != null ? smsEnabled : true;
+        this.pushEnabled = pushEnabled != null ? pushEnabled : true;
+        this.inAppEnabled = inAppEnabled != null ? inAppEnabled : true;
+        this.orderNotifications = orderNotifications != null ? orderNotifications : true;
+        this.paymentNotifications = paymentNotifications != null ? paymentNotifications : true;
+        this.restaurantNotifications = restaurantNotifications != null ? restaurantNotifications : true;
+        this.promotionalNotifications = promotionalNotifications != null ? promotionalNotifications : false;
+        this.quietHoursEnabled = quietHoursEnabled != null ? quietHoursEnabled : false;
+        this.quietHoursStart = quietHoursStart;
+        this.quietHoursEnd = quietHoursEnd;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+        this.androidDeviceToken = androidDeviceToken;
+        this.iosDeviceToken = iosDeviceToken;
+        this.locale = locale != null ? locale : "en";
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Boolean isEmailEnabled() {
+        return emailEnabled;
+    }
+
+    public Boolean getEmailEnabled() {
+        return emailEnabled;
+    }
+
+    public void setEmailEnabled(Boolean emailEnabled) {
+        this.emailEnabled = emailEnabled;
+    }
+
+    public Boolean isSmsEnabled() {
+        return smsEnabled;
+    }
+
+    public Boolean getSmsEnabled() {
+        return smsEnabled;
+    }
+
+    public void setSmsEnabled(Boolean smsEnabled) {
+        this.smsEnabled = smsEnabled;
+    }
+
+    public Boolean isPushEnabled() {
+        return pushEnabled;
+    }
+
+    public Boolean getPushEnabled() {
+        return pushEnabled;
+    }
+
+    public void setPushEnabled(Boolean pushEnabled) {
+        this.pushEnabled = pushEnabled;
+    }
+
+    public Boolean isInAppEnabled() {
+        return inAppEnabled;
+    }
+
+    public Boolean getInAppEnabled() {
+        return inAppEnabled;
+    }
+
+    public void setInAppEnabled(Boolean inAppEnabled) {
+        this.inAppEnabled = inAppEnabled;
+    }
+
+    public Boolean isOrderNotifications() {
+        return orderNotifications;
+    }
+
+    public Boolean getOrderNotifications() {
+        return orderNotifications;
+    }
+
+    public void setOrderNotifications(Boolean orderNotifications) {
+        this.orderNotifications = orderNotifications;
+    }
+
+    public Boolean isPaymentNotifications() {
+        return paymentNotifications;
+    }
+
+    public Boolean getPaymentNotifications() {
+        return paymentNotifications;
+    }
+
+    public void setPaymentNotifications(Boolean paymentNotifications) {
+        this.paymentNotifications = paymentNotifications;
+    }
+
+    public Boolean isRestaurantNotifications() {
+        return restaurantNotifications;
+    }
+
+    public Boolean getRestaurantNotifications() {
+        return restaurantNotifications;
+    }
+
+    public void setRestaurantNotifications(Boolean restaurantNotifications) {
+        this.restaurantNotifications = restaurantNotifications;
+    }
+
+    public Boolean isPromotionalNotifications() {
+        return promotionalNotifications;
+    }
+
+    public Boolean getPromotionalNotifications() {
+        return promotionalNotifications;
+    }
+
+    public void setPromotionalNotifications(Boolean promotionalNotifications) {
+        this.promotionalNotifications = promotionalNotifications;
+    }
+
+    public Boolean isQuietHoursEnabled() {
+        return quietHoursEnabled;
+    }
+
+    public Boolean getQuietHoursEnabled() {
+        return quietHoursEnabled;
+    }
+
+    public void setQuietHoursEnabled(Boolean quietHoursEnabled) {
+        this.quietHoursEnabled = quietHoursEnabled;
+    }
+
+    public String getQuietHoursStart() {
+        return quietHoursStart;
+    }
+
+    public void setQuietHoursStart(String quietHoursStart) {
+        this.quietHoursStart = quietHoursStart;
+    }
+
+    public String getQuietHoursEnd() {
+        return quietHoursEnd;
+    }
+
+    public void setQuietHoursEnd(String quietHoursEnd) {
+        this.quietHoursEnd = quietHoursEnd;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAndroidDeviceToken() {
+        return androidDeviceToken;
+    }
+
+    public void setAndroidDeviceToken(String androidDeviceToken) {
+        this.androidDeviceToken = androidDeviceToken;
+    }
+
+    public String getIosDeviceToken() {
+        return iosDeviceToken;
+    }
+
+    public void setIosDeviceToken(String iosDeviceToken) {
+        this.iosDeviceToken = iosDeviceToken;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     /**
      * Check if user can receive notification on channel

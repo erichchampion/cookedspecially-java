@@ -2,10 +2,6 @@ package com.cookedspecially.orderservice.event;
 
 import com.cookedspecially.orderservice.domain.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,10 +11,6 @@ import java.time.LocalDateTime;
  *
  * Published to SNS/SQS when order lifecycle events occur
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class OrderEvent {
 
     @JsonProperty("event_id")
@@ -56,6 +48,107 @@ public class OrderEvent {
 
     @JsonProperty("payment_status")
     private String paymentStatus;
+
+    // Constructors
+    public OrderEvent() {
+    }
+
+    // Getters and Setters
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
+    public OrderEventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(OrderEventType eventType) {
+        this.eventType = eventType;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public OrderStatus getPreviousStatus() {
+        return previousStatus;
+    }
+
+    public void setPreviousStatus(OrderStatus previousStatus) {
+        this.previousStatus = previousStatus;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getCancellationReason() {
+        return cancellationReason;
+    }
+
+    public void setCancellationReason(String cancellationReason) {
+        this.cancellationReason = cancellationReason;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
     public enum OrderEventType {
         ORDER_CREATED,

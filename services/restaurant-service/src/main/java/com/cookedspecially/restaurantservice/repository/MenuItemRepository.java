@@ -22,9 +22,19 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
     List<MenuItem> findByRestaurantIdOrderByDisplayOrderAsc(Long restaurantId);
 
     /**
+     * Find menu items by restaurant ID with pagination
+     */
+    Page<MenuItem> findByRestaurantId(Long restaurantId, Pageable pageable);
+
+    /**
      * Find available menu items by restaurant ID
      */
     List<MenuItem> findByRestaurantIdAndIsAvailableTrueOrderByDisplayOrderAsc(Long restaurantId);
+
+    /**
+     * Find available menu items by restaurant ID with pagination
+     */
+    Page<MenuItem> findByRestaurantIdAndIsAvailableTrue(Long restaurantId, Pageable pageable);
 
     /**
      * Find menu items by category
@@ -33,14 +43,38 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
         Long restaurantId, String category);
 
     /**
+     * Find menu items by category with pagination
+     */
+    Page<MenuItem> findByRestaurantIdAndCategoryAndIsAvailableTrue(
+        Long restaurantId, String category, Pageable pageable);
+
+    /**
      * Find vegetarian menu items
      */
     List<MenuItem> findByRestaurantIdAndIsVegetarianTrueAndIsAvailableTrue(Long restaurantId);
 
     /**
+     * Find vegetarian menu items with pagination
+     */
+    Page<MenuItem> findByRestaurantIdAndIsVegetarianTrueAndIsAvailableTrue(
+        Long restaurantId, Pageable pageable);
+
+    /**
      * Find vegan menu items
      */
     List<MenuItem> findByRestaurantIdAndIsVeganTrueAndIsAvailableTrue(Long restaurantId);
+
+    /**
+     * Find vegan menu items with pagination
+     */
+    Page<MenuItem> findByRestaurantIdAndIsVeganTrueAndIsAvailableTrue(
+        Long restaurantId, Pageable pageable);
+
+    /**
+     * Find gluten-free menu items with pagination
+     */
+    Page<MenuItem> findByRestaurantIdAndIsGlutenFreeTrueAndIsAvailableTrue(
+        Long restaurantId, Pageable pageable);
 
     /**
      * Search menu items by name
@@ -52,6 +86,18 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
     List<MenuItem> searchByName(
         @Param("restaurantId") Long restaurantId,
         @Param("searchTerm") String searchTerm);
+
+    /**
+     * Search menu items by name with pagination
+     */
+    @Query("SELECT m FROM MenuItem m WHERE " +
+           "m.restaurant.id = :restaurantId AND " +
+           "LOWER(m.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) AND " +
+           "m.isAvailable = true")
+    Page<MenuItem> searchByName(
+        @Param("restaurantId") Long restaurantId,
+        @Param("searchTerm") String searchTerm,
+        Pageable pageable);
 
     /**
      * Count available items for restaurant

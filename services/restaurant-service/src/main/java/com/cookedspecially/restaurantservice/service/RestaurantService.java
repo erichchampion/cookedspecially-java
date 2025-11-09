@@ -1,5 +1,8 @@
 package com.cookedspecially.restaurantservice.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.restaurantservice.domain.CuisineType;
 import com.cookedspecially.restaurantservice.domain.Restaurant;
 import com.cookedspecially.restaurantservice.domain.RestaurantStatus;
@@ -11,8 +14,6 @@ import com.cookedspecially.restaurantservice.exception.InvalidRestaurantStateExc
 import com.cookedspecially.restaurantservice.exception.RestaurantNotFoundException;
 import com.cookedspecially.restaurantservice.exception.UnauthorizedAccessException;
 import com.cookedspecially.restaurantservice.repository.RestaurantRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -28,12 +29,19 @@ import java.util.stream.Collectors;
  * Restaurant Service
  */
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class RestaurantService {
+
+    private static final Logger log = LoggerFactory.getLogger(RestaurantService.class);
 
     private final RestaurantRepository restaurantRepository;
     private final RestaurantEventPublisher eventPublisher;
+
+    // Constructor
+    public RestaurantService(RestaurantRepository restaurantRepository,
+                 RestaurantEventPublisher eventPublisher) {
+        this.restaurantRepository = restaurantRepository;
+        this.eventPublisher = eventPublisher;
+    }
 
     /**
      * Create a new restaurant
@@ -43,30 +51,27 @@ public class RestaurantService {
     public RestaurantResponse createRestaurant(CreateRestaurantRequest request, Long ownerId) {
         log.info("Creating restaurant for owner: {}", ownerId);
 
-        Restaurant restaurant = Restaurant.builder()
-            .name(request.getName())
-            .ownerId(ownerId)
-            .description(request.getDescription())
-            .status(RestaurantStatus.PENDING_APPROVAL) // All new restaurants start pending
-            .cuisineType(request.getCuisineType())
-            .phoneNumber(request.getPhoneNumber())
-            .email(request.getEmail())
-            .address(request.getAddress())
-            .city(request.getCity())
-            .state(request.getState())
-            .zipCode(request.getZipCode())
-            .country(request.getCountry())
-            .latitude(request.getLatitude())
-            .longitude(request.getLongitude())
-            .imageUrl(request.getImageUrl())
-            .logoUrl(request.getLogoUrl())
-            .minimumOrderAmount(request.getMinimumOrderAmount())
-            .deliveryFee(request.getDeliveryFee())
-            .estimatedDeliveryTimeMinutes(request.getEstimatedDeliveryTimeMinutes())
-            .isActive(true)
-            .acceptsDelivery(request.getAcceptsDelivery())
-            .acceptsPickup(request.getAcceptsPickup())
-            .build();
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName(request.name());
+        restaurant.setOwnerId(ownerId);
+        restaurant.setDescription(request.description());
+        restaurant.setStatus(RestaurantStatus.PENDING_APPROVAL); // All new restaurants start pending
+        restaurant.setCuisineType(request.cuisineType());
+        restaurant.setPhoneNumber(request.phoneNumber());
+        restaurant.setEmail(request.email());
+        restaurant.setAddress(request.address());
+        restaurant.setCity(request.city());
+        restaurant.setState(request.state());
+        restaurant.setZipCode(request.zipCode());
+        restaurant.setCountry(request.country());
+        restaurant.setLatitude(request.latitude());
+        restaurant.setLongitude(request.longitude());
+        restaurant.setMinimumOrderAmount(request.minimumOrderAmount());
+        restaurant.setDeliveryFee(request.deliveryFee());
+        restaurant.setEstimatedDeliveryTimeMinutes(request.estimatedDeliveryTimeMinutes());
+        restaurant.setIsActive(true);
+        restaurant.setAcceptsDelivery(request.acceptsDelivery());
+        restaurant.setAcceptsPickup(request.acceptsPickup());
 
         Restaurant saved = restaurantRepository.save(restaurant);
         log.info("Created restaurant with ID: {}", saved.getId());
@@ -108,65 +113,65 @@ public class RestaurantService {
         }
 
         // Update fields if provided
-        if (request.getName() != null) {
-            restaurant.setName(request.getName());
+        if (request.name() != null) {
+            restaurant.setName(request.name());
         }
-        if (request.getDescription() != null) {
-            restaurant.setDescription(request.getDescription());
+        if (request.description() != null) {
+            restaurant.setDescription(request.description());
         }
-        if (request.getCuisineType() != null) {
-            restaurant.setCuisineType(request.getCuisineType());
+        if (request.cuisineType() != null) {
+            restaurant.setCuisineType(request.cuisineType());
         }
-        if (request.getPhoneNumber() != null) {
-            restaurant.setPhoneNumber(request.getPhoneNumber());
+        if (request.phoneNumber() != null) {
+            restaurant.setPhoneNumber(request.phoneNumber());
         }
-        if (request.getEmail() != null) {
-            restaurant.setEmail(request.getEmail());
+        if (request.email() != null) {
+            restaurant.setEmail(request.email());
         }
-        if (request.getAddress() != null) {
-            restaurant.setAddress(request.getAddress());
+        if (request.address() != null) {
+            restaurant.setAddress(request.address());
         }
-        if (request.getCity() != null) {
-            restaurant.setCity(request.getCity());
+        if (request.city() != null) {
+            restaurant.setCity(request.city());
         }
-        if (request.getState() != null) {
-            restaurant.setState(request.getState());
+        if (request.state() != null) {
+            restaurant.setState(request.state());
         }
-        if (request.getZipCode() != null) {
-            restaurant.setZipCode(request.getZipCode());
+        if (request.zipCode() != null) {
+            restaurant.setZipCode(request.zipCode());
         }
-        if (request.getCountry() != null) {
-            restaurant.setCountry(request.getCountry());
+        if (request.country() != null) {
+            restaurant.setCountry(request.country());
         }
-        if (request.getLatitude() != null) {
-            restaurant.setLatitude(request.getLatitude());
+        if (request.latitude() != null) {
+            restaurant.setLatitude(request.latitude());
         }
-        if (request.getLongitude() != null) {
-            restaurant.setLongitude(request.getLongitude());
+        if (request.longitude() != null) {
+            restaurant.setLongitude(request.longitude());
         }
-        if (request.getImageUrl() != null) {
-            restaurant.setImageUrl(request.getImageUrl());
+        if (request.imageUrl() != null) {
+            restaurant.setImageUrl(request.imageUrl());
         }
-        if (request.getLogoUrl() != null) {
-            restaurant.setLogoUrl(request.getLogoUrl());
+        if (request.logoUrl() != null) {
+            restaurant.setLogoUrl(request.logoUrl());
         }
-        if (request.getMinimumOrderAmount() != null) {
-            restaurant.setMinimumOrderAmount(request.getMinimumOrderAmount());
+        if (request.minimumOrderAmount() != null) {
+            restaurant.setMinimumOrderAmount(request.minimumOrderAmount());
         }
-        if (request.getDeliveryFee() != null) {
-            restaurant.setDeliveryFee(request.getDeliveryFee());
+        if (request.deliveryFee() != null) {
+            restaurant.setDeliveryFee(request.deliveryFee());
         }
-        if (request.getEstimatedDeliveryTimeMinutes() != null) {
-            restaurant.setEstimatedDeliveryTimeMinutes(request.getEstimatedDeliveryTimeMinutes());
+        if (request.estimatedDeliveryTimeMinutes() != null) {
+            restaurant.setEstimatedDeliveryTimeMinutes(request.estimatedDeliveryTimeMinutes());
         }
-        if (request.getIsActive() != null) {
-            restaurant.setIsActive(request.getIsActive());
+        if (request.isActive() != null) {
+            restaurant.setIsActive(request.isActive());
         }
-        if (request.getAcceptsDelivery() != null) {
-            restaurant.setAcceptsDelivery(request.getAcceptsDelivery());
+        if (request.acceptsDelivery() != null) {
+            restaurant.setAcceptsDelivery(request.acceptsDelivery());
         }
-        if (request.getAcceptsPickup() != null) {
-            restaurant.setAcceptsPickup(request.getAcceptsPickup());
+        if (request.acceptsPickup() != null) {
+            restaurant.setAcceptsPickup(request.acceptsPickup());
         }
 
         Restaurant updated = restaurantRepository.save(restaurant);

@@ -1,5 +1,8 @@
 package com.cookedspecially.orderservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.orderservice.domain.OrderStatus;
 import com.cookedspecially.orderservice.dto.*;
 import com.cookedspecially.orderservice.service.OrderService;
@@ -9,8 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -27,12 +28,17 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/orders")
-@RequiredArgsConstructor
-@Slf4j
 @Tag(name = "Orders", description = "Order management APIs")
 public class OrderController {
 
+    private static final Logger log = LoggerFactory.getLogger(OrderController.class);
+
     private final OrderService orderService;
+
+    // Constructor
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     /**
      * Create a new order
@@ -46,7 +52,7 @@ public class OrderController {
     })
     public ResponseEntity<OrderResponse> createOrder(
             @Valid @RequestBody CreateOrderRequest request) {
-        log.info("POST /api/orders - Creating order for customer: {}", request.getCustomerId());
+        log.info("POST /api/orders - Creating order for customer: {}", request.customerId());
         OrderResponse response = orderService.createOrder(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -157,8 +163,8 @@ public class OrderController {
     public ResponseEntity<OrderResponse> updateOrderStatus(
             @Parameter(description = "Order ID") @PathVariable Long orderId,
             @Valid @RequestBody UpdateOrderStatusRequest request) {
-        log.info("PATCH /api/orders/{}/status - Updating to {}", orderId, request.getStatus());
-        OrderResponse response = orderService.updateOrderStatus(orderId, request.getStatus());
+        log.info("PATCH /api/orders/{}/status - Updating to {}", orderId, request.status());
+        OrderResponse response = orderService.updateOrderStatus(orderId, request.status());
         return ResponseEntity.ok(response);
     }
 
@@ -261,7 +267,7 @@ public class OrderController {
             @Parameter(description = "Order ID") @PathVariable Long orderId,
             @Valid @RequestBody CancelOrderRequest request) {
         log.info("POST /api/orders/{}/cancel - Cancelling order", orderId);
-        OrderResponse response = orderService.cancelOrder(orderId, request.getReason());
+        OrderResponse response = orderService.cancelOrder(orderId, request.reason());
         return ResponseEntity.ok(response);
     }
 }

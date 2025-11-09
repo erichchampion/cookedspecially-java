@@ -1,5 +1,8 @@
 package com.cookedspecially.notificationservice.consumer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cookedspecially.notificationservice.domain.NotificationChannel;
 import com.cookedspecially.notificationservice.domain.NotificationPriority;
 import com.cookedspecially.notificationservice.domain.NotificationType;
@@ -7,8 +10,6 @@ import com.cookedspecially.notificationservice.dto.SendNotificationRequest;
 import com.cookedspecially.notificationservice.service.NotificationService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,13 +25,22 @@ import java.util.Map;
  * Consumes restaurant events from SQS and sends notifications
  */
 @Component
-@Slf4j
-@RequiredArgsConstructor
 public class RestaurantEventConsumer {
+
+    private static final Logger log = LoggerFactory.getLogger(RestaurantEventConsumer.class);
 
     private final SqsClient sqsClient;
     private final NotificationService notificationService;
     private final ObjectMapper objectMapper;
+
+    // Constructor
+    public RestaurantEventConsumer(SqsClient sqsClient,
+                 NotificationService notificationService,
+                 ObjectMapper objectMapper) {
+        this.sqsClient = sqsClient;
+        this.notificationService = notificationService;
+        this.objectMapper = objectMapper;
+    }
 
     @Value("${aws.sqs.restaurant-events-queue-url:}")
     private String queueUrl;
@@ -160,17 +170,19 @@ public class RestaurantEventConsumer {
         Map<String, Object> variables = new HashMap<>();
         variables.put("restaurantName", restaurantName);
 
-        SendNotificationRequest request = SendNotificationRequest.builder()
-            .userId(ownerId)
-            .type(NotificationType.MENU_UPDATED)
-            .channel(NotificationChannel.IN_APP)
-            .priority(NotificationPriority.LOW)
-            .subject("Menu Updated")
-            .content(String.format("Menu for %s has been updated successfully.", restaurantName))
-            .templateVariables(variables)
-            .relatedEntityType("RESTAURANT")
-            .relatedEntityId(restaurantId)
-            .build();
+        SendNotificationRequest request = new SendNotificationRequest(
+            ownerId,
+            NotificationType.MENU_UPDATED,
+            NotificationChannel.IN_APP,
+            NotificationPriority.LOW,
+            "Menu Updated",
+            String.format("Menu for %s has been updated successfully.", restaurantName),
+            null, // recipient
+            null, // templateId
+            variables,
+            "RESTAURANT",
+            restaurantId
+        );
 
         try {
             notificationService.sendNotification(request);
@@ -199,17 +211,19 @@ public class RestaurantEventConsumer {
     private void sendNotification(Long userId, NotificationType type, NotificationChannel channel,
                                    String subject, String content, Map<String, Object> variables, Long restaurantId) {
         try {
-            SendNotificationRequest request = SendNotificationRequest.builder()
-                .userId(userId)
-                .type(type)
-                .channel(channel)
-                .priority(NotificationPriority.MEDIUM)
-                .subject(subject)
-                .content(content)
-                .templateVariables(variables)
-                .relatedEntityType("RESTAURANT")
-                .relatedEntityId(restaurantId)
-                .build();
+            SendNotificationRequest request = new SendNotificationRequest(
+                userId,
+                type,
+                channel,
+                NotificationPriority.MEDIUM,
+                subject,
+                content,
+                null, // recipient
+                null, // templateId
+                variables,
+                "RESTAURANT",
+                restaurantId
+            );
 
             notificationService.sendNotification(request);
 
