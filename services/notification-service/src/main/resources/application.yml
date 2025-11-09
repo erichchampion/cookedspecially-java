@@ -1,0 +1,119 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: notification-service
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/notification_db?createDatabaseIfNotExist=true}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:rootpassword}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+      timeout: 3000ms
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000  # 10 minutes default
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI:http://localhost:8080/auth}
+
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+
+# AWS Configuration
+aws:
+  region: ${AWS_REGION:us-east-1}
+
+  # SES Configuration for Email
+  ses:
+    from-email: ${AWS_SES_FROM_EMAIL:notifications@cookedspecially.com}
+    from-name: ${AWS_SES_FROM_NAME:CookedSpecially}
+    reply-to-email: ${AWS_SES_REPLY_TO_EMAIL:support@cookedspecially.com}
+    configuration-set: ${AWS_SES_CONFIGURATION_SET:cookedspecially-notifications}
+
+  # SNS Configuration for SMS and Push
+  sns:
+    sms-sender-id: ${AWS_SNS_SMS_SENDER_ID:CookedSpec}
+    push-platform-application-arn-android: ${AWS_SNS_PUSH_ANDROID_ARN:}
+    push-platform-application-arn-ios: ${AWS_SNS_PUSH_IOS_ARN:}
+
+  # SQS Queues for Event Consumption
+  sqs:
+    order-events-queue-url: ${AWS_SQS_ORDER_EVENTS_QUEUE_URL:}
+    payment-events-queue-url: ${AWS_SQS_PAYMENT_EVENTS_QUEUE_URL:}
+    restaurant-events-queue-url: ${AWS_SQS_RESTAURANT_EVENTS_QUEUE_URL:}
+    max-messages: 10
+    wait-time-seconds: 20
+    visibility-timeout: 30
+
+# Notification Configuration
+notification:
+  # Rate limiting
+  rate-limit:
+    email-per-user-per-hour: 10
+    sms-per-user-per-hour: 5
+    push-per-user-per-hour: 20
+
+  # Retry configuration
+  retry:
+    max-attempts: 3
+    initial-delay-ms: 1000
+    max-delay-ms: 10000
+    multiplier: 2.0
+
+  # Template configuration
+  templates:
+    base-path: classpath:/templates/notifications/
+    cache-enabled: true
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  health:
+    redis:
+      enabled: true
+    db:
+      enabled: true
+
+# Logging
+logging:
+  level:
+    com.cookedspecially.notificationservice: INFO
+    org.springframework.security: INFO
+    software.amazon.awssdk: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"

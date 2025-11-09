@@ -1,0 +1,184 @@
+spring:
+  application:
+    name: payment-service
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  # Database Configuration
+  datasource:
+    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/cookedspecially_payments?useSSL=false&allowPublicKeyRetrieval=true}
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:10}
+      minimum-idle: 3
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+
+  # Redis Cache Configuration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000 # 10 minutes for payment methods
+
+# Server Configuration
+server:
+  port: ${SERVER_PORT:8082}
+  compression:
+    enabled: true
+  error:
+    include-message: always
+
+# Management & Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+  metrics:
+    export:
+      cloudwatch:
+        namespace: CookedSpecially/PaymentService
+        enabled: ${CLOUDWATCH_METRICS_ENABLED:false}
+    tags:
+      service: payment-service
+
+# Logging
+logging:
+  level:
+    root: INFO
+    com.cookedspecially.paymentservice: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# AWS Configuration
+aws:
+  region: ${AWS_REGION:us-east-1}
+  endpoint-override: ${AWS_ENDPOINT_OVERRIDE:}
+
+  sns:
+    enabled: ${AWS_SNS_ENABLED:false}
+    payment-events-topic-arn: ${AWS_SNS_PAYMENT_EVENTS_TOPIC_ARN:arn:aws:sns:us-east-1:123456789012:cookedspecially-dev-payment-events}
+
+  sqs:
+    enabled: ${AWS_SQS_ENABLED:false}
+    order-events-queue-url: ${AWS_SQS_ORDER_EVENTS_QUEUE_URL:}
+
+  dynamodb:
+    enabled: ${AWS_DYNAMODB_ENABLED:false}
+    table-name:
+      payment-transactions: ${AWS_DYNAMODB_TABLE_PAYMENT_TRANSACTIONS:cookedspecially-dev-payment-transactions}
+
+  secrets:
+    stripe-api-key: ${AWS_SECRETS_STRIPE_API_KEY:cookedspecially/dev/stripe-api-key}
+
+# Payment Service Configuration
+payment-service:
+  stripe:
+    enabled: ${STRIPE_ENABLED:true}
+    api-key: ${STRIPE_API_KEY:sk_test_dummy}
+    webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+
+  paypal:
+    enabled: ${PAYPAL_ENABLED:false}
+    client-id: ${PAYPAL_CLIENT_ID:}
+    client-secret: ${PAYPAL_CLIENT_SECRET:}
+
+  refund:
+    auto-refund-timeout-hours: 24
+    max-refund-amount: 10000.00
+
+  retry:
+    max-attempts: 3
+    backoff-delay-ms: 1000
+
+# Resilience4j Circuit Breaker
+resilience4j:
+  circuitbreaker:
+    instances:
+      stripe:
+        register-health-indicator: true
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30000
+      paypal:
+        register-health-indicator: true
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30000
+
+  retry:
+    instances:
+      payment-processing:
+        max-attempts: 3
+        wait-duration: 1000
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+
+# OpenAPI/Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  show-actuator: true
+
+---
+# Development Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    root: DEBUG
+    com.cookedspecially.paymentservice: DEBUG
+    com.stripe: DEBUG
+
+---
+# Production Profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    root: WARN
+    com.cookedspecially.paymentservice: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
