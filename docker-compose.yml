@@ -193,6 +193,42 @@ services:
       retries: 3
       start_period: 40s
 
+  # Customer Service
+  customer-service:
+    build:
+      context: ./services/customer-service
+      dockerfile: Dockerfile
+    container_name: cookedspecially-customer-service
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/cookedspecially_customers
+      - SPRING_DATASOURCE_USERNAME=cookeduser
+      - SPRING_DATASOURCE_PASSWORD=cookedpass
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - AWS_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - JWT_ISSUER_URI=https://cognito-idp.us-east-1.amazonaws.com/us-east-1_EXAMPLE
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      localstack:
+        condition: service_started
+    networks:
+      - cookedspecially-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8085/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
 volumes:
   mysql_data:
     driver: local
