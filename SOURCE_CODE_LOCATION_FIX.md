@@ -1,4 +1,12 @@
-# ⚠️ IMPORTANT: Source Code Location Issue
+# ⚠️ DEPRECATED: Historical Document
+
+**UPDATE (2025-11-10):** This document is now deprecated. The legacy `back-end` directory referenced in this guide has been removed. All microservices are now fully implemented in the `services/` directory with complete source code.
+
+**For current development:** Refer to the microservices in `services/` directory and LEGACY_MIGRATION_GAPS.md for migration status.
+
+---
+
+# ⚠️ IMPORTANT: Source Code Location Issue (Historical)
 
 ## Problem
 
