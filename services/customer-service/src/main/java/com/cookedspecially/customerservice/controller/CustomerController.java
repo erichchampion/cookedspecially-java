@@ -9,8 +9,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -27,13 +27,17 @@ import java.math.BigDecimal;
  */
 @RestController
 @RequestMapping("/api/v1/customers")
-@RequiredArgsConstructor
-@Slf4j
 @Tag(name = "Customer", description = "Customer management APIs")
 @SecurityRequirement(name = "bearer-jwt")
 public class CustomerController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+
     private final CustomerService customerService;
+
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     /**
      * Create a new customer
@@ -41,7 +45,7 @@ public class CustomerController {
     @PostMapping
     @Operation(summary = "Create customer", description = "Register a new customer account")
     public ResponseEntity<CustomerResponse> createCustomer(@Valid @RequestBody CreateCustomerRequest request) {
-        log.info("Creating customer with email: {}", request.getEmail());
+        logger.info("Creating customer with email: {}", request.getEmail());
         CustomerResponse response = customerService.createCustomer(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -53,7 +57,7 @@ public class CustomerController {
     @Operation(summary = "Get my profile", description = "Get current customer's profile")
     public ResponseEntity<CustomerResponse> getMyProfile(@AuthenticationPrincipal Jwt jwt) {
         String cognitoSub = jwt.getSubject();
-        log.info("Fetching profile for Cognito sub: {}", cognitoSub);
+        logger.info("Fetching profile for Cognito sub: {}", cognitoSub);
         CustomerResponse response = customerService.getCustomerByCognitoSub(cognitoSub);
         return ResponseEntity.ok(response);
     }
@@ -65,7 +69,7 @@ public class CustomerController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('RESTAURANT_OWNER')")
     @Operation(summary = "Get customer by ID", description = "Get customer details by ID (admin/owner only)")
     public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable Long id) {
-        log.info("Fetching customer: {}", id);
+        logger.info("Fetching customer: {}", id);
         CustomerResponse response = customerService.getCustomerById(id);
         return ResponseEntity.ok(response);
     }
@@ -80,7 +84,7 @@ public class CustomerController {
             @PathVariable Long id,
             @Valid @RequestBody UpdateCustomerRequest request
     ) {
-        log.info("Updating customer: {}", id);
+        logger.info("Updating customer: {}", id);
         CustomerResponse response = customerService.updateCustomer(id, request);
         return ResponseEntity.ok(response);
     }
@@ -92,7 +96,7 @@ public class CustomerController {
     @PreAuthorize("#id == authentication.principal.claims['customer_id'] or hasRole('ADMIN')")
     @Operation(summary = "Delete customer", description = "Delete customer account (soft delete)")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
-        log.info("Deleting customer: {}", id);
+        logger.info("Deleting customer: {}", id);
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
     }
@@ -103,7 +107,7 @@ public class CustomerController {
     @PostMapping("/{id}/verify-email")
     @Operation(summary = "Verify email", description = "Verify customer email address")
     public ResponseEntity<Void> verifyEmail(@PathVariable Long id) {
-        log.info("Verifying email for customer: {}", id);
+        logger.info("Verifying email for customer: {}", id);
         customerService.verifyEmail(id);
         return ResponseEntity.ok().build();
     }
@@ -118,7 +122,7 @@ public class CustomerController {
             @PathVariable Long id,
             @RequestParam CustomerStatus status
     ) {
-        log.info("Updating status for customer {}: {}", id, status);
+        logger.info("Updating status for customer {}: {}", id, status);
         CustomerResponse response = customerService.updateStatus(id, status);
         return ResponseEntity.ok(response);
     }
@@ -133,7 +137,7 @@ public class CustomerController {
             @PathVariable Long id,
             @RequestParam int points
     ) {
-        log.info("Adding {} loyalty points to customer: {}", points, id);
+        logger.info("Adding {} loyalty points to customer: {}", points, id);
         customerService.addLoyaltyPoints(id, points);
         return ResponseEntity.ok().build();
     }
@@ -148,7 +152,7 @@ public class CustomerController {
             @PathVariable Long id,
             @RequestParam BigDecimal amount
     ) {
-        log.info("Adding {} credit to customer: {}", amount, id);
+        logger.info("Adding {} credit to customer: {}", amount, id);
         customerService.addCredit(id, amount);
         return ResponseEntity.ok().build();
     }
@@ -163,7 +167,7 @@ public class CustomerController {
             @PathVariable Long id,
             @RequestParam BigDecimal amount
     ) {
-        log.info("Deducting {} credit from customer: {}", amount, id);
+        logger.info("Deducting {} credit from customer: {}", amount, id);
         customerService.deductCredit(id, amount);
         return ResponseEntity.ok().build();
     }
@@ -178,7 +182,7 @@ public class CustomerController {
             @PathVariable Long id,
             @RequestParam BigDecimal amount
     ) {
-        log.info("Updating order stats for customer: {}, amount: {}", id, amount);
+        logger.info("Updating order stats for customer: {}, amount: {}", id, amount);
         customerService.updateOrderStats(id, amount);
         return ResponseEntity.ok().build();
     }
@@ -190,7 +194,7 @@ public class CustomerController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Get all customers", description = "Get all customers (admin only)")
     public ResponseEntity<Page<CustomerResponse>> getAllCustomers(Pageable pageable) {
-        log.info("Fetching all customers, page: {}", pageable.getPageNumber());
+        logger.info("Fetching all customers, page: {}", pageable.getPageNumber());
         Page<CustomerResponse> customers = customerService.getAllCustomers(pageable);
         return ResponseEntity.ok(customers);
     }
@@ -205,7 +209,7 @@ public class CustomerController {
             @RequestParam String query,
             Pageable pageable
     ) {
-        log.info("Searching customers: {}", query);
+        logger.info("Searching customers: {}", query);
         Page<CustomerResponse> customers = customerService.searchCustomers(query, pageable);
         return ResponseEntity.ok(customers);
     }
@@ -220,7 +224,7 @@ public class CustomerController {
             @PathVariable CustomerStatus status,
             Pageable pageable
     ) {
-        log.info("Fetching customers with status: {}", status);
+        logger.info("Fetching customers with status: {}", status);
         Page<CustomerResponse> customers = customerService.getCustomersByStatus(status, pageable);
         return ResponseEntity.ok(customers);
     }

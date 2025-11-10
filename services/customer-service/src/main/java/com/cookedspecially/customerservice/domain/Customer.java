@@ -1,10 +1,6 @@
 package com.cookedspecially.customerservice.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Customer entity
@@ -24,10 +21,6 @@ import java.util.List;
     @Index(name = "idx_cognito_sub", columnList = "cognito_sub"),
     @Index(name = "idx_status", columnList = "status")
 })
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Customer {
 
     @Id
@@ -60,38 +53,30 @@ public class Customer {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    @Builder.Default
     private CustomerStatus status = CustomerStatus.PENDING_VERIFICATION;
 
     // Loyalty and credits
     @Column(name = "loyalty_points")
-    @Builder.Default
     private Integer loyaltyPoints = 0;
 
     @Column(name = "account_credit", precision = 10, scale = 2)
-    @Builder.Default
     private BigDecimal accountCredit = BigDecimal.ZERO;
 
     // Preferences
     @Column(name = "email_notifications")
-    @Builder.Default
     private Boolean emailNotifications = true;
 
     @Column(name = "sms_notifications")
-    @Builder.Default
     private Boolean smsNotifications = true;
 
     @Column(name = "push_notifications")
-    @Builder.Default
     private Boolean pushNotifications = true;
 
     @Column(name = "marketing_emails")
-    @Builder.Default
     private Boolean marketingEmails = false;
 
     // Addresses
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
     // Preferences
@@ -100,11 +85,9 @@ public class Customer {
 
     // Statistics
     @Column(name = "total_orders")
-    @Builder.Default
     private Integer totalOrders = 0;
 
     @Column(name = "total_spent", precision = 10, scale = 2)
-    @Builder.Default
     private BigDecimal totalSpent = BigDecimal.ZERO;
 
     @Column(name = "last_order_date")
@@ -112,11 +95,9 @@ public class Customer {
 
     // Verification
     @Column(name = "email_verified")
-    @Builder.Default
     private Boolean emailVerified = false;
 
     @Column(name = "phone_verified")
-    @Builder.Default
     private Boolean phoneVerified = false;
 
     // Audit fields
@@ -130,6 +111,255 @@ public class Customer {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    // Constructors
+    public Customer() {
+    }
+
+    public Customer(Long id, String cognitoSub, String email, String phoneNumber, String firstName,
+                   String lastName, LocalDate dateOfBirth, String gender, String profileImageUrl,
+                   CustomerStatus status, Integer loyaltyPoints, BigDecimal accountCredit,
+                   Boolean emailNotifications, Boolean smsNotifications, Boolean pushNotifications,
+                   Boolean marketingEmails, List<Address> addresses, CustomerPreference preferences,
+                   Integer totalOrders, BigDecimal totalSpent, LocalDateTime lastOrderDate,
+                   Boolean emailVerified, Boolean phoneVerified, LocalDateTime createdAt,
+                   LocalDateTime updatedAt, LocalDateTime deletedAt) {
+        this.id = id;
+        this.cognitoSub = cognitoSub;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.profileImageUrl = profileImageUrl;
+        this.status = status != null ? status : CustomerStatus.PENDING_VERIFICATION;
+        this.loyaltyPoints = loyaltyPoints != null ? loyaltyPoints : 0;
+        this.accountCredit = accountCredit != null ? accountCredit : BigDecimal.ZERO;
+        this.emailNotifications = emailNotifications != null ? emailNotifications : true;
+        this.smsNotifications = smsNotifications != null ? smsNotifications : true;
+        this.pushNotifications = pushNotifications != null ? pushNotifications : true;
+        this.marketingEmails = marketingEmails != null ? marketingEmails : false;
+        this.addresses = addresses != null ? addresses : new ArrayList<>();
+        this.preferences = preferences;
+        this.totalOrders = totalOrders != null ? totalOrders : 0;
+        this.totalSpent = totalSpent != null ? totalSpent : BigDecimal.ZERO;
+        this.lastOrderDate = lastOrderDate;
+        this.emailVerified = emailVerified != null ? emailVerified : false;
+        this.phoneVerified = phoneVerified != null ? phoneVerified : false;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCognitoSub() {
+        return cognitoSub;
+    }
+
+    public void setCognitoSub(String cognitoSub) {
+        this.cognitoSub = cognitoSub;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public CustomerStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CustomerStatus status) {
+        this.status = status;
+    }
+
+    public Integer getLoyaltyPoints() {
+        return loyaltyPoints;
+    }
+
+    public void setLoyaltyPoints(Integer loyaltyPoints) {
+        this.loyaltyPoints = loyaltyPoints;
+    }
+
+    public BigDecimal getAccountCredit() {
+        return accountCredit;
+    }
+
+    public void setAccountCredit(BigDecimal accountCredit) {
+        this.accountCredit = accountCredit;
+    }
+
+    public Boolean getEmailNotifications() {
+        return emailNotifications;
+    }
+
+    public void setEmailNotifications(Boolean emailNotifications) {
+        this.emailNotifications = emailNotifications;
+    }
+
+    public Boolean getSmsNotifications() {
+        return smsNotifications;
+    }
+
+    public void setSmsNotifications(Boolean smsNotifications) {
+        this.smsNotifications = smsNotifications;
+    }
+
+    public Boolean getPushNotifications() {
+        return pushNotifications;
+    }
+
+    public void setPushNotifications(Boolean pushNotifications) {
+        this.pushNotifications = pushNotifications;
+    }
+
+    public Boolean getMarketingEmails() {
+        return marketingEmails;
+    }
+
+    public void setMarketingEmails(Boolean marketingEmails) {
+        this.marketingEmails = marketingEmails;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public CustomerPreference getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(CustomerPreference preferences) {
+        this.preferences = preferences;
+    }
+
+    public Integer getTotalOrders() {
+        return totalOrders;
+    }
+
+    public void setTotalOrders(Integer totalOrders) {
+        this.totalOrders = totalOrders;
+    }
+
+    public BigDecimal getTotalSpent() {
+        return totalSpent;
+    }
+
+    public void setTotalSpent(BigDecimal totalSpent) {
+        this.totalSpent = totalSpent;
+    }
+
+    public LocalDateTime getLastOrderDate() {
+        return lastOrderDate;
+    }
+
+    public void setLastOrderDate(LocalDateTime lastOrderDate) {
+        this.lastOrderDate = lastOrderDate;
+    }
+
+    public Boolean getEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public Boolean getPhoneVerified() {
+        return phoneVerified;
+    }
+
+    public void setPhoneVerified(Boolean phoneVerified) {
+        this.phoneVerified = phoneVerified;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
 
     // Helper methods
     public void addAddress(Address address) {
@@ -170,5 +400,210 @@ public class Customer {
 
     public boolean isVerified() {
         return Boolean.TRUE.equals(this.emailVerified);
+    }
+
+    // Builder
+    public static CustomerBuilder builder() {
+        return new CustomerBuilder();
+    }
+
+    public static class CustomerBuilder {
+        private Long id;
+        private String cognitoSub;
+        private String email;
+        private String phoneNumber;
+        private String firstName;
+        private String lastName;
+        private LocalDate dateOfBirth;
+        private String gender;
+        private String profileImageUrl;
+        private CustomerStatus status = CustomerStatus.PENDING_VERIFICATION;
+        private Integer loyaltyPoints = 0;
+        private BigDecimal accountCredit = BigDecimal.ZERO;
+        private Boolean emailNotifications = true;
+        private Boolean smsNotifications = true;
+        private Boolean pushNotifications = true;
+        private Boolean marketingEmails = false;
+        private List<Address> addresses = new ArrayList<>();
+        private CustomerPreference preferences;
+        private Integer totalOrders = 0;
+        private BigDecimal totalSpent = BigDecimal.ZERO;
+        private LocalDateTime lastOrderDate;
+        private Boolean emailVerified = false;
+        private Boolean phoneVerified = false;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+        private LocalDateTime deletedAt;
+
+        CustomerBuilder() {
+        }
+
+        public CustomerBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public CustomerBuilder cognitoSub(String cognitoSub) {
+            this.cognitoSub = cognitoSub;
+            return this;
+        }
+
+        public CustomerBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public CustomerBuilder phoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public CustomerBuilder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public CustomerBuilder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public CustomerBuilder dateOfBirth(LocalDate dateOfBirth) {
+            this.dateOfBirth = dateOfBirth;
+            return this;
+        }
+
+        public CustomerBuilder gender(String gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public CustomerBuilder profileImageUrl(String profileImageUrl) {
+            this.profileImageUrl = profileImageUrl;
+            return this;
+        }
+
+        public CustomerBuilder status(CustomerStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public CustomerBuilder loyaltyPoints(Integer loyaltyPoints) {
+            this.loyaltyPoints = loyaltyPoints;
+            return this;
+        }
+
+        public CustomerBuilder accountCredit(BigDecimal accountCredit) {
+            this.accountCredit = accountCredit;
+            return this;
+        }
+
+        public CustomerBuilder emailNotifications(Boolean emailNotifications) {
+            this.emailNotifications = emailNotifications;
+            return this;
+        }
+
+        public CustomerBuilder smsNotifications(Boolean smsNotifications) {
+            this.smsNotifications = smsNotifications;
+            return this;
+        }
+
+        public CustomerBuilder pushNotifications(Boolean pushNotifications) {
+            this.pushNotifications = pushNotifications;
+            return this;
+        }
+
+        public CustomerBuilder marketingEmails(Boolean marketingEmails) {
+            this.marketingEmails = marketingEmails;
+            return this;
+        }
+
+        public CustomerBuilder addresses(List<Address> addresses) {
+            this.addresses = addresses;
+            return this;
+        }
+
+        public CustomerBuilder preferences(CustomerPreference preferences) {
+            this.preferences = preferences;
+            return this;
+        }
+
+        public CustomerBuilder totalOrders(Integer totalOrders) {
+            this.totalOrders = totalOrders;
+            return this;
+        }
+
+        public CustomerBuilder totalSpent(BigDecimal totalSpent) {
+            this.totalSpent = totalSpent;
+            return this;
+        }
+
+        public CustomerBuilder lastOrderDate(LocalDateTime lastOrderDate) {
+            this.lastOrderDate = lastOrderDate;
+            return this;
+        }
+
+        public CustomerBuilder emailVerified(Boolean emailVerified) {
+            this.emailVerified = emailVerified;
+            return this;
+        }
+
+        public CustomerBuilder phoneVerified(Boolean phoneVerified) {
+            this.phoneVerified = phoneVerified;
+            return this;
+        }
+
+        public CustomerBuilder createdAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public CustomerBuilder updatedAt(LocalDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public CustomerBuilder deletedAt(LocalDateTime deletedAt) {
+            this.deletedAt = deletedAt;
+            return this;
+        }
+
+        public Customer build() {
+            return new Customer(id, cognitoSub, email, phoneNumber, firstName, lastName, dateOfBirth,
+                              gender, profileImageUrl, status, loyaltyPoints, accountCredit,
+                              emailNotifications, smsNotifications, pushNotifications, marketingEmails,
+                              addresses, preferences, totalOrders, totalSpent, lastOrderDate,
+                              emailVerified, phoneVerified, createdAt, updatedAt, deletedAt);
+        }
+    }
+
+    // equals and hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(id, customer.id) &&
+               Objects.equals(cognitoSub, customer.cognitoSub) &&
+               Objects.equals(email, customer.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, cognitoSub, email);
+    }
+
+    // toString
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", cognitoSub='" + cognitoSub + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

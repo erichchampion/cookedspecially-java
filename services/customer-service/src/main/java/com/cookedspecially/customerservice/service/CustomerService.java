@@ -6,8 +6,8 @@ import com.cookedspecially.customerservice.dto.*;
 import com.cookedspecially.customerservice.exception.CustomerAlreadyExistsException;
 import com.cookedspecially.customerservice.exception.CustomerNotFoundException;
 import com.cookedspecially.customerservice.repository.CustomerRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -24,19 +24,24 @@ import java.util.stream.Collectors;
  * Customer service - Business logic for customer management
  */
 @Service
-@RequiredArgsConstructor
-@Slf4j
 @Transactional
 public class CustomerService {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
+
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+
+    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper) {
+        this.customerRepository = customerRepository;
+        this.customerMapper = customerMapper;
+    }
 
     /**
      * Create a new customer
      */
     public CustomerResponse createCustomer(CreateCustomerRequest request) {
-        log.info("Creating customer with email: {}", request.getEmail());
+        logger.info("Creating customer with email: {}", request.getEmail());
 
         // Check if customer already exists
         if (customerRepository.existsByEmail(request.getEmail())) {
@@ -60,7 +65,7 @@ public class CustomerService {
                 .build();
 
         Customer savedCustomer = customerRepository.save(customer);
-        log.info("Customer created with ID: {}", savedCustomer.getId());
+        logger.info("Customer created with ID: {}", savedCustomer.getId());
 
         return customerMapper.toResponse(savedCustomer);
     }
@@ -71,7 +76,7 @@ public class CustomerService {
     @Cacheable(value = "customers", key = "#id")
     @Transactional(readOnly = true)
     public CustomerResponse getCustomerById(Long id) {
-        log.debug("Fetching customer by ID: {}", id);
+        logger.debug("Fetching customer by ID: {}", id);
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
         return customerMapper.toResponse(customer);
@@ -83,7 +88,7 @@ public class CustomerService {
     @Cacheable(value = "customers", key = "'cognito:' + #cognitoSub")
     @Transactional(readOnly = true)
     public CustomerResponse getCustomerByCognitoSub(String cognitoSub) {
-        log.debug("Fetching customer by Cognito sub: {}", cognitoSub);
+        logger.debug("Fetching customer by Cognito sub: {}", cognitoSub);
         Customer customer = customerRepository.findByCognitoSub(cognitoSub)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with Cognito ID: " + cognitoSub));
         return customerMapper.toResponse(customer);
@@ -94,7 +99,7 @@ public class CustomerService {
      */
     @Transactional(readOnly = true)
     public CustomerResponse getCustomerByEmail(String email) {
-        log.debug("Fetching customer by email: {}", email);
+        logger.debug("Fetching customer by email: {}", email);
         Customer customer = customerRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with email: " + email));
         return customerMapper.toResponse(customer);
@@ -105,7 +110,7 @@ public class CustomerService {
      */
     @CacheEvict(value = "customers", key = "#id")
     public CustomerResponse updateCustomer(Long id, UpdateCustomerRequest request) {
-        log.info("Updating customer: {}", id);
+        logger.info("Updating customer: {}", id);
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
@@ -143,7 +148,7 @@ public class CustomerService {
         }
 
         Customer updatedCustomer = customerRepository.save(customer);
-        log.info("Customer updated: {}", updatedCustomer.getId());
+        logger.info("Customer updated: {}", updatedCustomer.getId());
 
         return customerMapper.toResponse(updatedCustomer);
     }
@@ -153,7 +158,7 @@ public class CustomerService {
      */
     @CacheEvict(value = "customers", key = "#id")
     public void deleteCustomer(Long id) {
-        log.info("Deleting customer: {}", id);
+        logger.info("Deleting customer: {}", id);
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
@@ -162,7 +167,7 @@ public class CustomerService {
         customer.setDeletedAt(LocalDateTime.now());
         customerRepository.save(customer);
 
-        log.info("Customer soft-deleted: {}", id);
+        logger.info("Customer soft-deleted: {}", id);
     }
 
     /**
@@ -170,7 +175,7 @@ public class CustomerService {
      */
     @CacheEvict(value = "customers", key = "#id")
     public void verifyEmail(Long id) {
-        log.info("Verifying email for customer: {}", id);
+        logger.info("Verifying email for customer: {}", id);
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
@@ -181,7 +186,7 @@ public class CustomerService {
         }
         customerRepository.save(customer);
 
-        log.info("Email verified for customer: {}", id);
+        logger.info("Email verified for customer: {}", id);
     }
 
     /**
@@ -189,7 +194,7 @@ public class CustomerService {
      */
     @CacheEvict(value = "customers", key = "#id")
     public CustomerResponse updateStatus(Long id, CustomerStatus status) {
-        log.info("Updating status for customer: {} to {}", id, status);
+        logger.info("Updating status for customer: {} to {}", id, status);
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
@@ -197,7 +202,7 @@ public class CustomerService {
         customer.setStatus(status);
         Customer updatedCustomer = customerRepository.save(customer);
 
-        log.info("Customer status updated: {}", id);
+        logger.info("Customer status updated: {}", id);
         return customerMapper.toResponse(updatedCustomer);
     }
 
@@ -206,7 +211,7 @@ public class CustomerService {
      */
     @CacheEvict(value = "customers", key = "#id")
     public void addLoyaltyPoints(Long id, int points) {
-        log.info("Adding {} loyalty points to customer: {}", points, id);
+        logger.info("Adding {} loyalty points to customer: {}", points, id);
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
@@ -220,7 +225,7 @@ public class CustomerService {
      */
     @CacheEvict(value = "customers", key = "#id")
     public void addCredit(Long id, BigDecimal amount) {
-        log.info("Adding {} credit to customer: {}", amount, id);
+        logger.info("Adding {} credit to customer: {}", amount, id);
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
@@ -234,7 +239,7 @@ public class CustomerService {
      */
     @CacheEvict(value = "customers", key = "#id")
     public void deductCredit(Long id, BigDecimal amount) {
-        log.info("Deducting {} credit from customer: {}", amount, id);
+        logger.info("Deducting {} credit from customer: {}", amount, id);
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
@@ -252,7 +257,7 @@ public class CustomerService {
      */
     @CacheEvict(value = "customers", key = "#id")
     public void updateOrderStats(Long id, BigDecimal orderAmount) {
-        log.info("Updating order stats for customer: {}, amount: {}", id, orderAmount);
+        logger.info("Updating order stats for customer: {}, amount: {}", id, orderAmount);
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
@@ -266,7 +271,7 @@ public class CustomerService {
      */
     @Transactional(readOnly = true)
     public Page<CustomerResponse> getAllCustomers(Pageable pageable) {
-        log.debug("Fetching all customers, page: {}", pageable.getPageNumber());
+        logger.debug("Fetching all customers, page: {}", pageable.getPageNumber());
         return customerRepository.findAllActive(pageable)
                 .map(customerMapper::toResponse);
     }
@@ -276,7 +281,7 @@ public class CustomerService {
      */
     @Transactional(readOnly = true)
     public Page<CustomerResponse> searchCustomers(String query, Pageable pageable) {
-        log.debug("Searching customers with query: {}", query);
+        logger.debug("Searching customers with query: {}", query);
         return customerRepository.searchCustomers(query, pageable)
                 .map(customerMapper::toResponse);
     }
@@ -286,7 +291,7 @@ public class CustomerService {
      */
     @Transactional(readOnly = true)
     public Page<CustomerResponse> getCustomersByStatus(CustomerStatus status, Pageable pageable) {
-        log.debug("Fetching customers with status: {}", status);
+        logger.debug("Fetching customers with status: {}", status);
         return customerRepository.findByStatus(status, pageable)
                 .map(customerMapper::toResponse);
     }

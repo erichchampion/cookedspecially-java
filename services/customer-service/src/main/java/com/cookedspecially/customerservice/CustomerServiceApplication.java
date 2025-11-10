@@ -15,6 +15,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class CustomerServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CustomerServiceApplication.java, args);
+        SpringApplication.run(CustomerServiceApplication.class, args);
     }
 }
