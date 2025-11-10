@@ -1,0 +1,40 @@
+# Trivy Ignore File
+# Lines starting with # are comments
+# Each line is a vulnerability ID to ignore
+
+# ==========================================
+# Accepted Risks - Medium Severity
+# ==========================================
+
+# These are accepted as low-risk in our environment
+# Review quarterly: Next review 2025-12-10
+
+# Example format:
+# CVE-2023-XXXXX  # Short description of why ignored
+
+# ==========================================
+# False Positives
+# ==========================================
+
+# Add any confirmed false positives here with explanation
+
+# ==========================================
+# Pending Updates
+# ==========================================
+
+# Vulnerabilities waiting for upstream fixes
+# These should have GitHub issues tracking them
+
+# ==========================================
+# Notes
+# ==========================================
+
+# 1. Only MEDIUM or lower severity issues should be ignored
+# 2. HIGH and CRITICAL must never be ignored
+# 3. Each ignored CVE must have a comment explaining why
+# 4. Review this file monthly and remove fixed issues
+# 5. Use GitHub issues to track long-term ignores
+
+# Currently: No vulnerabilities ignored
+# Status: All HIGH and CRITICAL vulnerabilities addressed
+# Last Review: 2025-11-10
