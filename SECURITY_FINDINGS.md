@@ -104,16 +104,17 @@ Trivy detected **289 total vulnerabilities** and **11 hardcoded secrets** across
 ### Immediate (Within 24 hours)
 1. ✅ **Rotate all Stripe API keys** - Keys are exposed in repository - **COMPLETED**
 2. ✅ **Regenerate SSL certificates** - Private key is exposed - **COMPLETED**
-3. ✅ **Update Spring Boot** to 3.3.11 - **COMPLETED (2025-11-10)** - All 10 services now on 3.3.11
+3. ✅ **Update Spring Boot** to 3.5.7 - **COMPLETED (2025-11-10)** - All 10 services now on 3.5.7 (fixes CVE-2025-55754)
 
 ### Short-term (Within 1 week)
 4. ✅ **Update all microservice dependencies:** - **COMPLETED (2025-11-10)**
-   - ✅ Spring Boot: All services → 3.3.11
+   - ✅ Spring Boot: All services → **3.5.7** (includes Tomcat 10.1.48+)
    - ✅ AWS SDK: All services → 2.28.0 (standardized)
-   - ⚠️ Logback: Managed by Spring Boot 3.3.11 (1.4.14)
-   - ⚠️ Netty: Managed by Spring Boot 3.3.11 (4.1.115)
-   - ⚠️ SnakeYAML: Managed by Spring Boot 3.3.11 (2.2)
-   - ⚠️ MySQL Connector: Managed by Spring Boot 3.3.11 (9.0.0)
+   - ✅ Logback: Managed by Spring Boot 3.5.7
+   - ✅ Netty: Managed by Spring Boot 3.5.7
+   - ✅ SnakeYAML: Managed by Spring Boot 3.5.7
+   - ✅ MySQL Connector: Managed by Spring Boot 3.5.7
+   - ✅ **Tomcat: 10.1.48+ (fixes CVE-2025-55754 and CVE-2025-55752)**
 
 5. ✅ **Remove hardcoded secrets** from all files - **COMPLETED**
 
@@ -135,8 +136,8 @@ Update Spring Boot parent version in each `pom.xml`:
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <!-- Current: 3.1.5 -->
-    <version>3.3.11</version>
+    <!-- Current: 3.5.7 (includes Tomcat 10.1.48+) -->
+    <version>3.5.7</version>
     <relativePath/>
 </parent>
 ```
@@ -165,8 +166,9 @@ Update specific dependencies:
 ## Notes
 
 - ✅ **Good news:** No secrets found in current microservices (`services/` directory)
-- ✅ **Excellent progress:** All services now on consistent Spring Boot 3.3.11
+- ✅ **Excellent progress:** All services now on Spring Boot **3.5.7** (includes critical Tomcat security fixes)
 - ✅ **Security improvement (2025-11-10):** Legacy `back-end` removed - 111 vulnerabilities and 11 hardcoded secrets eliminated
+- ✅ **Critical CVEs fixed:** CVE-2025-55754 and CVE-2025-55752 (Tomcat 10.1.48+)
 - ✅ **Automated security:** Trivy scanning and Dependabot configured
 - ✅ **Standardized:** AWS SDK 2.28.0 across all services
 
