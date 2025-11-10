@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - CookedSpecially</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1rem;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+        }
+
+        .cart-item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .cart-item-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .cart-item-price {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 0.25rem;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .quantity-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .remove-btn {
+            color: var(--error);
+            font-size: 0.9rem;
+            padding: 0.5rem;
+        }
+
+        .remove-btn:hover {
+            text-decoration: underline;
+        }
+
+        .order-summary {
+            position: sticky;
+            top: calc(var(--header-height) + 1rem);
+            height: fit-content;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-total {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-cart-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                Cooked<span>Specially</span>
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#" id="user-menu" class="btn btn-outline btn-sm">Sign In</a>
+                <a href="cart.html" class="cart-icon">
+                    🛒
+                    <span class="cart-count" style="display: none;">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="section">
+        <div class="container">
+            <h1 class="section-title">Shopping Cart</h1>
+
+            <!-- Empty Cart State -->
+            <div id="empty-cart" class="empty-cart hidden">
+                <div class="empty-cart-icon">🛒</div>
+                <h2>Your cart is empty</h2>
+                <p class="text-muted mb-3">Add some delicious items from our menu</p>
+                <a href="menu.html" class="btn btn-primary btn-lg">Browse Menu</a>
+            </div>
+
+            <!-- Cart Items -->
+            <div id="cart-content" class="cart-container hidden">
+                <div>
+                    <div id="cart-items">
+                        <!-- Cart items will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <div class="summary-card">
+                        <h3 class="mb-3">Order Summary</h3>
+
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">₹0.00</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Delivery Fee</span>
+                            <span id="delivery-fee">₹0.00</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span class="summary-total">Total</span>
+                            <span class="summary-total" id="total">₹0.00</span>
+                        </div>
+
+                        <div class="mt-3">
+                            <a href="checkout.html" class="btn btn-primary btn-lg" style="width: 100%;">
+                                Proceed to Checkout
+                            </a>
+                            <a href="menu.html" class="btn btn-outline mt-2" style="width: 100%; display: block; text-align: center;">
+                                Continue Shopping
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Minimum Order Notice -->
+                    <div id="min-order-notice" class="alert alert-warning mt-3 hidden">
+                        <strong>Note:</strong> Minimum order amount is ₹<span id="min-amount">199</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CookedSpecially</h3>
+                    <p>Bringing fresh, healthy meals to your doorstep</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CookedSpecially. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="js/pages/cart-page.js"></script>
+</body>
+</html>
