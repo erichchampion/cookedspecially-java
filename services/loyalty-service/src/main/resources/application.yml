@@ -1,0 +1,87 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: loyalty-service
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/cookedspecially_loyalty?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    open-in-view: false
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 1800000 # 30 minutes
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+      password: ${REDIS_PASSWORD:}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI:https://cognito-idp.us-east-1.amazonaws.com/}${COGNITO_USER_POOL_ID:}
+          jwk-set-uri: ${JWT_JWK_SET_URI:https://cognito-idp.us-east-1.amazonaws.com/}${COGNITO_USER_POOL_ID:}/.well-known/jwks.json
+
+# AWS Configuration
+aws:
+  region: ${AWS_REGION:us-east-1}
+  cognito:
+    user-pool-id: ${COGNITO_USER_POOL_ID:}
+  sns:
+    loyalty-events-topic: ${SNS_LOYALTY_EVENTS_TOPIC:arn:aws:sns:us-east-1:123456789012:loyalty-events}
+  sqs:
+    loyalty-events-queue: ${SQS_LOYALTY_EVENTS_QUEUE:https://sqs.us-east-1.amazonaws.com/123456789012/loyalty-events}
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Logging
+logging:
+  level:
+    com.cookedspecially.loyaltyservice: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Swagger/OpenAPI
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
