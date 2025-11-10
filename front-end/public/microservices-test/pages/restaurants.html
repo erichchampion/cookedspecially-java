@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Service - CookedSpecially Microservices Testing</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🏪 Restaurant Service</h1>
+            <p class="subtitle">Test Restaurant, Menu, and Dish Management Endpoints</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="restaurants.html" class="active">Restaurants</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="admin.html">Admin</a></li>
+                <li><a href="reports.html">Reports</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Service Status -->
+        <section class="card">
+            <h2>Service Status</h2>
+            <p id="service-status">Checking...</p>
+            <button id="check-health" class="btn">Check Health</button>
+        </section>
+
+        <!-- Create Restaurant -->
+        <section class="card">
+            <h2>Create Restaurant</h2>
+            <form id="create-restaurant-form">
+                <div class="form-group">
+                    <label for="restaurant-name">Restaurant Name</label>
+                    <input type="text" id="restaurant-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="restaurant-address">Address</label>
+                    <input type="text" id="restaurant-address" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="restaurant-phone">Phone</label>
+                    <input type="tel" id="restaurant-phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="restaurant-email">Email</label>
+                    <input type="email" id="restaurant-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="restaurant-cuisine">Cuisine Type</label>
+                    <input type="text" id="restaurant-cuisine" name="cuisine_type" placeholder="Italian, Chinese, etc.">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Restaurant</button>
+            </form>
+            <div id="create-result" class="result-container"></div>
+        </section>
+
+        <!-- List Restaurants -->
+        <section class="card">
+            <h2>List Restaurants</h2>
+            <button id="list-restaurants" class="btn">Load Restaurants</button>
+            <div id="restaurants-list" class="result-container"></div>
+        </section>
+
+        <!-- Get Restaurant -->
+        <section class="card">
+            <h2>Get Restaurant by ID</h2>
+            <div class="form-group">
+                <label for="get-restaurant-id">Restaurant ID</label>
+                <input type="number" id="get-restaurant-id" placeholder="Enter restaurant ID">
+            </div>
+            <button id="get-restaurant-btn" class="btn">Get Restaurant</button>
+            <div id="get-restaurant-result" class="result-container"></div>
+        </section>
+
+        <!-- Menu Management -->
+        <section class="card">
+            <h2>Menu Management</h2>
+            <div class="form-group">
+                <label for="menu-restaurant-id">Restaurant ID</label>
+                <input type="number" id="menu-restaurant-id" placeholder="Enter restaurant ID">
+            </div>
+            <button id="get-menu-btn" class="btn">Get Menu</button>
+            <div id="menu-result" class="result-container"></div>
+        </section>
+
+        <!-- Create Menu Item -->
+        <section class="card">
+            <h2>Create Menu Item</h2>
+            <form id="create-menu-item-form">
+                <div class="form-group">
+                    <label for="menu-item-restaurant-id">Restaurant ID</label>
+                    <input type="number" id="menu-item-restaurant-id" name="restaurant_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="menu-item-name">Item Name</label>
+                    <input type="text" id="menu-item-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="menu-item-description">Description</label>
+                    <textarea id="menu-item-description" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="menu-item-price">Price</label>
+                    <input type="number" id="menu-item-price" name="price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="menu-item-category">Category</label>
+                    <input type="text" id="menu-item-category" name="category" placeholder="Appetizer, Main, Dessert, etc.">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Menu Item</button>
+            </form>
+            <div id="create-menu-item-result" class="result-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CookedSpecially - Microservices Testing Dashboard</p>
+        </div>
+    </footer>
+
+    <script type="module" src="../js/pages/restaurants.js"></script>
+</body>
+</html>

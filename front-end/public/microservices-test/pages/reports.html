@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporting Service - CookedSpecially Microservices Testing</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📊 Reporting Service</h1>
+            <p class="subtitle">Test Business Analytics and Reporting Endpoints</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="restaurants.html">Restaurants</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="admin.html">Admin</a></li>
+                <li><a href="reports.html" class="active">Reports</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Service Status -->
+        <section class="card">
+            <h2>Service Status</h2>
+            <p id="service-status">Checking...</p>
+            <button id="check-health" class="btn">Check Health</button>
+        </section>
+
+        <!-- Date Range Selector -->
+        <section class="card">
+            <h2>Report Parameters</h2>
+            <div class="form-group">
+                <label for="restaurant-id">Restaurant ID</label>
+                <input type="number" id="restaurant-id" placeholder="Enter restaurant ID" value="1">
+            </div>
+            <div class="form-group">
+                <label for="start-date">Start Date</label>
+                <input type="date" id="start-date">
+            </div>
+            <div class="form-group">
+                <label for="end-date">End Date</label>
+                <input type="date" id="end-date">
+            </div>
+        </section>
+
+        <!-- Dashboard Summary -->
+        <section class="card">
+            <h2>Dashboard Summary</h2>
+            <button id="get-dashboard-btn" class="btn">Get Dashboard Summary</button>
+            <div id="dashboard-result" class="result-container"></div>
+        </section>
+
+        <!-- Sales Reports -->
+        <section class="card">
+            <h2>Sales Report</h2>
+            <button id="get-sales-btn" class="btn">Get Sales Report</button>
+            <div id="sales-result" class="result-container"></div>
+        </section>
+
+        <!-- Sales by Day -->
+        <section class="card">
+            <h2>Sales by Day</h2>
+            <button id="get-daily-sales-btn" class="btn">Get Daily Sales</button>
+            <div id="daily-sales-result" class="result-container"></div>
+        </section>
+
+        <!-- Top Selling Items -->
+        <section class="card">
+            <h2>Top Selling Items</h2>
+            <div class="form-group">
+                <label for="top-items-limit">Limit</label>
+                <input type="number" id="top-items-limit" value="10" min="1" max="50">
+            </div>
+            <button id="get-top-items-btn" class="btn">Get Top Selling Items</button>
+            <div id="top-items-result" class="result-container"></div>
+        </section>
+
+        <!-- Order Metrics -->
+        <section class="card">
+            <h2>Order Metrics</h2>
+            <button id="get-order-metrics-btn" class="btn">Get Order Metrics</button>
+            <div id="order-metrics-result" class="result-container"></div>
+        </section>
+
+        <!-- Average Order Value -->
+        <section class="card">
+            <h2>Average Order Value</h2>
+            <button id="get-aov-btn" class="btn">Get Average Order Value</button>
+            <div id="aov-result" class="result-container"></div>
+        </section>
+
+        <!-- Customer Retention -->
+        <section class="card">
+            <h2>Customer Retention</h2>
+            <button id="get-retention-btn" class="btn">Get Customer Retention</button>
+            <div id="retention-result" class="result-container"></div>
+        </section>
+
+        <!-- Performance Reports -->
+        <section class="card">
+            <h2>Restaurant Performance</h2>
+            <button id="get-performance-btn" class="btn">Get Restaurant Performance</button>
+            <div id="performance-result" class="result-container"></div>
+        </section>
+
+        <!-- Revenue Summary -->
+        <section class="card">
+            <h2>Revenue Summary</h2>
+            <button id="get-revenue-btn" class="btn">Get Revenue Summary</button>
+            <div id="revenue-result" class="result-container"></div>
+        </section>
+
+        <!-- Payment Methods Breakdown -->
+        <section class="card">
+            <h2>Payment Methods Breakdown</h2>
+            <button id="get-payment-methods-btn" class="btn">Get Payment Methods Breakdown</button>
+            <div id="payment-methods-result" class="result-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CookedSpecially - Microservices Testing Dashboard</p>
+        </div>
+    </footer>
+
+    <script type="module" src="../js/pages/reports.js"></script>
+</body>
+</html>
