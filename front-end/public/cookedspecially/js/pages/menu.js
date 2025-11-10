@@ -36,7 +36,8 @@ async function loadMenu() {
     try {
         loading.classList.remove('hidden');
 
-        const restaurantId = config.app.defaultRestaurantId;
+        const profile = config.getCurrentProfile();
+        const restaurantId = profile.id;
         const result = await restaurantApi.getMenu(restaurantId);
 
         if (result.success && result.data) {
@@ -62,6 +63,7 @@ async function loadMenu() {
 function renderMenuItems(items) {
     const menuGrid = document.getElementById('menu-grid');
     const emptyState = document.getElementById('empty-state');
+    const profile = config.getCurrentProfile();
 
     if (!items || items.length === 0) {
         menuGrid.classList.add('hidden');
@@ -84,7 +86,7 @@ function renderMenuItems(items) {
                 <p class="card-description">${truncateText(stripHTML(item.shortDescription || item.description), 80)}</p>
             </div>
             <div class="card-footer">
-                <span class="card-price">₹${item.price || item.displayPrice}</span>
+                <span class="card-price">${profile.settings.currencySymbol}${item.price || item.displayPrice}</span>
                 <button class="btn btn-primary btn-sm view-item-btn">View Details</button>
             </div>
         </div>
@@ -143,10 +145,11 @@ function applyFilter(filter) {
 // Show item detail modal
 function showItemModal(item) {
     selectedItem = item;
+    const profile = config.getCurrentProfile();
 
     document.getElementById('modal-item-name').textContent = item.name;
     document.getElementById('modal-item-description').innerHTML = item.description || item.shortDescription;
-    document.getElementById('modal-item-price').textContent = `₹${item.price || item.displayPrice}`;
+    document.getElementById('modal-item-price').textContent = `${profile.settings.currencySymbol}${item.price || item.displayPrice}`;
     document.getElementById('modal-item-image').src = item.imageUrl || item.smallImageUrl || 'images/placeholder.jpg';
     document.getElementById('modal-quantity').value = 1;
     document.getElementById('modal-instructions').value = '';
@@ -188,8 +191,9 @@ function setupModal() {
 
 // Check authentication
 function checkAuth() {
-    const token = localStorage.getItem('cookedspecially_token');
-    const user = localStorage.getItem('cookedspecially_user');
+    const storageKeys = config.storage();
+    const token = localStorage.getItem(storageKeys.token);
+    const user = localStorage.getItem(storageKeys.user);
     const userMenu = document.getElementById('user-menu');
 
     if (token && user) {

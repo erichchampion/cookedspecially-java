@@ -1,4 +1,5 @@
 // Shopping Cart Management
+// Supports multiple restaurant profiles with dynamic settings
 
 import config from '../config/config.js';
 
@@ -8,9 +9,15 @@ class Cart {
         this.load();
     }
 
+    // Get current restaurant profile
+    getProfile() {
+        return config.getCurrentProfile();
+    }
+
     // Load cart from localStorage
     load() {
-        const savedCart = localStorage.getItem(config.storage.cart);
+        const storageKeys = config.storage();
+        const savedCart = localStorage.getItem(storageKeys.cart);
         if (savedCart) {
             try {
                 this.items = JSON.parse(savedCart);
@@ -23,26 +30,29 @@ class Cart {
 
     // Save cart to localStorage
     save() {
-        localStorage.setItem(config.storage.cart, JSON.stringify(this.items));
+        const storageKeys = config.storage();
+        localStorage.setItem(storageKeys.cart, JSON.stringify(this.items));
         this.updateCartUI();
     }
 
     // Add item to cart
     addItem(menuItem, quantity = 1, specialInstructions = '') {
-        const existingItem = this.items.find(item => item.id === menuItem.id);
+        const profile = this.getProfile();
+        const itemId = menuItem.id || menuItem.itemId;
+        const existingItem = this.items.find(item => item.id === itemId);
 
         if (existingItem) {
             existingItem.quantity += quantity;
             existingItem.specialInstructions = specialInstructions || existingItem.specialInstructions;
         } else {
             this.items.push({
-                id: menuItem.id,
+                id: itemId,
                 name: menuItem.name,
-                price: menuItem.price,
+                price: menuItem.price || menuItem.displayPrice,
                 imageUrl: menuItem.imageUrl || menuItem.smallImageUrl,
                 quantity,
                 specialInstructions,
-                restaurantId: menuItem.restaurantId || config.app.defaultRestaurantId
+                restaurantId: menuItem.restaurantId || profile.id
             });
         }
 
@@ -90,9 +100,18 @@ class Cart {
         return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
     }
 
-    // Calculate delivery fee
+    // Calculate delivery fee (dynamic based on profile)
     getDeliveryFee() {
-        return this.getSubtotal() >= config.app.minOrderAmount ? config.app.deliveryFee : 0;
+        const profile = this.getProfile();
+        const subtotal = this.getSubtotal();
+
+        // Free delivery if above threshold
+        if (profile.settings.freeDeliveryThreshold && subtotal >= profile.settings.freeDeliveryThreshold) {
+            return 0;
+        }
+
+        // Standard delivery fee if above minimum
+        return subtotal >= profile.settings.minOrderAmount ? profile.settings.deliveryFee : 0;
     }
 
     // Calculate total
@@ -103,6 +122,18 @@ class Cart {
     // Check if cart is empty
     isEmpty() {
         return this.items.length === 0;
+    }
+
+    // Get minimum order amount from profile
+    getMinOrderAmount() {
+        const profile = this.getProfile();
+        return profile.settings.minOrderAmount;
+    }
+
+    // Format currency based on profile
+    formatCurrency(amount) {
+        const profile = this.getProfile();
+        return `${profile.settings.currencySymbol}${amount.toFixed(2)}`;
     }
 
     // Update cart icon in header
@@ -126,8 +157,9 @@ class Cart {
         }));
     }
 
-    // Show notification when item added
+    // Show notification when item added (uses dynamic brand color)
     showAddedNotification(itemName) {
+        const profile = this.getProfile();
         const notification = document.createElement('div');
         notification.className = 'cart-notification';
         notification.innerHTML = `
@@ -147,7 +179,7 @@ class Cart {
                     position: fixed;
                     top: 100px;
                     right: 20px;
-                    background: #27ae60;
+                    background: ${profile.theme.primaryColor || '#27ae60'};
                     color: white;
                     padding: 1rem 1.5rem;
                     border-radius: 8px;
@@ -178,9 +210,10 @@ class Cart {
 
     // Get cart data for order creation
     getOrderData(customerId, deliveryAddress, notes = '') {
+        const profile = this.getProfile();
         return {
             customer_id: customerId,
-            restaurant_id: this.items[0]?.restaurantId || config.app.defaultRestaurantId,
+            restaurant_id: this.items[0]?.restaurantId || profile.id,
             delivery_address: deliveryAddress,
             notes,
             items: this.items.map(item => ({
