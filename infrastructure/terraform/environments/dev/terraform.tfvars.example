@@ -1,0 +1,9 @@
+# Development Environment - Terraform Variables
+# Copy this file to terraform.tfvars and update with your values
+
+aws_region         = "us-east-1"
+ecr_repository_url = "123456789012.dkr.ecr.us-east-1.amazonaws.com/cookedspecially"
+image_tag          = "latest"
+
+# Optional: Kafka bootstrap servers (leave empty if not using Kafka in dev)
+kafka_bootstrap_servers = ""
