@@ -57,12 +57,12 @@ server:
 
 logging:
   level:
-    root: INFO
-    com.cookedspecially.kitchenservice: DEBUG
-    org.springframework.web: INFO
-    org.springframework.security: INFO
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    root: WARN
+    com.cookedspecially.kitchenservice: INFO
+    org.springframework.web: WARN
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
@@ -75,7 +75,7 @@ management:
       base-path: /actuator
   endpoint:
     health:
-      show-details: always
+      show-details: when-authorized
       probes:
         enabled: true
   metrics:

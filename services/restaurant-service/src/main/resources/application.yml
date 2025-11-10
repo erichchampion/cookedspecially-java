@@ -57,7 +57,9 @@ server:
   compression:
     enabled: true
   error:
-    include-message: always
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
 
 # Management & Actuator
 management:
@@ -79,8 +81,8 @@ management:
 # Logging
 logging:
   level:
-    root: INFO
-    com.cookedspecially.restaurantservice: DEBUG
+    root: WARN
+    com.cookedspecially.restaurantservice: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 

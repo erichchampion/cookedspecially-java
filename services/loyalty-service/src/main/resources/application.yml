@@ -63,7 +63,7 @@ management:
         include: health,info,metrics,prometheus
   endpoint:
     health:
-      show-details: always
+      show-details: when-authorized
   metrics:
     export:
       prometheus:
@@ -72,11 +72,12 @@ management:
 # Logging
 logging:
   level:
-    com.cookedspecially.loyaltyservice: DEBUG
-    org.springframework.web: INFO
-    org.springframework.security: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    root: WARN
+    com.cookedspecially.loyaltyservice: INFO
+    org.springframework.web: WARN
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
 
 # Swagger/OpenAPI
 springdoc:

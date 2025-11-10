@@ -108,8 +108,8 @@ auth:
 # Logging
 logging:
   level:
-    root: INFO
-    com.cookedspecially: DEBUG
+    root: WARN
+    com.cookedspecially: INFO
     org.springframework.web: INFO
     org.springframework.security: INFO
     org.hibernate.SQL: INFO
