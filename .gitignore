@@ -4,3 +4,9 @@ services/payment-service/target
 services/order-service/target
 services/notification-service/target
 services/customer-service/target
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
