@@ -1,0 +1,104 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "password"
+  },
+  "services": {
+    "customer-service": {
+      "database": "cookedspecially_customers",
+      "port": 8085
+    },
+    "restaurant-service": {
+      "database": "cookedspecially_restaurants",
+      "port": 8083
+    },
+    "order-service": {
+      "database": "cookedspecially_orders",
+      "port": 8081
+    },
+    "payment-service": {
+      "database": "cookedspecially_payments",
+      "port": 8082
+    },
+    "kitchen-service": {
+      "database": "cookedspecially_kitchen",
+      "port": 8087
+    },
+    "loyalty-service": {
+      "database": "cookedspecially_loyalty",
+      "port": 8086
+    },
+    "admin-service": {
+      "database": "cookedspecially_admin",
+      "port": 8088
+    },
+    "integration-hub-service": {
+      "database": "cookedspecially_integrations",
+      "port": 8084
+    }
+  },
+  "table_mapping": {
+    "customer_service": [
+      "CUSTOMERS",
+      "CUSTOMERADDRESS",
+      "CUSTOMER_CREDIT"
+    ],
+    "restaurant_service": [
+      "RESTAURANT",
+      "DISHES",
+      "DISHTYPES",
+      "MENUS",
+      "MENU_SECTION",
+      "ADDONDISHES",
+      "ADDONDISHTYPES"
+    ],
+    "order_service": [
+      "ORDERS",
+      "ORDERDISHES",
+      "ORDERADDONS",
+      "CHECKS",
+      "CHECK_ORDER"
+    ],
+    "payment_service": [
+      "PAYMENTTYPE",
+      "CREDIT_TRANSACTION",
+      "CREDIT_BILLS",
+      "CREDIT_BILL_PAYMENTS"
+    ],
+    "kitchen_service": [
+      "DELIVERYAREAS",
+      "DELIVERYBOYS",
+      "TILLS",
+      "TILL_HANDOVER",
+      "TILL_MAP",
+      "SEATINGTABLES"
+    ],
+    "loyalty_service": [
+      "coupon",
+      "couponflatrules",
+      "COUPONRULES_DELIVERYAREAS",
+      "GIFT_CARD",
+      "GIFT_CARD_REDEMPTION",
+      "GIFT_CARD_SELL"
+    ],
+    "admin_service": [
+      "USER",
+      "ROLES",
+      "USER_ROLES",
+      "OTP",
+      "USER_RESTAURANT"
+    ],
+    "integration_hub_service": [
+      "SOCIALCONNECTORS"
+    ]
+  },
+  "migration_options": {
+    "batch_size": 1000,
+    "skip_on_error": true,
+    "log_errors": true,
+    "preserve_ids": false,
+    "generate_cognito_subs": true
+  }
+}
