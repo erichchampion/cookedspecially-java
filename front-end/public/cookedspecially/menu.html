@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - CookedSpecially</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .menu-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .menu-item {
+            position: relative;
+        }
+
+        .menu-item-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .menu-item-badge.veg {
+            background: #27ae60;
+        }
+
+        .menu-item-badge.non-veg {
+            background: #e74c3c;
+        }
+
+        .add-to-cart-form {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .quantity-input {
+            width: 60px;
+            padding: 0.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                Cooked<span>Specially</span>
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#" id="user-menu" class="btn btn-outline btn-sm">Sign In</a>
+                <a href="cart.html" class="cart-icon">
+                    🛒
+                    <span class="cart-count" style="display: none;">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="section">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">Our Menu</h1>
+                <p class="section-subtitle">Delicious, healthy meals crafted fresh daily</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="menu-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="vegetarian">Vegetarian</button>
+                <button class="filter-btn" data-filter="non-vegetarian">Non-Vegetarian</button>
+                <button class="filter-btn" data-filter="juice">Juices</button>
+                <button class="filter-btn" data-filter="fruit">Fruit</button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="text-center">
+                <div class="spinner" style="margin: 4rem auto;"></div>
+                <p>Loading menu...</p>
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menu-grid" class="grid grid-3 hidden">
+                <!-- Menu items will be loaded dynamically -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="text-center hidden" style="padding: 4rem 0;">
+                <h3>No items found</h3>
+                <p class="text-muted">Try a different filter</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Item Detail Modal -->
+    <div id="item-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-item-name">Item Details</h2>
+                <span class="modal-close" id="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img id="modal-item-image" src="" alt="" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+                <p id="modal-item-description"></p>
+                <div class="card-price mt-3" id="modal-item-price"></div>
+
+                <form id="add-to-cart-form" class="mt-3">
+                    <div class="form-group">
+                        <label class="form-label">Quantity</label>
+                        <input type="number" id="modal-quantity" class="form-control" min="1" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Special Instructions (Optional)</label>
+                        <textarea id="modal-instructions" class="form-control" rows="3" placeholder="Any special requests..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CookedSpecially</h3>
+                    <p>Bringing fresh, healthy meals to your doorstep</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CookedSpecially. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="js/pages/menu.js"></script>
+</body>
+</html>

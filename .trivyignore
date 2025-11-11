@@ -1,0 +1,53 @@
+# Trivy Ignore File
+# Lines starting with # are comments
+# Each line is a vulnerability ID to ignore
+
+# ==========================================
+# Accepted Risks - Medium Severity
+# ==========================================
+
+# These are accepted as low-risk in our environment
+# Review quarterly: Next review 2025-12-10
+
+# Example format:
+# CVE-2023-XXXXX  # Short description of why ignored
+
+# ==========================================
+# False Positives
+# ==========================================
+
+# Add any confirmed false positives here with explanation
+
+# ==========================================
+# Pending Updates
+# ==========================================
+
+# Vulnerabilities waiting for upstream fixes
+# These should have GitHub issues tracking them
+
+# ==========================================
+# Notes
+# ==========================================
+
+# 1. Only MEDIUM or lower severity issues should be ignored
+# 2. HIGH and CRITICAL must never be ignored
+# 3. Each ignored CVE must have a comment explaining why
+# 4. Review this file monthly and remove fixed issues
+# 5. Use GitHub issues to track long-term ignores
+
+# ==========================================
+# Legacy Front-End - Deprecated Code
+# ==========================================
+
+# CVE-2020-7598: minimist prototype pollution (front-end/package-lock.json)
+# Justification: Legacy front-end is deprecated, new consumer website already deployed
+# Component: minimist 0.0.10 (transitive via node-static → optimist)
+# Risk Level: LOW (legacy code, not in production use)
+# Mitigation: New consumer website uses modern stack without these vulnerabilities
+# Reviewed: 2025-11-10
+# Next Review: 2026-01-10 (or when legacy front-end is removed)
+CVE-2020-7598
+
+# Currently: 1 vulnerability ignored (deprecated legacy code)
+# Status: All production vulnerabilities addressed
+# Last Review: 2025-11-10

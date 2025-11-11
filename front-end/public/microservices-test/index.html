@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CookedSpecially Microservices Testing Dashboard</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🍽️ CookedSpecially Microservices</h1>
+            <p class="subtitle">Testing Dashboard for Microservices Architecture</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <ul>
+                <li><a href="index.html" class="active">Dashboard</a></li>
+                <li><a href="pages/restaurants.html">Restaurants</a></li>
+                <li><a href="pages/orders.html">Orders</a></li>
+                <li><a href="pages/customers.html">Customers</a></li>
+                <li><a href="pages/admin.html">Admin</a></li>
+                <li><a href="pages/reports.html">Reports</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="services-grid">
+            <h2>Microservices Status</h2>
+            <div class="grid">
+                <div class="service-card" data-service="restaurant">
+                    <div class="service-icon">🏪</div>
+                    <h3>Restaurant Service</h3>
+                    <p class="service-status" id="status-restaurant">Checking...</p>
+                    <p class="service-description">Restaurant, menu, and dish management</p>
+                    <a href="pages/restaurants.html" class="btn">Test Service</a>
+                </div>
+
+                <div class="service-card" data-service="order">
+                    <div class="service-icon">📦</div>
+                    <h3>Order Service</h3>
+                    <p class="service-status" id="status-order">Checking...</p>
+                    <p class="service-description">Order creation and management</p>
+                    <a href="pages/orders.html" class="btn">Test Service</a>
+                </div>
+
+                <div class="service-card" data-service="payment">
+                    <div class="service-icon">💳</div>
+                    <h3>Payment Service</h3>
+                    <p class="service-status" id="status-payment">Checking...</p>
+                    <p class="service-description">Payment processing and transactions</p>
+                    <a href="pages/payments.html" class="btn">Test Service</a>
+                </div>
+
+                <div class="service-card" data-service="customer">
+                    <div class="service-icon">👤</div>
+                    <h3>Customer Service</h3>
+                    <p class="service-status" id="status-customer">Checking...</p>
+                    <p class="service-description">Customer profiles and authentication</p>
+                    <a href="pages/customers.html" class="btn">Test Service</a>
+                </div>
+
+                <div class="service-card" data-service="notification">
+                    <div class="service-icon">🔔</div>
+                    <h3>Notification Service</h3>
+                    <p class="service-status" id="status-notification">Checking...</p>
+                    <p class="service-description">Email, SMS, and push notifications</p>
+                    <a href="pages/notifications.html" class="btn">Test Service</a>
+                </div>
+
+                <div class="service-card" data-service="loyalty">
+                    <div class="service-icon">🎁</div>
+                    <h3>Loyalty Service</h3>
+                    <p class="service-status" id="status-loyalty">Checking...</p>
+                    <p class="service-description">Coupons, promotions, and loyalty programs</p>
+                    <a href="pages/loyalty.html" class="btn">Test Service</a>
+                </div>
+
+                <div class="service-card" data-service="kitchen">
+                    <div class="service-icon">👨‍🍳</div>
+                    <h3>Kitchen Service</h3>
+                    <p class="service-status" id="status-kitchen">Checking...</p>
+                    <p class="service-description">Kitchen operations and till management</p>
+                    <a href="pages/kitchen.html" class="btn">Test Service</a>
+                </div>
+
+                <div class="service-card" data-service="reporting">
+                    <div class="service-icon">📊</div>
+                    <h3>Reporting Service</h3>
+                    <p class="service-status" id="status-reporting">Checking...</p>
+                    <p class="service-description">Business analytics and reports</p>
+                    <a href="pages/reports.html" class="btn">Test Service</a>
+                </div>
+
+                <div class="service-card" data-service="integration">
+                    <div class="service-icon">🔗</div>
+                    <h3>Integration Hub Service</h3>
+                    <p class="service-status" id="status-integration">Checking...</p>
+                    <p class="service-description">Zomato, social media integrations</p>
+                    <a href="pages/integrations.html" class="btn">Test Service</a>
+                </div>
+
+                <div class="service-card" data-service="admin">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Admin Service</h3>
+                    <p class="service-status" id="status-admin">Checking...</p>
+                    <p class="service-description">User management and RBAC</p>
+                    <a href="pages/admin.html" class="btn">Test Service</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-actions">
+            <h2>Quick Actions</h2>
+            <div id="status-summary" class="status-summary"></div>
+            <div class="actions-grid">
+                <button id="test-all-services" class="action-btn">
+                    🔄 Test All Services
+                </button>
+            </div>
+        </section>
+
+        <section class="test-results" id="test-results" style="display: none;">
+            <h2>Test Results</h2>
+            <div id="results-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CookedSpecially - Microservices Testing Dashboard</p>
+            <p>Built with ES6 JavaScript and Plain CSS</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

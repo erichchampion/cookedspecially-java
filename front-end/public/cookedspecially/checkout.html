@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - CookedSpecially</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .checkout-section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+        }
+
+        .checkout-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .address-card {
+            border: 2px solid var(--border-color);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 1rem;
+        }
+
+        .address-card:hover,
+        .address-card.selected {
+            border-color: var(--primary-color);
+            background: #f0fff4;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                Cooked<span>Specially</span>
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="account.html" class="btn btn-outline btn-sm" id="user-menu">My Account</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="section">
+        <div class="container">
+            <h1 class="section-title">Checkout</h1>
+
+            <!-- Alert -->
+            <div id="checkout-message" style="display: none;"></div>
+
+            <div class="checkout-container">
+                <div>
+                    <!-- Delivery Address -->
+                    <div class="checkout-section">
+                        <h2>Delivery Address</h2>
+
+                        <div id="saved-addresses">
+                            <!-- Saved addresses will be loaded -->
+                        </div>
+
+                        <button class="btn btn-outline mt-2" id="add-address-btn">
+                            + Add New Address
+                        </button>
+
+                        <!-- New Address Form -->
+                        <div id="new-address-form" class="mt-3 hidden">
+                            <div class="form-group">
+                                <label class="form-label">Address Line 1</label>
+                                <input type="text" id="address-line1" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Address Line 2 (Optional)</label>
+                                <input type="text" id="address-line2" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">City</label>
+                                <input type="text" id="address-city" class="form-control" required>
+                            </div>
+                            <div class="grid grid-2" style="gap: 1rem;">
+                                <div class="form-group">
+                                    <label class="form-label">State</label>
+                                    <input type="text" id="address-state" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Zip Code</label>
+                                    <input type="text" id="address-zipcode" class="form-control" required>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" id="save-address-btn">Save Address</button>
+                            <button class="btn btn-outline" id="cancel-address-btn">Cancel</button>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Instructions -->
+                    <div class="checkout-section">
+                        <h2>Delivery Instructions</h2>
+                        <div class="form-group">
+                            <textarea id="delivery-notes" class="form-control" rows="3" placeholder="Any special delivery instructions..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="checkout-section">
+                        <h2>Payment Method</h2>
+                        <div class="form-group">
+                            <label class="address-card">
+                                <input type="radio" name="payment" value="cod" checked>
+                                <span style="margin-left: 0.5rem;">Cash on Delivery</span>
+                            </label>
+                            <label class="address-card">
+                                <input type="radio" name="payment" value="online">
+                                <span style="margin-left: 0.5rem;">Pay Online (Coming Soon)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div>
+                    <div class="checkout-section">
+                        <h2>Order Summary</h2>
+
+                        <div id="order-items">
+                            <!-- Order items will be loaded -->
+                        </div>
+
+                        <div class="mt-3" style="border-top: 2px solid var(--border-color); padding-top: 1rem;">
+                            <div class="order-item">
+                                <span>Subtotal</span>
+                                <span id="checkout-subtotal">₹0.00</span>
+                            </div>
+                            <div class="order-item">
+                                <span>Delivery Fee</span>
+                                <span id="checkout-delivery">₹0.00</span>
+                            </div>
+                            <div class="order-item" style="font-weight: bold; font-size: 1.25rem; color: var(--primary-color);">
+                                <span>Total</span>
+                                <span id="checkout-total">₹0.00</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-lg mt-3" style="width: 100%;" id="place-order-btn">
+                            Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 CookedSpecially. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="js/pages/checkout.js"></script>
+</body>
+</html>

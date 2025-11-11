@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Service - CookedSpecially Microservices Testing</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>👤 Customer Service</h1>
+            <p class="subtitle">Test Customer Management and Authentication Endpoints</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="restaurants.html">Restaurants</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="customers.html" class="active">Customers</a></li>
+                <li><a href="admin.html">Admin</a></li>
+                <li><a href="reports.html">Reports</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Service Status -->
+        <section class="card">
+            <h2>Service Status</h2>
+            <p id="service-status">Checking...</p>
+            <button id="check-health" class="btn">Check Health</button>
+        </section>
+
+        <!-- Register Customer -->
+        <section class="card">
+            <h2>Register Customer</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="customer-email">Email</label>
+                    <input type="email" id="customer-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer-password">Password</label>
+                    <input type="password" id="customer-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer-first-name">First Name</label>
+                    <input type="text" id="customer-first-name" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer-last-name">Last Name</label>
+                    <input type="text" id="customer-last-name" name="last_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer-phone">Phone</label>
+                    <input type="tel" id="customer-phone" name="phone">
+                </div>
+                <button type="submit" class="btn btn-primary">Register Customer</button>
+            </form>
+            <div id="register-result" class="result-container"></div>
+        </section>
+
+        <!-- Login -->
+        <section class="card">
+            <h2>Customer Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <div id="login-result" class="result-container"></div>
+        </section>
+
+        <!-- Get Customer -->
+        <section class="card">
+            <h2>Get Customer by ID</h2>
+            <div class="form-group">
+                <label for="get-customer-id">Customer ID</label>
+                <input type="number" id="get-customer-id" placeholder="Enter customer ID">
+            </div>
+            <button id="get-customer-btn" class="btn">Get Customer</button>
+            <div id="get-customer-result" class="result-container"></div>
+        </section>
+
+        <!-- List Customers -->
+        <section class="card">
+            <h2>List Customers</h2>
+            <div class="form-group">
+                <label for="list-page">Page</label>
+                <input type="number" id="list-page" value="0" min="0">
+            </div>
+            <div class="form-group">
+                <label for="list-size">Page Size</label>
+                <input type="number" id="list-size" value="20" min="1" max="100">
+            </div>
+            <button id="list-customers-btn" class="btn">Load Customers</button>
+            <div id="customers-list" class="result-container"></div>
+        </section>
+
+        <!-- Search Customers -->
+        <section class="card">
+            <h2>Search Customers</h2>
+            <div class="form-group">
+                <label for="search-query">Search Query</label>
+                <input type="text" id="search-query" placeholder="Enter name, email, or phone">
+            </div>
+            <button id="search-btn" class="btn">Search</button>
+            <div id="search-result" class="result-container"></div>
+        </section>
+
+        <!-- Address Management -->
+        <section class="card">
+            <h2>Customer Addresses</h2>
+            <div class="form-group">
+                <label for="address-customer-id">Customer ID</label>
+                <input type="number" id="address-customer-id" placeholder="Enter customer ID">
+            </div>
+            <button id="get-addresses-btn" class="btn">Get Addresses</button>
+            <div id="addresses-result" class="result-container"></div>
+        </section>
+
+        <!-- Add Address -->
+        <section class="card">
+            <h2>Add Address</h2>
+            <form id="add-address-form">
+                <div class="form-group">
+                    <label for="add-address-customer-id">Customer ID</label>
+                    <input type="number" id="add-address-customer-id" name="customer_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="address-line1">Address Line 1</label>
+                    <input type="text" id="address-line1" name="line1" required>
+                </div>
+                <div class="form-group">
+                    <label for="address-line2">Address Line 2</label>
+                    <input type="text" id="address-line2" name="line2">
+                </div>
+                <div class="form-group">
+                    <label for="address-city">City</label>
+                    <input type="text" id="address-city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="address-state">State</label>
+                    <input type="text" id="address-state" name="state" required>
+                </div>
+                <div class="form-group">
+                    <label for="address-zipcode">Zip Code</label>
+                    <input type="text" id="address-zipcode" name="zipcode" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Address</button>
+            </form>
+            <div id="add-address-result" class="result-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CookedSpecially - Microservices Testing Dashboard</p>
+        </div>
+    </footer>
+
+    <script type="module" src="../js/pages/customers.js"></script>
+</body>
+</html>

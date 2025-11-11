@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - CookedSpecially</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .confirmation-container {
+            max-width: 600px;
+            margin: 4rem auto;
+            text-align: center;
+        }
+
+        .confirmation-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+        }
+
+        .order-details {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                Cooked<span>Specially</span>
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="account.html" class="btn btn-outline btn-sm">My Account</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="section">
+        <div class="container confirmation-container">
+            <div class="confirmation-icon">✓</div>
+            <h1 style="color: var(--success);">Order Confirmed!</h1>
+            <p class="text-muted">Thank you for your order. We're preparing your delicious meal.</p>
+
+            <div class="order-details">
+                <h3 class="mb-3">Order Details</h3>
+                <p><strong>Order ID:</strong> <span id="order-id">Loading...</span></p>
+                <p><strong>Status:</strong> <span id="order-status" class="badge-warning">PENDING</span></p>
+                <p id="order-info"></p>
+
+                <div class="mt-4">
+                    <a href="account.html" class="btn btn-primary">View All Orders</a>
+                    <a href="menu.html" class="btn btn-outline">Order Again</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 CookedSpecially. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Simple script to display order ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+
+        if (orderId) {
+            document.getElementById('order-id').textContent = `#${orderId}`;
+            document.getElementById('order-info').innerHTML = `
+                <p class="mt-3">We'll send you updates about your order. You can track your order status in your account.</p>
+            `;
+        } else {
+            document.getElementById('order-id').textContent = 'N/A';
+        }
+    </script>
+</body>
+</html>

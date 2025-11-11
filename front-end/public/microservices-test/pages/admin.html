@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Service - CookedSpecially Microservices Testing</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>⚙️ Admin Service</h1>
+            <p class="subtitle">Test User Management and RBAC Endpoints</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <ul>
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="restaurants.html">Restaurants</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="customers.html">Customers</a></li>
+                <li><a href="admin.html" class="active">Admin</a></li>
+                <li><a href="reports.html">Reports</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Service Status -->
+        <section class="card">
+            <h2>Service Status</h2>
+            <p id="service-status">Checking...</p>
+            <button id="check-health" class="btn">Check Health</button>
+        </section>
+
+        <!-- Login -->
+        <section class="card">
+            <h2>Admin Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <div id="login-result" class="result-container"></div>
+        </section>
+
+        <!-- Create User -->
+        <section class="card">
+            <h2>Create User</h2>
+            <form id="create-user-form">
+                <div class="form-group">
+                    <label for="user-username">Username</label>
+                    <input type="text" id="user-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-email">Email</label>
+                    <input type="email" id="user-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-password">Password</label>
+                    <input type="password" id="user-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-first-name">First Name</label>
+                    <input type="text" id="user-first-name" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-last-name">Last Name</label>
+                    <input type="text" id="user-last-name" name="last_name" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create User</button>
+            </form>
+            <div id="create-user-result" class="result-container"></div>
+        </section>
+
+        <!-- List Users -->
+        <section class="card">
+            <h2>List Users</h2>
+            <button id="list-users-btn" class="btn">Load Users</button>
+            <div id="users-list" class="result-container"></div>
+        </section>
+
+        <!-- Get User -->
+        <section class="card">
+            <h2>Get User by ID</h2>
+            <div class="form-group">
+                <label for="get-user-id">User ID</label>
+                <input type="number" id="get-user-id" placeholder="Enter user ID">
+            </div>
+            <button id="get-user-btn" class="btn">Get User</button>
+            <div id="get-user-result" class="result-container"></div>
+        </section>
+
+        <!-- OTP Generation -->
+        <section class="card">
+            <h2>Generate OTP</h2>
+            <div class="form-group">
+                <label for="otp-user-id">User ID</label>
+                <input type="number" id="otp-user-id" placeholder="Enter user ID">
+            </div>
+            <div class="form-group">
+                <label for="otp-type">OTP Type</label>
+                <select id="otp-type">
+                    <option value="LOGIN">LOGIN</option>
+                    <option value="PASSWORD_RESET">PASSWORD_RESET</option>
+                    <option value="MFA">MFA</option>
+                </select>
+            </div>
+            <button id="generate-otp-btn" class="btn">Generate OTP</button>
+            <div id="otp-result" class="result-container"></div>
+        </section>
+
+        <!-- Validate OTP -->
+        <section class="card">
+            <h2>Validate OTP</h2>
+            <div class="form-group">
+                <label for="validate-user-id">User ID</label>
+                <input type="number" id="validate-user-id" placeholder="Enter user ID">
+            </div>
+            <div class="form-group">
+                <label for="validate-code">OTP Code</label>
+                <input type="text" id="validate-code" placeholder="Enter OTP code" maxlength="6">
+            </div>
+            <button id="validate-otp-btn" class="btn">Validate OTP</button>
+            <div id="validate-result" class="result-container"></div>
+        </section>
+
+        <!-- Role Management -->
+        <section class="card">
+            <h2>List Roles</h2>
+            <button id="list-roles-btn" class="btn">Load Roles</button>
+            <div id="roles-list" class="result-container"></div>
+        </section>
+
+        <!-- Employee Management -->
+        <section class="card">
+            <h2>Create Employee</h2>
+            <form id="create-employee-form">
+                <div class="form-group">
+                    <label for="employee-user-id">User ID</label>
+                    <input type="number" id="employee-user-id" name="user_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="employee-restaurant-id">Restaurant ID</label>
+                    <input type="number" id="employee-restaurant-id" name="restaurant_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="employee-position">Position</label>
+                    <input type="text" id="employee-position" name="position" required>
+                </div>
+                <div class="form-group">
+                    <label for="employee-type">Employment Type</label>
+                    <select id="employee-type" name="employment_type">
+                        <option value="FULL_TIME">Full Time</option>
+                        <option value="PART_TIME">Part Time</option>
+                        <option value="CONTRACT">Contract</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="employee-salary">Salary</label>
+                    <input type="number" id="employee-salary" name="salary" step="0.01">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Employee</button>
+            </form>
+            <div id="create-employee-result" class="result-container"></div>
+        </section>
+
+        <!-- Get Employees by Restaurant -->
+        <section class="card">
+            <h2>Get Employees by Restaurant</h2>
+            <div class="form-group">
+                <label for="restaurant-employees-id">Restaurant ID</label>
+                <input type="number" id="restaurant-employees-id" placeholder="Enter restaurant ID">
+            </div>
+            <button id="get-employees-btn" class="btn">Get Employees</button>
+            <div id="employees-result" class="result-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CookedSpecially - Microservices Testing Dashboard</p>
+        </div>
+    </footer>
+
+    <script type="module" src="../js/pages/admin.js"></script>
+</body>
+</html>

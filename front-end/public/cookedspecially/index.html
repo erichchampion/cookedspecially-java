@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CookedSpecially - Handcrafted premium salads and healthy meals delivered fresh to your door">
+    <title>CookedSpecially - Fresh, Healthy Meals Delivered</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                Cooked<span>Specially</span>
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#" id="user-menu" class="btn btn-outline btn-sm">Sign In</a>
+                <a href="cart.html" class="cart-icon">
+                    🛒
+                    <span class="cart-count" style="display: none;">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Fresh, Healthy Meals Delivered</h1>
+            <p>Handcrafted salads and nutritious meals made with premium ingredients</p>
+            <a href="menu.html" class="btn btn-lg btn-secondary">Order Now</a>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Menu</h2>
+                <p class="section-subtitle">Explore our delicious and healthy options</p>
+            </div>
+
+            <div class="grid grid-4" id="categories-grid">
+                <!-- Categories will be loaded dynamically -->
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">🥗 Fresh Salads</div>
+                        <p class="card-description">Crisp, colorful salads made with the freshest ingredients</p>
+                        <a href="menu.html?category=salads" class="btn btn-primary btn-sm">View Menu</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">🍗 Protein Bowls</div>
+                        <p class="card-description">Satisfying meals with grilled chicken and seafood</p>
+                        <a href="menu.html?category=protein" class="btn btn-primary btn-sm">View Menu</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">🥤 Fresh Juices</div>
+                        <p class="card-description">Cold-pressed juices and healthy beverages</p>
+                        <a href="menu.html?category=juices" class="btn btn-primary btn-sm">View Menu</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title">🌱 Vegetarian</div>
+                        <p class="card-description">Plant-based deliciousness for everyone</p>
+                        <a href="menu.html?category=vegetarian" class="btn btn-primary btn-sm">View Menu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section" style="background: var(--bg-light);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Us</h2>
+                <p class="section-subtitle">Quality you can taste</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-content text-center">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🌿</div>
+                        <h3>Fresh Ingredients</h3>
+                        <p class="card-description">We source only the finest, freshest ingredients for every meal</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content text-center">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍🍳</div>
+                        <h3>Expert Chefs</h3>
+                        <p class="card-description">Crafted by experienced chefs who care about nutrition</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content text-center">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🚚</div>
+                        <h3>Fast Delivery</h3>
+                        <p class="card-description">Quick and reliable delivery right to your doorstep</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Order in 3 simple steps</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin: 0 auto 1rem;">1</div>
+                    <h3>Browse Menu</h3>
+                    <p class="card-description">Choose from our wide selection of healthy meals</p>
+                </div>
+
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin: 0 auto 1rem;">2</div>
+                    <h3>Place Order</h3>
+                    <p class="card-description">Add items to cart and complete your order</p>
+                </div>
+
+                <div class="text-center">
+                    <div style="width: 80px; height: 80px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin: 0 auto 1rem;">3</div>
+                    <h3>Enjoy</h3>
+                    <p class="card-description">Receive your fresh meal and enjoy!</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="menu.html" class="btn btn-primary btn-lg">Start Ordering</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CookedSpecially</h3>
+                    <p>Bringing fresh, healthy meals to your doorstep</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="account.html">My Account</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>📞 +91 1234567890</li>
+                        <li>✉️ hello@cookedspecially.com</li>
+                        <li>📍 Gurgaon, India</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 CookedSpecially. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="js/pages/home.js"></script>
+</body>
+</html>

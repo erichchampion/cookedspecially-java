@@ -57,7 +57,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: "*"
+        spring.json.trusted.packages: "com.cookedspecially.customerservice.dto,com.cookedspecially.common"
 
   # OAuth2 Resource Server (Cognito)
   security:
@@ -87,7 +87,7 @@ management:
         include: health,info,metrics,prometheus
   endpoint:
     health:
-      show-details: always
+      show-details: when-authorized
   metrics:
     export:
       prometheus:
@@ -99,11 +99,11 @@ management:
 # Logging
 logging:
   level:
-    root: INFO
-    com.cookedspecially.customerservice: DEBUG
-    org.springframework.security: DEBUG
-    org.springframework.web: INFO
-    org.hibernate.SQL: DEBUG
+    root: WARN
+    com.cookedspecially.customerservice: INFO
+    org.springframework.security: WARN
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 
