@@ -23,7 +23,7 @@
         <spring-cloud.version>2023.0.3</spring-cloud.version>
         <poi.version>5.4.1</poi.version>
         <itext.version>8.0.2</itext.version>
-        <aws.sdk.version>2.28.0</aws.sdk.version>
+        <aws.sdk.version>2.38.2</aws.sdk.version>
     </properties>
 
     <dependencies>
